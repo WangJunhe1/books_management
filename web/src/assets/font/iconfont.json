@@ -1,0 +1,37 @@
+{
+  "id": "4341914",
+  "name": "MaBatis项目",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "77156",
+      "name": "微信",
+      "font_class": "weixin",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "4936984",
+      "name": "QQ",
+      "font_class": "QQ",
+      "unicode": "e882",
+      "unicode_decimal": 59522
+    },
+    {
+      "icon_id": "27365088",
+      "name": "github",
+      "font_class": "github",
+      "unicode": "ec01",
+      "unicode_decimal": 60417
+    },
+    {
+      "icon_id": "29524237",
+      "name": "bilibili-line",
+      "font_class": "bilibili-line",
+      "unicode": "e7d6",
+      "unicode_decimal": 59350
+    }
+  ]
+}
