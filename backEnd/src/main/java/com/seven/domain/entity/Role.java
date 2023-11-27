@@ -14,5 +14,6 @@ import lombok.NoArgsConstructor;
 public class Role {
     @TableId(value = "role_id",type = IdType.AUTO)
     private Integer roleId;
+
     private String roleName;
 }
