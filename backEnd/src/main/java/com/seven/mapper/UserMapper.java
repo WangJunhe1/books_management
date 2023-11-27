@@ -1,6 +1,6 @@
-package com.seven.dao;
+package com.seven.mapper;
 
-import com.seven.domain.User;
+import com.seven.domain.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Mapper
-public interface UserDao {
+public interface UserMapper {
     /**
      * 查询用户通过username
      * @param username
