@@ -1,0 +1,9 @@
+server:
+  port: 5000
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.236.37.1:3306/books_management?useSSL=false&serverTimezone=UTC
+    username: parter
+    password: COMEONboy123.
