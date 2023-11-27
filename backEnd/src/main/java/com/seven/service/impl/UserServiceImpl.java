@@ -1,20 +1,19 @@
-package com.seven.service.impl;
+package com.seven.service;
 
-import com.seven.mapper.UserMapper;
-import com.seven.domain.entity.User;
+import com.seven.dao.UserDao;
+import com.seven.domain.User;
 import com.seven.domain.vo.MessageModel;
-import com.seven.service.UserService;
 import com.seven.util.CodeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserService {
     @Autowired
-    private UserMapper userMapper;
+    private UserDao userDao;
 
     @Autowired
-    private StudentServiceImpl service;
+    private StudentService service;
 
     /**
      * 通过账号名和密码查询用户
@@ -24,7 +23,7 @@ public class UserServiceImpl implements UserService {
      */
     public MessageModel selectUserByUsernameAndPassword(String username, String password) {
         MessageModel messageModel = new MessageModel();
-        User user = userMapper.selectUserByUsername(username);
+        User user = userDao.selectUserByUsername(username);
         if (user != null) {
             if (user.getPassword().equals(password)) {
                 messageModel.setCode(CodeUtils.SUCCESS);
@@ -53,17 +52,17 @@ public class UserServiceImpl implements UserService {
      */
     public MessageModel insertUser(String username, String number, String password) {
         MessageModel messageModel = new MessageModel();
-        User user = userMapper.selectUserByUsername(username);     //  查询这个账号名有没有重复
+        User user = userDao.selectUserByUsername(username);     //  查询这个账号名有没有重复
         if (user != null) {     //  账号名重复
             messageModel.setCode(CodeUtils.FAILED_REGISTER_USERNAME);
             messageModel.setMessage("用户注册失败，账号名已存在");
             messageModel.setObject(null);
         } else {
-            int result = userMapper.insertUser(username, password);    //  插入数据
+            int result = userDao.insertUser(username, password);    //  插入数据
             if (result > 0) {
                 messageModel.setCode(CodeUtils.SUCCESS);
                 messageModel.setMessage("注册成功");
-                messageModel.setObject(userMapper.selectUserByUsername(username));
+                messageModel.setObject(userDao.selectUserByUsername(username));
                 service.insertStudent(username, number);
                 // TODO: user表和student表对应的外键同步没有解决
             }
