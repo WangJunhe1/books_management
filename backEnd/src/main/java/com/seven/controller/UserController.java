@@ -1,10 +1,8 @@
 package com.seven.controller;
 
 
-import com.seven.domain.User;
 import com.seven.domain.vo.MessageModel;
-import com.seven.service.UserService;
-import com.seven.util.CodeUtils;
+import com.seven.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class UserController {
     @Autowired
-    private UserService service;
+    private UserServiceImpl service;
 
     /**
      * 用户登录
@@ -22,7 +20,6 @@ public class UserController {
      * @return
      */
     @PostMapping("/getUser")
-    @ResponseBody
     public MessageModel login(String username, String password) {
         return service.selectUserByUsernameAndPassword(username, password);
     }
@@ -36,7 +33,6 @@ public class UserController {
      * @return
      */
     @PostMapping("/register")
-    @ResponseBody
     public MessageModel register(String username, String number, String password) {
         return service.insertUser(username, number, password);
     }
