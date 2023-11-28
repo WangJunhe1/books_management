@@ -1,6 +1,6 @@
-package com.seven.util;
+package com.seven.utils;
 
-public class CodeUtils {
+public class CodeUtil {
     public static final Integer SUCCESS = 20000;
     public static final Integer FAILED = 40000;
     public static final Integer FAILED_PASSWORD = 40001;

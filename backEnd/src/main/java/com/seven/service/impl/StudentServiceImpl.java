@@ -12,13 +12,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-    private StudentMapper studentDao;
+    private StudentMapper studentMapper;
     public Student insertStudent(String student_name, String student_number) {
-        int result = studentDao.insertStudent(student_name, student_number);
-        Student student = null;
-        if (result > 0) {
-            student = studentDao.selectByStudentName(student_name);
-        }
-        return student;
+        return null;
     }
 }

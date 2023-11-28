@@ -1,5 +1,6 @@
 package com.seven.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.seven.domain.entity.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
@@ -9,14 +10,14 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
     /**
      * 查询用户通过username
      * @param username
      * @return
      */
     @Select("select * from user where username = #{username}")
-    public User selectUserByUsername(@Param("username")String username);
+    User selectUserByUsername(@Param("username")String username);
 
     /**
      * 插入用户通过username和password
@@ -25,5 +26,5 @@ public interface UserMapper {
      * @return
      */
     @Insert("insert into user (username, password) values (#{username}, #{password})")
-    public int insertUser(@Param("username") String username, @Param("password") String password);
+    int insertUser(@Param("username") String username, @Param("password") String password);
 }
