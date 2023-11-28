@@ -1,4 +1,4 @@
-package com.seven.domain;
+package com.seven.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
