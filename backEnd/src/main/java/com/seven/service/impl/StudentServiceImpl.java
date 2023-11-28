@@ -1,28 +1,24 @@
-package com.seven.service;
+package com.seven.service.impl;
 
-import com.seven.dao.StudentDao;
-import com.seven.domain.Student;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.seven.domain.entity.Student;
+import com.seven.mapper.StudentMapper;
+import com.seven.service.StudentService;
 import org.springframework.stereotype.Service;
 
-@Service
-public class StudentService {
-    @Autowired
-    private StudentDao studentDao;
+/**
+ * @author :Wjh
+ * @since :2023/11/28 10:03
+ */
 
-    /**
-     * 返回创建的新student数据
-     * @param student_name
-     * @param student_number
-     * @return
-     */
+@Service
+public class StudentServiceImpl implements StudentService {
+    private StudentMapper studentDao;
     public Student insertStudent(String student_name, String student_number) {
         int result = studentDao.insertStudent(student_name, student_number);
         Student student = null;
         if (result > 0) {
-             student = studentDao.selectByStudentName(student_name);
+            student = studentDao.selectByStudentName(student_name);
         }
         return student;
     }
-
 }
