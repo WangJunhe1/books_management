@@ -3,6 +3,7 @@ package com.seven.service.impl;
 import com.seven.domain.entity.Student;
 import com.seven.mapper.StudentMapper;
 import com.seven.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class StudentServiceImpl implements StudentService {
+    @Autowired
     private StudentMapper studentMapper;
     public Student insertStudent(String student_name, String student_number) {
         return null;

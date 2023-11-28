@@ -1,6 +1,8 @@
+# 服务端口配置
 server:
   port: 5000
 
+# 数据库连接配置
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -8,6 +10,12 @@ spring:
     username: parter
     password: COMEONboy123.
 
+#开启驼峰命名规范自动映射
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+# mybatis-plus配置
 mybatis-plus:
   type-aliases-package: com.seven.domain
   mapper-locations: classpath:/mapper/*.xml

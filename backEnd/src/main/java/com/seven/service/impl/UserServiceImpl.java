@@ -9,6 +9,7 @@ import com.seven.exception.PasswordErrorException;
 import com.seven.mapper.UserMapper;
 import com.seven.service.StudentService;
 import com.seven.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -57,6 +58,10 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public Integer register(RegisterDTO registerDTO) {
+        User user = new User();
+
+        BeanUtils.copyProperties(registerDTO,user);
+
        return 0;
     }
 }

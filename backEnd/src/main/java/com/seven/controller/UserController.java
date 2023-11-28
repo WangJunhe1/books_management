@@ -6,12 +6,11 @@ import com.seven.domain.dto.LoginDTO;
 import com.seven.domain.dto.RegisterDTO;
 import com.seven.domain.entity.User;
 import com.seven.domain.pojo.Result;
-import com.seven.service.impl.UserServiceImpl;
+import com.seven.domain.vo.UserInfoVO;
+import com.seven.properties.JwtProperties;
+import com.seven.service.UserService;
 import com.seven.utils.CodeUtil;
 import com.seven.utils.JwtUtil;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,18 +23,17 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 @CrossOrigin
-@Api(tags = "用户接口")
 public class UserController {
-    @ApiModelProperty(value = "用户服务接口")
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
+    @Autowired
+    private JwtProperties jwtProperties;
 
     /**
      * 用户登录
      * @param loginDTO
      * @return
      */
-    @ApiOperation(value = "用户登录")
     @PostMapping("/login")
     public Result login(@RequestBody LoginDTO loginDTO) {
 
@@ -43,12 +41,33 @@ public class UserController {
 
         User user = userService.login(loginDTO);
 
+        user.setPassword("********");
+
         Map<String,Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.USER_ID, user.getUserId());
+        String token = JwtUtil.createJWT(
+                jwtProperties.getAdminSecretKey(),
+                jwtProperties.getAdminTtl(),
+                claims);
+
+        UserInfoVO userInfo = new UserInfoVO().builder()
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .phone(user.getPhone())
+                .token(token).build();
 
         if(user == null)
             return Result.error();
-        return Result.success(user);
+        return Result.success(userInfo);
+    }
+
+    /**
+     * 退出
+     * @return
+     */
+    @PostMapping("/logout")
+    public Result logout(){
+        return Result.success();
     }
 
 
@@ -57,7 +76,6 @@ public class UserController {
      * @param registerDTO
      * @return
      */
-    @ApiOperation(value = "用户注册")
     @PostMapping("/register")
     @Transactional(rollbackFor = Exception.class)
     public Result register(@RequestBody RegisterDTO registerDTO) {

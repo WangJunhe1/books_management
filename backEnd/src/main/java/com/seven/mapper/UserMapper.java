@@ -9,7 +9,6 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@Mapper
 public interface UserMapper extends BaseMapper<User> {
     /**
      * 查询用户通过username

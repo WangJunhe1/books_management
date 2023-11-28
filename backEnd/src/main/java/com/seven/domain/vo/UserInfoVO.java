@@ -18,4 +18,5 @@ public class UserInfoVO {
     private String username;
     private String password;
     private String phone;
+    private String token;
 }
