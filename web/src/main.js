@@ -7,6 +7,11 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import store from "@/store";
 
+// 动画 animate.css
+import animated from 'animate.css'
+Vue.use(animated)
+
+
 Vue.use(ElementUI);
 Vue.prototype.$axios = axios;
 // Vue.use(VueAxios, axios)
