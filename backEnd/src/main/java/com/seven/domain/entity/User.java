@@ -21,7 +21,7 @@ public class User {
 
     private String phone;
 
-    private Integer state;
+    private Integer status;
 
     private LocalDateTime createTime;
 

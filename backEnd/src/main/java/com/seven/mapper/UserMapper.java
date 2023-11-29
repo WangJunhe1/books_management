@@ -12,18 +12,21 @@ import org.springframework.stereotype.Repository;
 public interface UserMapper extends BaseMapper<User> {
     /**
      * 查询用户通过username
+     *
      * @param username
      * @return
      */
     @Select("select * from user where username = #{username}")
-    User selectUserByUsername(@Param("username")String username);
+    User selectUserByUsername(@Param("username") String username);
 
     /**
      * 插入用户通过username和password
-     * @param username
-     * @param password
+     *
+     * @param user
      * @return
      */
-    @Insert("insert into user (username, password) values (#{username}, #{password})")
-    int insertUser(@Param("username") String username, @Param("password") String password);
+    @Insert("insert into user (username, password, phone, status,create_time,update_time, student_id) " +
+            "value (#{user.username},#{user.password},#{user.phone},#{user.status}," +
+            "#{user.createTime},#{user.updateTime},#{user.studentId})")
+    int insertUser(@Param("user") User user);
 }

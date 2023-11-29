@@ -56,6 +56,7 @@ public class UserController {
                 .phone(user.getPhone())
                 .token(token).build();
 
+        log.info("token：{}", token);
         if(user == null)
             return Result.error();
         return Result.success(userInfo);
@@ -79,9 +80,10 @@ public class UserController {
     @PostMapping("/register")
     @Transactional(rollbackFor = Exception.class)
     public Result register(@RequestBody RegisterDTO registerDTO) {
+        log.info("新增员工：{}", registerDTO);
         Integer code = userService.register(registerDTO);
         if(code.equals(CodeUtil.SUCCESS))
-            return Result.success();
+            return Result.success("登录成功");
         else
             return Result.error();
     }
