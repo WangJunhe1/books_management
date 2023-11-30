@@ -1,0 +1,30 @@
+{
+  "id": "4336364",
+  "name": "京东-km",
+  "font_family": "element-icons",
+  "css_prefix_text": "el-icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "38174359",
+      "name": "大雾",
+      "font_class": "dawu-copy",
+      "unicode": "e8a5",
+      "unicode_decimal": 59557
+    },
+    {
+      "icon_id": "577365",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "e752",
+      "unicode_decimal": 59218
+    },
+    {
+      "icon_id": "1304896",
+      "name": "用户",
+      "font_class": "yonghu",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    }
+  ]
+}

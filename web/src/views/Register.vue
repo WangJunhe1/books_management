@@ -1,16 +1,81 @@
 <script>
 import '@/assets/font/iconfont.css'
+import "@/assets/css/registe.css";
 export default {
   name: "Register",
   data() {
     return {
       user: {
         username: '',
-        email: '',
+        studentId: '',
+        phone: '',
         password: ''
       }
-    };
+    }
   },
+  methods: {
+    register() {
+      if(this.user.username.trim() === '') {
+        this.$message({
+          message: '用户名不能为空',
+          type: 'error'
+        })
+        return false;
+      }
+      if(this.user.username.length < 3 || this.user.username.length > 12) {
+        this.$message({
+          message: '用户名长度为3-12位',
+          type: 'error'
+        })
+        return false;
+      }
+      if(this.user.phone.trim() === '') {
+        this.$message({
+          message: '手机号不能为空',
+          type: 'error'
+        })
+        return false;
+      }
+      if(this.user.phone.length !== 11 ) {
+        this.$message({
+          message: '用户名长度为11位',
+          type: 'error'
+        })
+        return false;
+      }
+      if(this.user.password.trim() === '') {
+        this.$message({
+          message: '密码不能为空',
+          type: 'error'
+        })
+        return false;
+      }
+      if(this.user.password.length < 8 && this.user.password.length > 16) {
+        this.$message({
+          message: '密码长度为8-16位',
+          type: 'error'
+        })
+        return false;
+      }
+      this.$router.push('/registerNext');
+      /*  分页设置数据
+      this.$axios.post('http://localhost:5000/user/register', this.user).then(res => {
+        if (res.data.code === 200) {
+          this.$message({
+            message: '注册成功',
+            type: 'success'
+          })
+          this.$router.push('/registerNext');
+        } else {
+          this.$message({
+            message: res.data.message,
+            type: 'error'
+          })
+          return false;
+        }
+      })*/
+    }
+  }
 }
 </script>
 
@@ -19,7 +84,7 @@ export default {
   <div class="body">
     <div id="register">
       <div class="container register-container" id="register-container">
-        <form action="/login" method="post" class="form" id="register-form">
+        <form class="form" id="register-form">
           <h2 class="form_title title">创建账号</h2>
           <div class="from_icons">
             <i class="iconfont icon-QQ"></i>
@@ -29,9 +94,9 @@ export default {
           </div>
           <span class="form_span">选择注册方式或电子邮箱注册</span>
           <input type="text" class="form_input" placeholder="Name" v-model="user.username" />
-          <input type="email" class="form_input" placeholder="Email" v-model="user.email" />
+          <input type="text" class="form_input" placeholder="Phone" v-model="user.phone" />
           <input type="password" class="form_input" placeholder="Password" v-model="user.password" />
-          <button type="submit" class="form_button button submit">SIGN UP</button>
+          <el-button  :plain="true" class="form_button button submit"  @click="register()">SIGN UP</el-button>
         </form>
         
       </div>
@@ -42,7 +107,7 @@ export default {
         <div class="switch-container" id="switch-container-register">
           <h2 class="switch-title title" style="letter-spacing: 0;">Welcome Back!</h2>
           <p class="switch-description description">已经有账号了嘛，去登录账号进入奇妙的世界吧！！！</p>
-          <router-link to="/login"><button class="switch-button button switch-btn">SIGN IN</button></router-link>
+          <router-link to="/login"><el-button class="switch-button button switch-btn submit">SIGN IN</el-button></router-link>
         </div>
       </div>
     </div>
@@ -51,5 +116,5 @@ export default {
 </template>
 
 <style>
-@import "F:/Web前端框架/web_project/Km/Km/src/assets/css/registe.css";
+
 </style>

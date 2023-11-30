@@ -1,5 +1,6 @@
 <script>
 import '@/assets/font/iconfont.css'
+import '@/assets/css/login.css';
 export default {
   name: "Login",
   data() {
@@ -29,13 +30,7 @@ export default {
       };
       // this.$store.dispatch('User/setDataAction', this.data);
       // debugger
-      this.$axios.get('http://localhost:5000/user/getUser', {
-        method: 'post',
-        params: {
-          username: this.user.username,
-          password: this.user.password
-        }
-      }).then(res => {
+      this.$axios.post('http://localhost:5000/user/login', this.user).then(res => {
         console.log(res.data);
         this.data = res.data;
         if( this.data.object === null ) {
@@ -47,11 +42,13 @@ export default {
         }
         localStorage.setItem('data', JSON.stringify(this.data));
         this.$store.dispatch('User/setDataAction', this.data);
-        this.user = this.data.object;
+        this.user = this.data.data;
         localStorage.setItem('user', JSON.stringify(this.user));
         this.$store.dispatch('User/setUserAction', this.user);
         localStorage.setItem('isLogin', true);
         this.$store.dispatch('User/setIsLoginAction', true);
+        localStorage.setItem('token', this.user.token);
+        this.$store.dispatch('User/setTokenAction', this.user.token);
         this.$router.push('/index');
         return true;
       }).catch(err => {
@@ -104,7 +101,7 @@ export default {
 </div>
 </template>
 
-<style scoped>
-@import "F:/Web前端框架/web_project/Km/Km/src/assets/css/login.css";
+<style>
+
 
 </style>
