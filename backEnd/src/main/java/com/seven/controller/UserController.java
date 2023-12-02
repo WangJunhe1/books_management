@@ -2,6 +2,7 @@ package com.seven.controller;
 
 
 import com.seven.constant.JwtClaimsConstant;
+import com.seven.constant.PasswordConstant;
 import com.seven.domain.dto.LoginDTO;
 import com.seven.domain.dto.RegisterDTO;
 import com.seven.domain.dto.StudentUserDTO;
@@ -47,7 +48,7 @@ public class UserController {
 
         User user = userService.login(loginDTO);
 
-        user.setPassword("********");
+        user.setPassword(PasswordConstant.SECURE_PASSWORD);
 
         Map<String,Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.USER_ID, user.getUserId());
