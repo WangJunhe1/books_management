@@ -1,23 +1,20 @@
 package com.seven.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.seven.domain.entity.Student;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface StudentMapper {
+public interface StudentMapper extends BaseMapper<Student> {
 
     /**
-     * 插入学生通过姓名和学生学号
-     * @param student_name
-     * @param student_number
+     * 通过学生姓名查找学生id
+     * @param studentName
+     * @return
      */
-    @Insert("insert into student(student_name, student_number) values (#{student_name}, #{student_number})")
-    public int insertStudent(@Param("student_name") String student_name,
-                              @Param("student_number") String student_number);
-    @Select("select * from student where student_name = #{student_name};")
-    public Student selectByStudentName(@Param("student_name") String student_name);
+    @Select("select student_id from student where student_name = #{studentName}")
+    Integer selectIdByName(@Param("studentName") String studentName);
+
 }

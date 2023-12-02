@@ -1,25 +1,24 @@
 package com.seven.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.seven.constant.MessageConstant;
 import com.seven.constant.StatusConstant;
 import com.seven.domain.dto.LoginDTO;
 import com.seven.domain.dto.RegisterDTO;
 import com.seven.domain.entity.User;
 import com.seven.exception.AccountNotFoundException;
+import com.seven.exception.BaseException;
 import com.seven.exception.PasswordErrorException;
+import com.seven.mapper.StudentMapper;
 import com.seven.mapper.UserMapper;
-import com.seven.service.StudentService;
 import com.seven.service.UserService;
 import com.seven.utils.CodeUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
-
-import java.time.LocalDateTime;
 
 /**
  * @author :Wjh
@@ -31,12 +30,12 @@ import java.time.LocalDateTime;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
-
     @Autowired
-    private StudentService studentService;
+    private StudentMapper studentMapper;
 
     /**
      * 通过账号名和密码查询用户
+     *
      * @param loginDTO
      * @return
      */
@@ -44,13 +43,16 @@ public class UserServiceImpl implements UserService {
         String username = loginDTO.getUsername();
         String password = loginDTO.getPassword();
 
+        //查询用户是否存在
         User user = userMapper.selectUserByUsername(username);
-
+        //用户密码进行md5加密和数据库密码进行比对
         password = DigestUtils.md5DigestAsHex(password.getBytes());
         System.out.println(password);
-        if(user == null){
+        if (user == null) {
+            //用户不存在
             throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
-        }else if(!password.equals(user.getPassword())){
+        } else if (!password.equals(user.getPassword())) {
+            //密码错误
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
         }
 
@@ -59,6 +61,7 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 创建新user数据的同时建立一个对应的student数据
+     *
      * @param registerDTO
      * @return
      */
@@ -66,16 +69,33 @@ public class UserServiceImpl implements UserService {
     public Integer register(RegisterDTO registerDTO) {
         User user = new User();
 
-        BeanUtils.copyProperties(registerDTO,user);
+        user = user.builder()
+                .username(registerDTO.getUsername())
+                .password(registerDTO.getPassword())
+                .phone(registerDTO.getPhone())
+                .build();
+
+        log.info("user:{}", user);
         //设置账号状态为启用
         user.setStatus(StatusConstant.ENABLE);
         //设置密码并进行md5加密
         user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
-        user.setCreateTime(LocalDateTime.now());
-        user.setUpdateTime(LocalDateTime.now());
-        log.info("user:{}",user);
+
+        Integer studentId = studentMapper.selectIdByName(registerDTO.getStudentName());
+
+        //学生查不到
+        if (studentId == null) {
+            log.info("学生需注册");
+            return CodeUtil.FAILED;
+        } else {
+            log.info("学生已注册");
+            user.setStudentId(studentId);
+        }
 
         userMapper.insertUser(user);
-       return CodeUtil.SUCCESS;
+        user = userMapper.selectOne(new QueryWrapper<User>().eq("username", registerDTO.getUsername()));
+        log.info("userId:{}", user.getUserId());
+        //返回学生表需要插入的userId
+        return user.getUserId();
     }
 }

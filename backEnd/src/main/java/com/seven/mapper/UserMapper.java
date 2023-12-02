@@ -1,9 +1,10 @@
 package com.seven.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.seven.annotation.AutoFill;
 import com.seven.domain.entity.User;
+import com.seven.enumeration.OperationType;
 import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -28,5 +29,6 @@ public interface UserMapper extends BaseMapper<User> {
     @Insert("insert into user (username, password, phone, status,create_time,update_time, student_id) " +
             "value (#{user.username},#{user.password},#{user.phone},#{user.status}," +
             "#{user.createTime},#{user.updateTime},#{user.studentId})")
+    @AutoFill(value = OperationType.INSERT)
     int insertUser(@Param("user") User user);
 }

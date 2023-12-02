@@ -14,7 +14,6 @@ import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 /**
  * 配置类，注册web层相关组件
@@ -36,7 +35,10 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         log.info("开始注册自定义拦截器...");
         registry.addInterceptor(jwtTokenAdminInterceptor)
                 .addPathPatterns("/user/**")
-                .excludePathPatterns("/user/login");
+                .excludePathPatterns("/user/login")
+               .excludePathPatterns("/user/register")
+                .excludePathPatterns("/student/register")
+                .excludePathPatterns("/bookType/getBookType");
     }
 
     /**
@@ -67,8 +69,6 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         log.info("开始设置静态页面映射...");
         registry.addResourceHandler("/doc.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
-//        registry.addResourceHandler("swagger-ui.html")
-//                .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
     }

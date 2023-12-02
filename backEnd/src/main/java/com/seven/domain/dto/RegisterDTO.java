@@ -1,6 +1,7 @@
 package com.seven.domain.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,9 +13,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class RegisterDTO {
     private String username;
     private String password;
     private String phone;
-    private Integer studentId;
+    @Builder.Default
+    private String studentName = null;
 }
