@@ -9,7 +9,7 @@ export default {
     },
     loginOut() {
       localStorage.clear();
-      this.$router.push('/index');
+      this.$router.push('/login');
     }
   }
 

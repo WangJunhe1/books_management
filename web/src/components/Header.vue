@@ -13,7 +13,7 @@ export default {
   methods: {
     loginOut() {
       localStorage.clear();
-      this.$router.push('/registerNext');
+      this.$router.push('/login');
     }
   },
 }
@@ -49,10 +49,10 @@ export default {
               <li class="main-ul-li" v-if="isLogin">
                 <a href="/login" class="menu-link" @click="loginOut()">
                   <div class="el-icon-arrow-left"></div>退出登录
-                </a href="/login">
+                </a>
               </li>
               <li class="main-ul-li" v-else>
-                <a href="#" class="menu-link" @click="loginOut()">登录</a>
+                <a href="" class="menu-link" @click="loginOut()">登录</a>
               </li>
             </ul>
           </div>     
