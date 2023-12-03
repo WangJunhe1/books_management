@@ -6,6 +6,10 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+    },
+    loginOut() {
+      localStorage.clear();
+      this.$router.push('/index');
     }
   }
 
@@ -44,7 +48,7 @@ export default {
               <i class="el-icon-chat-dot-round"></i>
               <span slot="title">我的评论</span>
             </el-menu-item>
-            <el-menu-item index="/login">
+            <el-menu-item index="/login" @click="loginOut()">
               <i class="el-icon-arrow-left"></i>
               <span slot="title">退出登录</span>
             </el-menu-item>

@@ -48,6 +48,15 @@ const routes = new VueRouter({
                     }
                 },
                 {
+                    name: "bookDetails",
+                    path: "/index/bookDetails/:book",
+                    props:true,
+                    component: () => import("@/views/BookDetails.vue"),
+                    meta: {
+                        title: "图书信息"
+                    }
+                },
+                {
                     name: "user",
                     path: "/User",
                     redirect: {name: "userInfo"},
@@ -127,6 +136,14 @@ const routes = new VueRouter({
             component: () => import("@/views/Register.vue"),
             meta: {
                 title: "注册"
+            }
+        },
+        {
+            name: "registerNext",
+            path: "/registerNext",
+            component: () => import("@/views/RegisterNext.vue"),
+            meta: {
+                title: "详细注册"
             }
         },
         {

@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4341914 */
-  src: url('iconfont.woff2?t=1700880947438') format('woff2'),
-       url('iconfont.woff?t=1700880947438') format('woff'),
-       url('iconfont.ttf?t=1700880947438') format('truetype');
+  src: url('//at.alicdn.com/t/c/font_4341914_cs9ixfxa4o.woff2?t=1701576735646') format('woff2'),
+  url('//at.alicdn.com/t/c/font_4341914_cs9ixfxa4o.woff?t=1701576735646') format('woff'),
+  url('//at.alicdn.com/t/c/font_4341914_cs9ixfxa4o.ttf?t=1701576735646') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,18 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-Outline_fuben5:before {
+  content: "\e652";
+}
+
+.icon-Outline_fuben11:before {
+  content: "\e657";
+}
+
+.icon-Outline_fuben24:before {
+  content: "\e661";
 }
 
 .icon-weixin:before {
