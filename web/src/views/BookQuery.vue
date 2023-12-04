@@ -154,7 +154,7 @@ export default {
           </h2>
           <div class="borrow-list">
             <div class="borrow-bookshelf" v-for="item in myBorrowBooks" :key="item.id">
-              <router-link to="/index/bookDetails" :params="{book: item}"></router-link>
+              <router-link :to="{name: 'bookDetails', params: {book: item}}"></router-link>
               <div class="book-allInfo">
                 <div class="book-img">
                   <img :src="item.img" :alt="item.name" class="borrow-img">
@@ -176,7 +176,7 @@ export default {
           </h2>
           <div class="recommend-list">
             <div class="recommend-item" v-for="item in recommendBooks" :key="item.id">
-              <router-link to="/index/bookDetails" :params="{book: item}"></router-link>
+              <router-link :to="{name: 'bookDetails', params: {book: item}}"></router-link>
               <div class="item-allInfo">
                 <div class="book-img">
                   <img :src="item.img" :alt="item.name" class="borrow-img">
