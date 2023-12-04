@@ -2,16 +2,21 @@ package com.seven.controller;
 
 
 import com.seven.constant.JwtClaimsConstant;
+import com.seven.constant.PasswordConstant;
 import com.seven.domain.dto.LoginDTO;
 import com.seven.domain.dto.RegisterDTO;
+import com.seven.domain.dto.StudentUserDTO;
+import com.seven.domain.dto.UpdateStudentDTO;
 import com.seven.domain.entity.User;
 import com.seven.domain.pojo.Result;
 import com.seven.domain.vo.UserInfoVO;
 import com.seven.properties.JwtProperties;
+import com.seven.service.StudentService;
 import com.seven.service.UserService;
 import com.seven.utils.CodeUtil;
 import com.seven.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.jsqlparser.statement.RollbackStatement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +33,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private JwtProperties jwtProperties;
+    @Autowired
+    private StudentService studentService;
 
     /**
      * 用户登录
@@ -41,7 +48,7 @@ public class UserController {
 
         User user = userService.login(loginDTO);
 
-        user.setPassword("********");
+        user.setPassword(PasswordConstant.SECURE_PASSWORD);
 
         Map<String,Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.USER_ID, user.getUserId());
@@ -56,6 +63,7 @@ public class UserController {
                 .phone(user.getPhone())
                 .token(token).build();
 
+        log.info("token：{}", token);
         if(user == null)
             return Result.error();
         return Result.success(userInfo);
@@ -79,10 +87,24 @@ public class UserController {
     @PostMapping("/register")
     @Transactional(rollbackFor = Exception.class)
     public Result register(@RequestBody RegisterDTO registerDTO) {
+        log.info("新增员工：{}", registerDTO);
         Integer code = userService.register(registerDTO);
-        if(code.equals(CodeUtil.SUCCESS))
-            return Result.success();
-        else
+        if(code.equals(CodeUtil.FAILED)){
             return Result.error();
+        }
+
+        StudentUserDTO studentUserDTO = new StudentUserDTO()
+                .builder()
+                .userId(code)
+                .studentName(registerDTO.getStudentName())
+                .build();
+
+        code = studentService.updateStudent(studentUserDTO);
+
+        if(code.equals(CodeUtil.FAILED)){
+            throw new RuntimeException("注册失败");
+        }
+
+        return Result.success("注册成功");
     }
 }

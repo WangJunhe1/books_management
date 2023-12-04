@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,6 +22,14 @@ public class Student {
     private String studentSex;
 
     private String studentNumber;
+
+    private LocalDateTime birthday = null;
+
+    private String studentEmail;
+
+    private String region;
+
+    private String description = null;
 
     private Integer roleId;
 

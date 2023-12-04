@@ -1,9 +1,8 @@
 package com.seven.utils;
 
 public class CodeUtil {
-    public static final Integer SUCCESS = 20000;
-    public static final Integer FAILED = 40000;
-    public static final Integer FAILED_PASSWORD = 40001;
-
-    public static final Integer FAILED_REGISTER_USERNAME = 40002;
+    public static final Integer SUCCESS = 200;
+    public static final Integer FAILED = 400;
+    public static final Integer FAILED_PASSWORD = 401;
+    public static final Integer FAILED_REGISTER_USERNAME = 402;
 }
