@@ -1,6 +1,21 @@
 <script>
 import "@/assets/css/header.css";
+window.onscroll = function() {
+      var img = document.getElementById('myImage');
+      var blackDiv = document.getElementsByClassName('black')[0];
+      var scrollTop = window.scrollY || document.documentElement.scrollTop;
+      
+      // 页面回到顶端时，照片放大
+    if (scrollTop === 0) {
+      img.style.width = '500px';
+      blackDiv.style.height = '300px'; /* 高度变高 */
+    } else { // 下滑时，照片变小，div高度恢复
+      img.style.width = '400px';
+      blackDiv.style.height = '200px'; /* 高度恢复 */
+  }
+};
 export default {
+  
   data() {
     return {
       activeIndex: '1',
@@ -16,13 +31,14 @@ export default {
       this.$router.push('/login');
     }
   },
+  
 }
 </script>
 <template>
-    <div>
+    <div >
       <div class="black">
-          <a href="/index" title="首页">
-            <img src="@/assets/css/logo.png" style="width: 400px;" alt="图书管理logo">
+          <a href="/index" title="首页" class="img">
+            <img id="myImage" src="@/assets/css/logo.png" style="width: 500px;" alt="Example Image">
           </a>
   
           <div class="main">

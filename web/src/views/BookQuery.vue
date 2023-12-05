@@ -1,4 +1,6 @@
 <script>
+import "@/assets/css/BookQuery.css";
+
 export default {
   data() {
     return {
@@ -132,6 +134,8 @@ export default {
 
 <template>
   <div id="bookQuery">
+    <div class="bookQuery">
+
     <div class="container">
       <div class="header">
         <div class="input">
@@ -191,27 +195,36 @@ export default {
           </div>
         </div>
       </div>
-      <div class="footer">
+    </div>
+
+    
+
+    <div class="footer">
         <div class="book-classify">
           <h2 class="book-classify-title bookshelf-title">
             分类
           </h2>
           <ul class="classify-list-body">
-            <li class="classify-list-item" v-for="item in classifyList">
+              <li class="classify-list-item" v-for="item in classifyList">
               <router-link to="/index/bookBorrow" :params="{type: item.type}">{{item.type}} * {{item.num}}</router-link>
-            </li>
+            </li>        
             <li class="classify-list-item">
               <router-link to="/index/bookBorrow">查看全部 * 17个</router-link>
             </li>
           </ul>
+        
         </div>
-      </div>
     </div>
+
   </div>
+  </div>
+  
 </template>
 
 <style>
+
 #bookQuery .header {
+  padding: 10px;
   width: 100%;
 }
 
@@ -233,10 +246,12 @@ export default {
 .header-borrow {
   position: relative;
   font-size: 25px;
+  color: white;
 }
 
 .header-borrow .right-link {
   position: absolute;
+  text-decoration: none;
   right: 0;
 }
 
@@ -259,7 +274,7 @@ export default {
   position: absolute;
   right: 0;
   font-size: 20px;
-  color: #666666;
+  color: white;
 }
 
 .right-link:hover {
@@ -274,15 +289,9 @@ export default {
   justify-content: space-between;
 }
 
-.myBorrow .borrow-bookshelf {
-  position: relative;
-  height: 169px;
-  overflow: hidden;
-  border-radius: 12px;
-  width: 23.5%;
-  transition: all .2s ease-in-out;
-  background-color: gainsboro;
-}
+
+
+
 
 .myBorrow .borrow-bookshelf:hover {
   transform: scale(1.1);
@@ -324,11 +333,12 @@ export default {
 .myBorrow .borrow-bookshelf .book-info .book-author {
   margin-top: 10px;
   font-size: 14px;
-  color: #666;
+  color: white;
 }
 
 .recommend {
   width: 100%;
+  color: white;
 }
 
 .recommend .recommend-list {
@@ -337,14 +347,8 @@ export default {
   justify-content: space-between;
 }
 
-.recommend .recommend-list .recommend-item {
-  position: relative;
-  height: 352px;
-  border-radius: 12px;
-  width: 23.5%;
-  transition: all .2s ease-in-out;
-  background-color: gainsboro;
-}
+
+
 
 .recommend .recommend-list .recommend-item:hover {
   transform: scale(1.1);
@@ -416,38 +420,4 @@ export default {
   max-height: 42px;
 }
 
-.footer {
-  background-color: pink;
-}
-
-.book-classify-title {
-  padding: 20px 0;
-  border-radius: 0;
-}
-
-.footer .classify-list-body{
-  width: 100%;
-  padding: 0;
-  list-style: none;
-  text-align: left;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.footer .classify-list-body .classify-list-item {
-  padding-left: 10px;
-  width: 24%;
-  border-radius: 0;
-  margin-right: 0;
-}
-
-.footer .classify-list-body .classify-list-item:hover {
-  background-color: #666666;
-}
-
-.footer .classify-list-body .classify-list-item a:hover {
-  text-decoration: none;
-  font-size: 20px;
-}
 </style>

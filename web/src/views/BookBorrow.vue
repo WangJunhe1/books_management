@@ -1,4 +1,5 @@
 <script>
+import "@/assets/css/BookBorrow.css";
 export default {
   data() {
     return {

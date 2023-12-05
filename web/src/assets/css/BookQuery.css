@@ -1,0 +1,69 @@
+.bookQuery{
+    background-color: black;
+}
+.myBorrow .borrow-bookshelf {
+    position: relative;
+    height: 169px;
+    overflow: hidden;
+    border-radius: 12px;
+    width: 23.5%;
+    transition: all .2s ease-in-out;
+    background-color: black;
+  }
+  /*书鼠标悬浮变色*/
+  .myBorrow .borrow-bookshelf:hover {
+    background-color: rgb(38, 38, 40); 
+  }
+  
+.recommend .recommend-list .recommend-item {
+    position: relative;
+    height: 352px;
+    border-radius: 12px;
+    width: 23.5%;
+    transition: all .2s ease-in-out;
+    background-color: black;
+  }
+    /*书鼠标悬浮变色*/
+  .recommend .recommend-list .recommend-item:hover{
+    background-color: rgb(38, 38, 40);
+  }
+
+.book-classify{
+    margin: 30px auto;
+    width: 79%;
+}
+.book-classify h2{
+    color: white;
+}
+.book-classify ul{
+    width: 100%;
+    padding: 0;
+    list-style: none;
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    
+}
+.book-classify ul li {
+    padding-left: 10px;
+    width: 24%;
+    height: 50px;
+    border-radius: 0;
+    border: solid hsla(0,0%,100%,.05);
+    border-width: 0 0 1px;
+    
+}
+
+.book-classify a {
+    text-decoration: none;
+    color: white;
+    height: 100%; /* 让a标签高度100%填充li元素 */
+    display: flex; /* 使用flex布局 */
+    align-items: center; /* 实现垂直居中 */
+}
+
+.book-classify ul li:hover{
+    background-color:rgb(38, 38, 40);
+}
