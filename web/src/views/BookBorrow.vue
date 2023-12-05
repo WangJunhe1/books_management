@@ -179,7 +179,7 @@ export default {
   <div id="bookBorrow">
     <div class="container" style="background-color:#fff;">
       <el-container>
-        <el-aside width="200px" class="el-aside">
+        <el-aside width="200px" class="el-aside" style="background-color:whitesmoke;">
           <div class="nav-slide">
             <ul class="ranking-list">
               <li class="ranking-list-item" v-for="item in bookTypeList" :key="item.id">
@@ -189,10 +189,10 @@ export default {
           </div>
         </el-aside>
         <el-container class="main-container">
-          <el-header class="main-header">
+          <el-header class="main-header" style="background-color:whitesmoke;">
             <span class="header-title">{{type}}</span>
           </el-header>
-          <el-main>
+          <el-main style="padding: 0">
             <div class="ranking-content-list">
               <div class="ranking-content-list-item" v-for="item in books" :key="item.id">
                 <router-link :to="{name: 'bookDetails', params: {book: item}}" ></router-link>
@@ -218,17 +218,13 @@ export default {
 
 <style>
 .el-aside {
-  position: fixed;
   height: 580px;
 }
 .main-container{
-  position: fixed;
-  left: 350px;
-  width: 70%;
   height: 580px;
 }
 .nav-slide {
-  padding: 10px 0;
+  padding: 0;
   height: 100%;
   width: 100%;
   box-sizing: border-box;
@@ -241,9 +237,11 @@ export default {
   height: 100%;
   width: 100%;
   overflow: auto;
+  text-align: left;
 }
 
 .nav-slide .ranking-list .ranking-list-item{
+  margin: 0;
   padding: 0 18px;
   height: 56px;
   display: block;
@@ -284,7 +282,7 @@ export default {
 
 .ranking-content-list {
   width: 100%;
-  padding: 20px 0;
+  padding: 0 0 20px;
   flex-direction: row;
   position: relative;
 }

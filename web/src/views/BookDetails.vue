@@ -296,7 +296,6 @@ export default {
 .book-banner {
   margin-bottom: 10px;
   width: 100%;
-  border-bottom: 1px solid rgb(0, 0, 0, 0.5);
 }
 
 .book-ratings {
