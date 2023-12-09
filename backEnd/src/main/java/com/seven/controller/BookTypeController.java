@@ -28,6 +28,10 @@ public class BookTypeController {
     @Autowired
     BookTypeService bookTypeService;
 
+    /**
+     * 获取图书类型列表
+     * @return
+     */
     @GetMapping("/getBookType")
     public Result getBookTypeList() {
         List<BookTypeVO> bookTypeList = bookTypeService.getBookTypeList();
