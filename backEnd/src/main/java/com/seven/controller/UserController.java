@@ -6,7 +6,6 @@ import com.seven.constant.PasswordConstant;
 import com.seven.domain.dto.LoginDTO;
 import com.seven.domain.dto.RegisterDTO;
 import com.seven.domain.dto.StudentUserDTO;
-import com.seven.domain.dto.UpdateStudentDTO;
 import com.seven.domain.entity.User;
 import com.seven.domain.pojo.Result;
 import com.seven.domain.vo.UserInfoVO;
@@ -106,5 +105,33 @@ public class UserController {
         }
 
         return Result.success("注册成功");
+    }
+
+    /**
+     * 更新密码无验证
+     * @param studentNumber
+     * @param password
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @PutMapping("/updatePassword")
+    public Result updatePassword(@RequestParam(required = true) String studentNumber,
+                                 @RequestParam(required = true) String password){
+        userService.updatePassword(studentNumber, password);
+        return Result.success();
+    }
+
+    /**
+     * 更新邮箱无验证
+     * @param studentNumber
+     * @param studentEmail
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @PutMapping("/updateEmail")
+    public Result updateEmail(@RequestParam(required = true) String studentNumber,
+                             @RequestParam(required = true) String studentEmail){
+        userService.updateEmail(studentNumber, studentEmail);
+        return Result.success();
     }
 }

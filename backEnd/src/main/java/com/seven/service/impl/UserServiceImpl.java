@@ -1,10 +1,12 @@
 package com.seven.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.seven.constant.MessageConstant;
 import com.seven.constant.StatusConstant;
 import com.seven.domain.dto.LoginDTO;
 import com.seven.domain.dto.RegisterDTO;
+import com.seven.domain.entity.Student;
 import com.seven.domain.entity.User;
 import com.seven.exception.AccountNotFoundException;
 import com.seven.exception.BaseException;
@@ -97,5 +99,50 @@ public class UserServiceImpl implements UserService {
         log.info("userId:{}", user.getUserId());
         //返回学生表需要插入的userId
         return user.getUserId();
+    }
+
+    /**
+     * 传入学号更新用户密码
+     * @param studentNumber
+     * @param password
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void updatePassword(String studentNumber, String password) {
+        LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<Student>()
+                .eq(Student::getStudentNumber, studentNumber);
+
+        Student student = studentMapper.selectOne(queryWrapper);
+        if(student == null){
+            throw new BaseException("学号不存在");
+        }
+        Integer userId = student.getUserId();
+
+        if(userId == null){
+            throw new BaseException("该学号未注册");
+        }else{
+            User user = userMapper.selectById(userId);
+            user.setPassword(DigestUtils.md5DigestAsHex(password.getBytes()));
+            userMapper.updateById(user);
+        }
+    }
+
+    /**
+     * 传入学号更新用户邮箱
+     * @param studentNumber
+     * @param email
+     */
+    @Transactional(propagation = Propagation.REQUIRED)
+    @Override
+    public void updateEmail(String studentNumber, String email) {
+        LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<Student>()
+               .eq(Student::getStudentNumber, studentNumber);
+
+        Student student = studentMapper.selectOne(queryWrapper);
+        if(student == null){
+            throw new BaseException("学号不存在");
+        }
+        student.setStudentEmail(email);
+        studentMapper.update(student, queryWrapper);
     }
 }

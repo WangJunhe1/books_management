@@ -20,6 +20,11 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
+    /**
+     * 学生注册页面
+     * @param studentRegisterDTO
+     * @return
+     */
     @Transactional(rollbackFor = Exception.class)
     @PostMapping("/register")
     public Result registerStudent(@RequestBody StudentRegisterDTO studentRegisterDTO) {
@@ -30,7 +35,12 @@ public class StudentController {
         return Result.success(student);
     }
 
-    @PostMapping("/update")
+    /**
+     * 更新学生信息操作
+     * @param updateStudentDTO
+     * @return
+     */
+    @PutMapping("/update")
     @Transactional(rollbackFor = Exception.class)
     public Result updateStudent(@RequestBody UpdateStudentDTO updateStudentDTO) {
         log.info("updateStudent: {}", updateStudentDTO);
