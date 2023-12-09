@@ -33,6 +33,7 @@ public class BookTypeServiceImpl extends ServiceImpl<BookTypeMapper, BookType> i
 
         List<BookTypeVO> bookTypeVOList = bookTypes.stream().map(bookType -> {
             BookTypeVO bookTypeVO = new BookTypeVO();
+            bookTypeVO.setBookTypeId(bookType.getBookTypeId());
             bookTypeVO.setBookType(bookType.getBookType());
             bookTypeVO.setBookTypeLocation(bookType.getBookTypeLocation());
             bookTypeVO.setBookNumber(bookType.getBookNumber());

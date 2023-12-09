@@ -16,6 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BookTypeVO {
 
+    private Integer bookTypeId;
+
     private String bookType;
 
     private String bookTypeLocation;
