@@ -41,7 +41,7 @@ const routes = new VueRouter({
                 },
                 {
                     name: "bookBorrow",
-                    path: "/index/bookBorrow",
+                    path: "/index/bookBorrow/:bookTypeID",
                     component: () => import("@/views/BookBorrow.vue"),
                     meta: {
                         title: "图书借阅"

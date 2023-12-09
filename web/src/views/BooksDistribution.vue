@@ -2,35 +2,12 @@
 export default {
   data() {
     return {
-      tableData: [
-        {
-          type: "文学",
-          location: "二楼A区"
-        },
-        {
-          type: "文学",
-          location: "二楼A区"
-        },
-        {
-          type: "文学",
-          location: "二楼A区"
-        },
-        {
-          type: "文学",
-          location: "二楼A区"
-        },
-        {
-          type: "文学",
-          location: "二楼A区"
-        }
-      ]
+      tableData: []
     }
   },
   mounted() {
-    this.$route.get("http://localhost:5000/book/getBookType").then(res => {
-      this.tableData = res.data
-    }).error(err => {
-      console.log(err.response.data)
+    this.$axios.get("http://localhost:5000/bookType/getBookType").then(res => {
+      this.tableData = res.data.data;
     })
   }
 }
@@ -44,14 +21,14 @@ export default {
           stripe
           style="width: 100%">
         <el-table-column
-            prop="type"
+            prop="bookType"
             label="种类"
-            width="180">
+            width="570px">
         </el-table-column>
         <el-table-column
-            prop="location"
+            prop="bookTypeLocation"
             label="位置"
-            width="180">
+            width="570px">
         </el-table-column>
 
       </el-table>

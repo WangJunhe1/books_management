@@ -46,7 +46,7 @@ export default {
               <li class="main-ul-li"><a href="/index" class="menu-link">首页</a></li>
               <li class="main-ul-li"><a href="/index/bookDistribution" class="menu-link">馆藏分布</a></li>
               <li class="main-ul-li"><a href="/index/bookQuery" class="menu-link">图书查询</a></li>
-              <li class="main-ul-li"><a href="/index/bookBorrow" class="menu-link">图书借阅</a></li>
+              <li class="main-ul-li"><a href="/index/bookBorrow/1" class="menu-link">图书借阅</a></li>
               <li class="main-ul-li" v-if="isLogin">
                 <a href="/user/userInfo" class="menu-link">
                   <i class="el-icon-user-solid"></i>个人信息

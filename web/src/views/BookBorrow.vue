@@ -169,8 +169,20 @@ export default {
       type: "文学",
     }
   },
-  methods: {
+  mounted() {
+    this.$axios.get('http://localhost:5000/bookType/getBookType').then(res => {
+      this.bookTypeList = res.data.data;
+    });
 
+    const path = this.$route.path;
+    let typeID = path.split('/').pop();
+    console.log(typeID);
+    let rankingList = document.querySelectorAll('ranking-list-item');
+    for (let i = 0; i < rankingList.length; i++) {
+      if (typeID === i) {
+        rankingList[i].classList.add('ranking-list-item-active');
+      }
+    }
   },
 }
 </script>
@@ -183,7 +195,7 @@ export default {
           <div class="nav-slide">
             <ul class="ranking-list">
               <li class="ranking-list-item" v-for="item in bookTypeList" :key="item.id">
-                {{item.type}}
+                {{item.bookType}}
               </li>
             </ul>
           </div>

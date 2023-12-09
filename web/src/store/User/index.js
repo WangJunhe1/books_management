@@ -1,6 +1,7 @@
 const user = {
     namespaced:true,
     state: {
+        token: localStorage.getItem('token') || null,
         isLogin: localStorage.getItem('isLogin') || false,
         user: JSON.parse(localStorage.getItem('user')) || null,
         data: JSON.parse(localStorage.getItem('data')) || null,
@@ -14,6 +15,9 @@ const user = {
         },
         setIsLogin(state, isLogin) {
             state.isLogin = isLogin
+        },
+        setToken(state, token) {
+            this.token = token
         }
     },
     actions: {
@@ -25,6 +29,9 @@ const user = {
         },
         setIsLoginAction(context, isLogin) {
             context.commit('setIsLogin', isLogin);
+        },
+        setTokenAction(context, token) {
+            context.commit('setToken', token);
         }
     },
 }
