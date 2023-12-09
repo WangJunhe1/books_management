@@ -67,67 +67,83 @@ export default {
       ],
       classifyList: [
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
         {
-          type: "文学",
-          num: 111
+          bookType: "文学",
+          bookNumber: 111
         },
       ]
     }
+  },
+  mounted() {
+    this.$axios.get('http://localhost:5000/bookType/getBookType').then(res => {
+      this.classifyList = res.data.data;
+    });
+
+    // this.$axios.post('http://localhost:5000/book/myBorrowBooks', null,{
+    //   headers: {
+    //     'token': this.$store.state.User.token
+    //   }
+    // }).then(res => {
+    //   console.log(res.data)
+    //   this.myBorrowBooks = res.data;
+    // });
+
+
   }
 }
 </script>
@@ -157,7 +173,7 @@ export default {
             </router-link>
           </h2>
           <div class="borrow-list">
-            <div class="borrow-bookshelf" v-for="item in myBorrowBooks" :key="item.id">
+            <div class="borrow-bookshelf" v-for="item in myBorrowBooks" :key="item.id" v-if="myBorrowBooks !== null">
               <router-link :to="{name: 'bookDetails', params: {book: item}}"></router-link>
               <div class="book-allInfo">
                 <div class="book-img">
@@ -168,6 +184,9 @@ export default {
                   <div class="book-author">{{item.author}}</div>
                 </div>
               </div>
+            </div>
+            <div class="borrow-nothing" v-else>
+
             </div>
           </div>
         </div>
@@ -206,10 +225,10 @@ export default {
           </h2>
           <ul class="classify-list-body">
               <li class="classify-list-item" v-for="item in classifyList">
-              <router-link to="/index/bookBorrow" :params="{type: item.type}">{{item.type}} * {{item.num}}</router-link>
+              <router-link to="/index/bookBorrow" :params="{type: item.bookType}">{{item.bookType}} * {{item.bookNumber}}</router-link>
             </li>        
             <li class="classify-list-item">
-              <router-link to="/index/bookBorrow">查看全部 * 17个</router-link>
+              <router-link to="/index/bookBorrow">查看全部 * 19个</router-link>
             </li>
           </ul>
         
