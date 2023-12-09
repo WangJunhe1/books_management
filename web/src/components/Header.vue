@@ -68,7 +68,7 @@ export default {
                 </a>
               </li>
               <li class="main-ul-li" v-else>
-                <a href="" class="menu-link" @click="loginOut()">登录</a>
+                <a href="/login" class="menu-link" @click="loginOut()">登录</a>
               </li>
             </ul>
           </div>     

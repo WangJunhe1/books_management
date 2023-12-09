@@ -225,7 +225,7 @@ export default {
           </h2>
           <ul class="classify-list-body">
               <li class="classify-list-item" v-for="item in classifyList">
-              <router-link to="/index/bookBorrow" :params="{type: item.bookType}">{{item.bookType}} * {{item.bookNumber}}</router-link>
+              <router-link :to="{name: 'bookBorrow', params: {bookTypeID: item.bookTypeId}}">{{item.bookType}} * {{item.bookNumber}}</router-link>
             </li>        
             <li class="classify-list-item">
               <router-link to="/index/bookBorrow">查看全部 * 19个</router-link>

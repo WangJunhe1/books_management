@@ -43,8 +43,6 @@ background-color: rgb(38, 38, 40);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-
-    
 }
 .book-classify ul li {
     padding-left: 10px;

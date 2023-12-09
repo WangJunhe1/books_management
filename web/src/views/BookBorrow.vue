@@ -3,170 +3,32 @@ import "@/assets/css/BookBorrow.css";
 export default {
   data() {
     return {
-      bookTypeList: [
-        {
-          id: 1,
-          type: "文学",
-        },
-        {
-          id: 2,
-          type: "文学",
-        },
-        {
-          id: 3,
-          type: "文学",
-        },
-        {
-          id: 4,
-          type: "文学",
-        },
-        {
-          id: 5,
-          type: "文学",
-        },
-        {
-          id: 6,
-          type: "文学",
-        },
-        {
-          id: 7,
-          type: "文学",
-        },
-        {
-          id: 8,
-          type: "文学",
-        },
-        {
-          id: 9,
-          type: "文学",
-        },
-        {
-          id: 10,
-          type: "文学",
-        },
-        {
-          id: 11,
-          type: "文学",
-        },
-        {
-          id: 12,
-          type: "文学",
-        },
-        {
-          id: 13,
-          type: "文学",
-        },
-        {
-          id: 14,
-          type: "文学",
-        },
-        {
-          id: 15,
-          type: "文学",
-        },
-        {
-          id: 16,
-          type: "文学",
-        },
-        {
-          id: 17,
-          type: "文学",
-        },
-      ],
-      books: [
-        {
-          id: 1,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 2,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 3,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 4,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 5,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 6,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 7,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 8,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 9,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },{
-          id: 10,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 11,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 12,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 13,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
+      bookTypeList: [],
+      books: [],
+      type: "",
+    }
+  },
+  methods: {
+    changeBorrowPage(item,index) {
+      this.type = item.bookType;
+      this.$axios.get(`http://localhost:5000/book/${item.bookTypeId}`).then(res => {
+        this.books = res.data.data;
+      })
 
-      ],
-      type: "文学",
+      this.$router.push('/index/bookBorrow/'+item.bookTypeId);
+
+      const path = this.$route.path;
+      let typeID = path.split('/').pop();
+      console.log(typeID);
+      let rankingList = document.querySelectorAll('.ranking-list-item');
+      for (let i = 0; i < rankingList.length; i++) {
+        rankingList[i].classList.remove('ranking-list-item-active');
+        if (typeID == (i + 1)) {
+          console.log("test");
+          this.type = this.bookTypeList[i].bookType;
+          rankingList[i].classList.add('ranking-list-item-active');
+        }
+      }
     }
   },
   mounted() {
@@ -177,13 +39,18 @@ export default {
     const path = this.$route.path;
     let typeID = path.split('/').pop();
     console.log(typeID);
-    let rankingList = document.querySelectorAll('ranking-list-item');
+    let rankingList = document.querySelectorAll('.ranking-list-item');
     for (let i = 0; i < rankingList.length; i++) {
       rankingList[i].classList.remove('ranking-list-item-active');
-      if (typeID === (i + 1)) {
+      if (typeID == (i + 1)) {
+        this.type = this.bookTypeList[i].bookType;
         rankingList[i].classList.add('ranking-list-item-active');
       }
     }
+
+    this.$axios.get(`http://localhost:5000/book/1`).then(res => {
+      this.books = res.data.data;
+    })
   },
 }
 </script>
@@ -195,8 +62,8 @@ export default {
         <el-aside width="200px" class="el-aside" style="background-color:whitesmoke;">
           <div class="nav-slide">
             <ul class="ranking-list">
-              <li class="ranking-list-item" v-for="item in bookTypeList" :key="item.id">
-                {{item.bookType}}
+              <li class="ranking-list-item" v-for="item in bookTypeList" :key="item.bookTypeID">
+                <span class="ranking-list-item-link" @click="changeBorrowPage(item)">{{item.bookType}}</span>
               </li>
             </ul>
           </div>
@@ -207,17 +74,17 @@ export default {
           </el-header>
           <el-main style="padding: 0">
             <div class="ranking-content-list">
-              <div class="ranking-content-list-item" v-for="item in books" :key="item.id">
+              <div class="ranking-content-list-item" v-for="(item, index) in books" :key="item.id">
                 <router-link :to="{name: 'bookDetails', params: {book: item}}" ></router-link>
                 <div class="content-list-item-info">
-                  <p class="content-list-item-info-index">{{item.id}}</p>
+                  <p class="content-list-item-info-index">{{index + 1}}</p>
                   <div class="content-list-item-info-cover">
-                    <img :src="item.img" :alt="item.name">
+                    <img :src="item.bookImg" :alt="item.bookName">
                   </div>
                   <div class="content-list-item-info-info">
-                    <p class="title">{{item.name}}</p>
-                    <p class="author">{{item.author}}</p>
-                    <p class="desc">{{item.desc}}</p>
+                    <p class="title">{{item.bookName}}</p>
+                    <p class="author">{{item.bookAuthor}}</p>
+                    <p class="desc">{{item.bookDesc}}</p>
                   </div>
                 </div>
               </div>
@@ -277,6 +144,12 @@ export default {
 
 .ranking-list-item-active {
   background-color: #4a7ab0;
+}
+
+.nav-slide .ranking-list .ranking-list-item .ranking-list-item-link {
+  display: block;
+  text-decoration: none;
+  color: black;
 }
 
 .main-container .main-header {
