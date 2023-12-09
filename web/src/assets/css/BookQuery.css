@@ -9,11 +9,11 @@
     width: 23.5%;
     transition: all .2s ease-in-out;
     background-color: black;
-  }
-  /*书鼠标悬浮变色*/
-  .myBorrow .borrow-bookshelf:hover {
-    background-color: rgb(38, 38, 40); 
-  }
+}
+/*书鼠标悬浮变色*/
+.myBorrow .borrow-bookshelf:hover {
+background-color: rgb(38, 38, 40);
+}
   
 .recommend .recommend-list .recommend-item {
     position: relative;
