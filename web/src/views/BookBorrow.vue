@@ -179,7 +179,8 @@ export default {
     console.log(typeID);
     let rankingList = document.querySelectorAll('ranking-list-item');
     for (let i = 0; i < rankingList.length; i++) {
-      if (typeID === i) {
+      rankingList[i].classList.remove('ranking-list-item-active');
+      if (typeID === (i + 1)) {
         rankingList[i].classList.add('ranking-list-item-active');
       }
     }
@@ -275,7 +276,7 @@ export default {
 }
 
 .ranking-list-item-active {
-  background-color: aqua;
+  background-color: #4a7ab0;
 }
 
 .main-container .main-header {
