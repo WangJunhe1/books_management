@@ -1,6 +1,7 @@
 package com.seven.controller;
 
 
+import com.seven.domain.dto.SearchDTO;
 import com.seven.domain.pojo.PageBean;
 import com.seven.domain.pojo.Result;
 import com.seven.service.BookService;
@@ -24,12 +25,13 @@ public class BookController {
     @Autowired
     BookService bookService ;
 
-    @GetMapping("/selectPage")
-    public Result selectPage(@RequestParam(defaultValue = "1") Integer page,
-                       @RequestParam(defaultValue = "10") Integer size){
-        log.info("page:{},size:{}",page,size);
+    @GetMapping("/searchPage")
+    public Result searchPage(@RequestParam(defaultValue = "1") Integer page,
+                             @RequestParam(defaultValue = "10") Integer size,
+                             @RequestBody SearchDTO searchDTO){
+        log.info("page:{},size:{},searchDTO:{}",page,size,searchDTO);
 
-        PageBean pageBean = bookService.selectPage(page,size);
+        PageBean pageBean = bookService.searchPage(page,size,searchDTO);
         return Result.success(pageBean);
     }
 
