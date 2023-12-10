@@ -25,7 +25,6 @@ public class StudentController {
      * @param studentRegisterDTO
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     @PostMapping("/register")
     public Result registerStudent(@RequestBody StudentRegisterDTO studentRegisterDTO) {
         log.info("registerStudent: {}", studentRegisterDTO);
@@ -41,7 +40,6 @@ public class StudentController {
      * @return
      */
     @PutMapping("/update")
-    @Transactional(rollbackFor = Exception.class)
     public Result updateStudent(@RequestBody UpdateStudentDTO updateStudentDTO) {
         log.info("updateStudent: {}", updateStudentDTO);
 

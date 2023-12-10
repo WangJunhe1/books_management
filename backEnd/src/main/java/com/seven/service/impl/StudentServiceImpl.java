@@ -31,7 +31,7 @@ public class StudentServiceImpl implements StudentService {
      * @param studentRegisterDTO
      * @return
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(rollbackFor = Exception.class)
     public Student registerStudent(StudentRegisterDTO studentRegisterDTO) {
         Student student = new Student();
         log.info("studentRegisterDTO: {}", studentRegisterDTO);
@@ -41,7 +41,7 @@ public class StudentServiceImpl implements StudentService {
         return student;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer updateStudent(UpdateStudentDTO updateStudentDTO) {
         Student student = new Student();

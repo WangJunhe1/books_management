@@ -83,7 +83,6 @@ public class UserController {
      * @return
      */
     @PostMapping("/register")
-    @Transactional(rollbackFor = Exception.class)
     public Result register(@RequestBody RegisterDTO registerDTO) {
         log.info("新增员工：{}", registerDTO);
         Integer code = userService.register(registerDTO);
@@ -112,7 +111,6 @@ public class UserController {
      * @param password
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     @PutMapping("/updatePassword")
     public Result updatePassword(@RequestParam(required = true) String studentNumber,
                                  @RequestParam(required = true) String password){
@@ -126,11 +124,34 @@ public class UserController {
      * @param studentEmail
      * @return
      */
-    @Transactional(rollbackFor = Exception.class)
     @PutMapping("/updateEmail")
     public Result updateEmail(@RequestParam(required = true) String studentNumber,
                              @RequestParam(required = true) String studentEmail){
         userService.updateEmail(studentNumber, studentEmail);
+        return Result.success();
+    }
+
+    /**
+     * 更新手机号无验证
+     * @param studentNumber
+     * @param studentPhone
+     * @return
+     */
+    @PutMapping("/updatePhone")
+    public Result updatePhone(@RequestParam(required = true) String studentNumber,
+                              @RequestParam(required = true) String studentPhone){
+        userService.updatePhone(studentNumber, studentPhone);
+        return Result.success();
+    }
+
+    /**
+     * 注销账号
+     * @param studentNumber
+     * @return
+     */
+    @DeleteMapping("/delete/{studentNumber}")
+    public Result delete(@PathVariable String studentNumber){
+        userService.delete(studentNumber);
         return Result.success();
     }
 }

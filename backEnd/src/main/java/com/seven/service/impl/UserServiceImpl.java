@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
      * @param registerDTO
      * @return
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(rollbackFor = Exception.class)
     public Integer register(RegisterDTO registerDTO) {
         User user = new User();
 
@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
      * @param studentNumber
      * @param password
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updatePassword(String studentNumber, String password) {
         LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<Student>()
@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
      * @param studentNumber
      * @param email
      */
-    @Transactional(propagation = Propagation.REQUIRED)
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void updateEmail(String studentNumber, String email) {
         LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<Student>()
@@ -144,5 +144,46 @@ public class UserServiceImpl implements UserService {
         }
         student.setStudentEmail(email);
         studentMapper.update(student, queryWrapper);
+    }
+
+    /**
+     * 传入学号更新学生手机
+     * @param studentNumber
+     * @param studentPhone
+     */
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void updatePhone(String studentNumber, String studentPhone) {
+        User user = new User();
+
+        LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<Student>()
+               .eq(Student::getStudentNumber, studentNumber);
+
+        Student student = studentMapper.selectOne(queryWrapper);
+        if(student == null){
+            throw new BaseException("学号不存在");
+        }
+
+        user.setPhone(studentPhone);
+        userMapper.update(user, new LambdaQueryWrapper<User>().eq(User::getStudentId, student.getStudentId()));
+    }
+
+    /**
+     * 传入学号进行用户注销
+     * @param studentNumber
+     */
+    @Override
+    public void delete(String studentNumber) {
+        User user = new User();
+
+        LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<Student>()
+                .eq(Student::getStudentNumber, studentNumber);
+
+        Student student = studentMapper.selectOne(queryWrapper);
+        if(student == null){
+            throw new BaseException("学号不存在");
+        }
+
+        userMapper.delete(new LambdaQueryWrapper<User>().eq(User::getStudentId, student.getStudentId()));
     }
 }
