@@ -15,7 +15,6 @@ import com.seven.service.UserService;
 import com.seven.utils.CodeUtil;
 import com.seven.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.jsqlparser.statement.RollbackStatement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;

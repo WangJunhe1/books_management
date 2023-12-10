@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
@@ -15,6 +18,8 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
+import java.io.IOException;
+
 /**
  * 配置类，注册web层相关组件
  */
@@ -23,8 +28,20 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Slf4j
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
+    ResourceLoader resourceLoader = new DefaultResourceLoader();
     @Autowired
     private JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
+
+    Resource resource = resourceLoader.getResource("classpath:static/img");
+    String path = null;
+
+    {
+        try {
+            path = resource.getFile().getPath()+"\\";
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * 注册自定义拦截器
@@ -38,7 +55,8 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .excludePathPatterns("/user/login")
                .excludePathPatterns("/user/register")
                 .excludePathPatterns("/student/register")
-                .excludePathPatterns("/bookType/getBookType");
+                .excludePathPatterns("/bookType/getBookType")
+                .excludePathPatterns("/image/**");
     }
 
     /**
@@ -71,5 +89,8 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        registry.addResourceHandler("/image/**")
+                .addResourceLocations("file:" + path);
+        System.out.println(path);
     }
 }
