@@ -3,13 +3,7 @@ import '@/assets/font/iconfont.css'
 export default {
   data() {
     return {
-      book: {
-        id: 1,
-        name: "《JavaScript权威指南》",
-        author: "Nicholas C. Zakas",
-        desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-        img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-      },
+      book: this.$store.state.Book.book,
       bookDetail: {
         bookName: '《JavaScript权威指南》',
         count: 92,
@@ -60,6 +54,8 @@ export default {
   },
   mounted() {
     this.book = this.$route.params.book;
+    localStorage.setItem('book', JSON.stringify(this.book));
+    this.$store.dispatch('Book/setBookAction', this.book);
   }
 }
 </script>
@@ -71,13 +67,13 @@ export default {
         <div class="reader-book-info">
           <div class="reader-book-info-header">
             <div class="book-info-cover">
-              <img :src="book.img" :alt="book.name" class="book-info-img">
+              <img :src="book.bookImg" :alt="book.bookName" class="book-info-img">
             </div>
             <div class="book-info-right">
               <div class="book-info-right-header">
                 <div class="book-info-right-header-title">
-                  <div class="book-info-name">{{book.name}}</div>
-                  <div class="book-info-author">{{book.author}}</div>
+                  <div class="book-info-name">{{book.bookName}}</div>
+                  <div class="book-info-author">{{book.bookAuthor}}</div>
                 </div>
                 <div class="book-info-right-header-wrapper">
                   <button class="book-info-right-button" v-if="book !== null">借阅</button>
@@ -85,7 +81,7 @@ export default {
                 </div>
               </div>
               <div class="book-info-right-desc">
-                {{book.desc}}
+                {{book.bookDesc}}
               </div>
             </div>
           </div>

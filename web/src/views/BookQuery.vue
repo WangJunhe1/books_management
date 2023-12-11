@@ -65,68 +65,7 @@ export default {
           img: "https://img3.doubanio.com/lpic/s1167614.jpg",
         }
       ],
-      classifyList: [
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-        {
-          bookType: "文学",
-          bookNumber: 111
-        },
-      ]
+      classifyList: []
     }
   },
   mounted() {

@@ -1,9 +1,9 @@
 <script>
 import "@/assets/css/header.css";
 window.onscroll = function() {
-      var img = document.getElementById('myImage');
-      var blackDiv = document.getElementsByClassName('black')[0];
-      var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    let img = document.getElementById('myImage');
+    let blackDiv = document.getElementsByClassName('black')[0];
+    let scrollTop = window.scrollY || document.documentElement.scrollTop;
       
       // 页面回到顶端时，照片放大
     if (scrollTop === 0) {
@@ -11,7 +11,7 @@ window.onscroll = function() {
       blackDiv.style.height = '300px'; /* 高度变高 */
     } else { // 下滑时，照片变小，div高度恢复
       img.style.width = '400px';
-      blackDiv.style.height = '200px'; /* 高度恢复 */
+      blackDiv.style.height = '100px'; /* 高度恢复 */
   }
 };
 export default {

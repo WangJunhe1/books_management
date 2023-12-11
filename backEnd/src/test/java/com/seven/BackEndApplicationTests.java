@@ -15,5 +15,4 @@ class BackEndApplicationTests {
         String imagePath = resource.getPath();
         System.out.println(imagePath);
     }
-
 }

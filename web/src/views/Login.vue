@@ -77,7 +77,7 @@ export default {
           </div>
           <span class="form_span">选择登录方式或电子邮箱注册</span>
           <input type="text" class="form_input" placeholder="Username" v-model="user.username"/>
-          <input type="password" class="form_input" placeholder="Password" v-model="user.password"/>
+          <input type="password" class="form_input" placeholder="Password" v-model="user.password" @keyup.enter="formCheck"/>
           <router-link to="/register" class="form_link">忘记密码?</router-link>
           <el-button :plain="true" class="form_button button submit" @click="formCheck()">SIGN IN</el-button>
         </form>

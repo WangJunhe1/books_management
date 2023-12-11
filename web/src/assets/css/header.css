@@ -4,7 +4,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 300px;
+    height: 100px;
     display: flex;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
     padding: 20px;
@@ -50,7 +50,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 300px; /* 初始高度 */
+    height: 100px; /* 初始高度 */
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
     z-index: 999;
     transition: height 0.5s; /* 过渡效果的时间 */
