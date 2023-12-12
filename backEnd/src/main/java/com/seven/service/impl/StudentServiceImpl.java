@@ -1,5 +1,6 @@
 package com.seven.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.seven.domain.dto.StudentRegisterDTO;
 import com.seven.domain.dto.StudentUserDTO;
@@ -12,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -75,5 +75,17 @@ public class StudentServiceImpl implements StudentService {
             return CodeUtil.FAILED;
         }
         return CodeUtil.SUCCESS;
+    }
+
+    @Override
+    public void uploadImage(String studentNumber, String filePath) {
+        LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<Student>()
+                .eq(Student::getStudentNumber, studentNumber);
+
+        Student student = new Student();
+        student.setStudentNumber(studentNumber);
+        student.setPortrait(filePath);
+
+        studentMapper.update(student, queryWrapper);
     }
 }

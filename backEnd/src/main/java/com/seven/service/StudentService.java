@@ -11,4 +11,6 @@ public interface StudentService {
     Integer updateStudent(UpdateStudentDTO updateStudentDTO);
 
     Integer updateStudent(StudentUserDTO studentUserDTO);
+
+    void uploadImage(String studentNumber, String filePath);
 }

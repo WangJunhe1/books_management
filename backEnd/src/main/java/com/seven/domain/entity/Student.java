@@ -29,6 +29,8 @@ public class Student {
 
     private String region;
 
+    private String portrait;
+
     private String description = null;
 
     private Integer roleId;
