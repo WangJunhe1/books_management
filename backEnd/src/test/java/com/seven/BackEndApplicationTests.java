@@ -10,9 +10,5 @@ class BackEndApplicationTests {
 
     @Test
     void contextLoads() {
-        ClassLoader classLoader = getClass().getClassLoader();
-        URL resource = classLoader.getResource("static/img/1/1.jpg");
-        String imagePath = resource.getPath();
-        System.out.println(imagePath);
     }
 }

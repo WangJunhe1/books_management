@@ -43,6 +43,9 @@ books:
     # 设置前端传递过来的令牌名称
     admin-token-name: token
 
+upload:
+  path:
+    image: D:\books_management\backEnd\src\main\resources\static\img\user
 
 
 
