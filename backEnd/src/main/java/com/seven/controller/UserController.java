@@ -1,6 +1,5 @@
 package com.seven.controller;
 
-
 import com.seven.constant.JwtClaimsConstant;
 import com.seven.constant.PasswordConstant;
 import com.seven.domain.dto.LoginDTO;
@@ -16,7 +15,6 @@ import com.seven.utils.CodeUtil;
 import com.seven.utils.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -99,7 +97,7 @@ public class UserController {
         code = studentService.updateStudent(studentUserDTO);
 
         if(code.equals(CodeUtil.FAILED)){
-            throw new RuntimeException("注册失败");
+            return Result.error("学生需注册");
         }
 
         return Result.success("注册成功");
