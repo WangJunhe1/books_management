@@ -53,6 +53,15 @@
           this.user.birthday = this.user.birthday.toLocaleDateString();
         },
       }
+    },
+    mounted() {
+      this.$axios.get('http://localhost:5000//student/getStduent', {
+        headers: {
+          'token': this.$store.state.User.token,
+        }
+      }).then(res => {
+        this.student = res.data.data;
+      })
     }
   }
 </script>

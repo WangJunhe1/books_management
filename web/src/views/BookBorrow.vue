@@ -6,39 +6,35 @@ export default {
       bookTypeList: [],
       books: [],
       type: "",
+      loading: true,
     }
   },
   methods: {
     changeBorrowPage(item,index) {
       this.type = item.bookType;
-      this.$axios.get(`http://localhost:5000/book/${item.bookTypeId}`).then(res => {
-        this.books = res.data.data;
-      })
 
       this.$router.push('/index/bookBorrow/'+item.bookTypeId);
 
       const path = this.$route.path;
       let typeID = path.split('/').pop();
-      console.log(typeID);
       let rankingList = document.querySelectorAll('.ranking-list-item');
       for (let i = 0; i < rankingList.length; i++) {
         rankingList[i].classList.remove('ranking-list-item-active');
         if (typeID == (i + 1)) {
-          console.log("test");
-          this.type = this.bookTypeList[i].bookType;
           rankingList[i].classList.add('ranking-list-item-active');
         }
       }
+      window.location.reload();
     }
   },
   mounted() {
     this.$axios.get('http://localhost:5000/bookType/getBookType').then(res => {
       this.bookTypeList = res.data.data;
     });
-
+  },
+  updated() {
     const path = this.$route.path;
     let typeID = path.split('/').pop();
-    console.log(typeID);
     let rankingList = document.querySelectorAll('.ranking-list-item');
     for (let i = 0; i < rankingList.length; i++) {
       rankingList[i].classList.remove('ranking-list-item-active');
@@ -48,9 +44,10 @@ export default {
       }
     }
 
-    this.$axios.get(`http://localhost:5000/book/1`).then(res => {
+    this.$axios.get(`http://localhost:5000/book/${typeID}`).then(res => {
       this.books = res.data.data;
     })
+    this.loading = false;
   },
 }
 </script>
@@ -58,7 +55,7 @@ export default {
 <template>
   <div id="bookBorrow">
     <div class="container" style="background-color:#fff;">
-      <el-container>
+      <el-container v-loading="loading">
         <el-aside width="200px" class="el-aside" style="background-color:whitesmoke;">
           <div class="nav-slide">
             <ul class="ranking-list">

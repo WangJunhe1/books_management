@@ -8,7 +8,7 @@ window.onscroll = function() {
       // 页面回到顶端时，照片放大
     if (scrollTop === 0) {
       img.style.width = '500px';
-      blackDiv.style.height = '300px'; /* 高度变高 */
+      blackDiv.style.height = '200px'; /* 高度变高 */
     } else { // 下滑时，照片变小，div高度恢复
       img.style.width = '400px';
       blackDiv.style.height = '100px'; /* 高度恢复 */
