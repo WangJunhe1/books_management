@@ -88,4 +88,14 @@ public class StudentServiceImpl implements StudentService {
 
         studentMapper.update(student, queryWrapper);
     }
+
+    @Override
+    public Student getStudent(Integer userId) {
+        LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<Student>()
+               .eq(Student::getUserId, userId);
+
+        Student student = studentMapper.selectOne(queryWrapper);
+
+        return student;
+    }
 }

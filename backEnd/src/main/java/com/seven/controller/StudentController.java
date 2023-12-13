@@ -1,22 +1,29 @@
 package com.seven.controller;
 
+import com.seven.constant.JwtClaimsConstant;
 import com.seven.domain.dto.StudentRegisterDTO;
 import com.seven.domain.dto.UpdateStudentDTO;
 import com.seven.domain.entity.Student;
 import com.seven.domain.pojo.Result;
+import com.seven.properties.JwtProperties;
 import com.seven.service.StudentService;
 import com.seven.utils.CodeUtil;
+import com.seven.utils.JwtUtil;
+import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/student")
 @CrossOrigin
 @Slf4j
 public class StudentController {
-
+    @Autowired
+    JwtProperties jwtProperties ;
     @Autowired
     private StudentService studentService;
 
@@ -50,5 +57,19 @@ public class StudentController {
         }
 
         return Result.success();
+    }
+
+    @GetMapping("/getStudent")
+    public Result getStudent(ServletRequest request) {
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+
+        String token = httpRequest.getHeader("token");
+        Claims claims = JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(), token);
+
+        Integer userId = (Integer) claims.get(JwtClaimsConstant.USER_ID);
+
+        Student student = studentService.getStudent(userId);
+
+        return Result.success(student);
     }
 }
