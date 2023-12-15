@@ -9,11 +9,11 @@
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
     padding: 20px;
   }
-  
+
   body {
-    padding-top: 240px; 
+    padding-top: 240px;
   }
-  
+
 .main{
     flex-grow: 1; /* 使用flex-grow属性使得ul占据剩余空间 */
     text-align: right; /* 将整个main区域右对齐 */

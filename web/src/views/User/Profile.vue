@@ -382,7 +382,24 @@
       changeIsFalse() {
         this.isChange = false;
         this.student.region = this.student.region.join("/");
+      },
+      saveStudent() {
+        this.student.region = this.student.region.join("/");
         this.student.birthday = this.student.birthday.toLocaleDateString();
+        this.$axios.post('http://localhost:5000/image/upload',
+            {
+              'studentNumber': this.student.studentNumber,
+              "file": this.fileImg
+            },
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data'
+              }
+            }
+        )
+        this.$axios.put('http://localhost:5000/student/update',
+                    this.student,
+        )
       },
       changeDisplayBlock() {
         let icon = document.querySelector('.iconfont');
@@ -414,15 +431,23 @@
         }
       },
     },
-    // mounted() {
-    //   this.$axios.get('http://localhost:5000//student/getStduent', {
-    //     headers: {
-    //       'token': this.$store.state.User.token,
-    //     }
-    //   }).then(res => {
-    //     this.student = res.data.data;
-    //   })
-    // }
+    watch: {
+      'student.birthday': {
+        handler(oldVal, newVal) {
+          this.student.birthday = this.student.birthday.toLocaleDateString();
+        }
+      }
+    },
+    mounted() {
+      console.log(this.$store.state.User.token);
+      this.$axios.get('http://localhost:5000/student/getStudent', {
+        headers: {
+          'token': this.$store.state.User.token,
+        }
+      }).then(res => {
+        this.student = res.data.data;
+      })
+    }
   }
 </script>
 
@@ -484,7 +509,7 @@
         <el-input type="textarea" placeholder="请输入个人简介" v-model="student.description"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="changeIsFalse()">保存</el-button>
+        <el-button type="primary" @click="saveStudent()">保存</el-button>
         <el-button  @click="changeIsFalse()">取消</el-button>
       </el-form-item>
     </el-form>

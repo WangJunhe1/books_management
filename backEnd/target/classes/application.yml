@@ -45,7 +45,8 @@ books:
 
 upload:
   path:
-    image: D:\books_management\backEnd\src\main\resources\static\img\user
+    image: /Users/seven/Desktop/book_management/backEnd/src/main/resources/static/img/user
+#    image:
 
 
 
