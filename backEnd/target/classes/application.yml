@@ -4,6 +4,10 @@ server:
 
 # 数据库连接配置
 spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 200MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://47.236.37.1:3306/books_management?useSSL=false&serverTimezone=UTC
@@ -26,6 +30,7 @@ mybatis-plus:
       db-config:
         id-type: auto
 
+# log.info日志输出
 logging:
   level:
     com:
@@ -34,6 +39,7 @@ logging:
         service: info
         controller: info
 
+# token令牌设置
 books:
   jwt:
     # 设置jwt签名加密时使用的秘钥

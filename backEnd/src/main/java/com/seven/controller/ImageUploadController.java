@@ -50,14 +50,15 @@ public class ImageUploadController {
     public Result uploadImage(@RequestBody @RequestParam(required = true) String studentNumber,
                               @RequestParam(value = "file",required = true) MultipartFile file) {
         try {
+            System.out.println(file);
             // 获取文件名
             String fileName = file.getOriginalFilename();
             // 指定保存路径
-            String filePath = uploadPath  + "\\" + fileName;
-            targetPath = targetPath  + "\\" + fileName;
+            String filePath = uploadPath  + "/" + fileName;
+            String tempPath = targetPath  + "/" + fileName;
 
             log.info("上传文件路径：" + filePath);
-            log.info("上传文件路径：" + targetPath);
+            log.info("上传文件路径：" + tempPath);
 
             file.transferTo(new File(filePath));
 
@@ -67,7 +68,7 @@ public class ImageUploadController {
             MultipartFile targetFile = new MultipartFileDTO(pdfFile.getName(), pdfFile.getName(),
                     ContentTypeUtil.getContentType(fileName), fileInputStream);
 
-            targetFile.transferTo(new File(targetPath));
+            targetFile.transferTo(new File(tempPath));
 
             String path = "http://localhost:5000/image/user/" + fileName;
             studentService.uploadImage(studentNumber,path);

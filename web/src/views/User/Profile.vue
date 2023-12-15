@@ -377,18 +377,22 @@
       changeIsTrue() {
         this.isChange = true;
         this.student.region = this.student.region.split("/");
-        console.log(this.student.region)
+        console.log(this.student.region);
       },
       changeIsFalse() {
         this.isChange = false;
+        console.log(this.student.region);
         this.student.region = this.student.region.join("/");
+        this.student.birthday = this.student.birthday.toLocaleDateString();
+        console.log(this.student.birthday)
       },
       saveStudent() {
+        console.log(this.student.region)
         this.student.region = this.student.region.join("/");
         this.student.birthday = this.student.birthday.toLocaleDateString();
         this.$axios.post('http://localhost:5000/image/upload',
             {
-              'studentNumber': this.student.studentNumber,
+              "studentNumber": this.student.studentNumber,
               "file": this.fileImg
             },
             {
@@ -400,6 +404,19 @@
         this.$axios.put('http://localhost:5000/student/update',
                     this.student,
         )
+        this.isChange = false;
+        this.fileImg = null;
+        //  数据回显
+        this.$axios.get('http://localhost:5000/student/getStudent', {
+          headers: {
+            'token': this.$store.state.User.token,
+          }
+        }).then(res => {
+          this.student = res.data.data;
+          console.log(this.student.birthday)
+          this.student.birthday = this.student.birthday[0] + "-" + this.student.birthday[1] + "-" + this.student.birthday[2];
+          console.log(this.student.birthday)
+        })
       },
       changeDisplayBlock() {
         let icon = document.querySelector('.iconfont');
@@ -431,13 +448,6 @@
         }
       },
     },
-    watch: {
-      'student.birthday': {
-        handler(oldVal, newVal) {
-          this.student.birthday = this.student.birthday.toLocaleDateString();
-        }
-      }
-    },
     mounted() {
       console.log(this.$store.state.User.token);
       this.$axios.get('http://localhost:5000/student/getStudent', {
@@ -446,6 +456,9 @@
         }
       }).then(res => {
         this.student = res.data.data;
+        console.log(this.student.birthday)
+        this.student.birthday = this.student.birthday[0] + "-" + this.student.birthday[1] + "-" + this.student.birthday[2];
+        console.log(this.student.birthday)
       })
     }
   }
@@ -458,7 +471,7 @@
         <el-button type="primary" size="small" @click="changeIsTrue()">修改</el-button>
       </template>
       <el-descriptions-item label="头像">
-        <el-avatar :src="student.portrait" size="large" style="width: 100px; height: 100px;"></el-avatar>
+        <img :src="student.portrait" :alt="student.studentName" style="width: 100px; height: 100px; border-radius: 50%"></img>
       </el-descriptions-item> <br/>
       <el-descriptions-item label="用户昵称">{{student.studentName}}</el-descriptions-item>
       <el-descriptions-item label="用户ID">{{student.studentNumber}}</el-descriptions-item>
