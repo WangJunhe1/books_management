@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +26,7 @@ public class StudentRegisterDTO {
     private String studentSex;
 
     @Builder.Default
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime birthday = null;
 
     private String studentEmail;

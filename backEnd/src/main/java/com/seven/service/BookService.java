@@ -20,4 +20,6 @@ public interface BookService extends IService<Book> {
     PageBean searchPage(Integer page, Integer size, SearchDTO searchDTO);
 
     List<Book> selectByTypeId(Integer typeId);
+
+    PageBean nextPage(Integer currentPage);
 }

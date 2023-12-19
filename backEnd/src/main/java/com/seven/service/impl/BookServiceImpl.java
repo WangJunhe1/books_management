@@ -1,6 +1,7 @@
 package com.seven.service.impl;
 
 import ch.qos.logback.core.joran.util.beans.BeanUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -46,5 +47,17 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     public List<Book> selectByTypeId(Integer typeId) {
         List<Book> lists = bookMapper.selectList(new QueryWrapper<Book>().eq("book_typeId",typeId));
         return lists;
+    }
+
+    @Override
+    public PageBean nextPage(Integer currentPage) {
+        PageHelper.startPage(currentPage, 4);
+        Book book = new Book();
+
+        List<Book> bookList = bookMapper.selectList(new LambdaQueryWrapper<>());
+        Page<Book> pages = (Page<Book>) bookList;
+
+        PageBean pageBean = new PageBean(pages.getTotal(),pages.getResult());
+        return pageBean;
     }
 }
