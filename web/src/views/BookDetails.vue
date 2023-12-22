@@ -50,6 +50,13 @@ export default {
   methods: {
     format(percentage) {
       return percentage;
+    },
+    borrowBook() {
+      this.$axios.post('', {
+        headers: {
+          'token': this.$store.state.User.token,
+        }
+      })
     }
   },
   mounted() {
@@ -76,7 +83,7 @@ export default {
                   <div class="book-info-author">{{book.bookAuthor}}</div>
                 </div>
                 <div class="book-info-right-header-wrapper">
-                  <button class="book-info-right-button" v-if="book !== null">借阅</button>
+                  <button class="book-info-right-button" v-if="book !== null" @click="borrowBook()">借阅</button>
                   <button class="book-info-right-button" v-else>已借阅</button>
                 </div>
               </div>
