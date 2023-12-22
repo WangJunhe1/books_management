@@ -172,6 +172,7 @@ public class UserServiceImpl implements UserService {
      * 传入学号进行用户注销
      * @param studentNumber
      */
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void delete(String studentNumber) {
         User user = new User();

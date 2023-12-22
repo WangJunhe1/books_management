@@ -2,8 +2,6 @@ package com.seven.controller;
 
 import com.seven.domain.dto.MultipartFileDTO;
 import com.seven.domain.pojo.Result;
-import com.seven.interceptor.JwtTokenAdminInterceptor;
-import com.seven.service.BookService;
 import com.seven.service.StudentService;
 import com.seven.utils.ContentTypeUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,7 +33,7 @@ public class ImageUploadController {
     private String uploadPath;
     @Autowired
     private StudentService studentService;
-    private String targetPath = null;
+    private String targetPath ;
 
     {
         try {
@@ -49,19 +46,20 @@ public class ImageUploadController {
     @PostMapping("/upload")
     public Result uploadImage(@RequestBody @RequestParam(required = true) String studentNumber,
                               @RequestParam(value = "file",required = true) MultipartFile file) {
+        String tempPath = null;
+        String filePath = null;
+        String fileName = null;
         try {
-            System.out.println(file);
+            fileName = file.getOriginalFilename();
             // 获取文件名
-            String fileName = file.getOriginalFilename();
             // 指定保存路径
-            String filePath = uploadPath  + "/" + fileName;
-            String tempPath = targetPath  + "/" + fileName;
+            filePath = uploadPath  + "\\" + fileName;
+            tempPath = targetPath  + "\\" + fileName;
 
             log.info("上传文件路径：" + filePath);
             log.info("上传文件路径：" + tempPath);
 
             file.transferTo(new File(filePath));
-
 
             File pdfFile = new File(filePath);
             FileInputStream fileInputStream = new FileInputStream(pdfFile);

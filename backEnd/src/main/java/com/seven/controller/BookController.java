@@ -41,4 +41,10 @@ public class BookController {
         log.info("typeId:{}",typeId);
         return Result.success(bookService.selectByTypeId(typeId));
     }
+
+    @GetMapping("/nextPage/{currentPage}")
+    public Result nextPage(@PathVariable Integer currentPage){
+        log.info("page:{}",currentPage); 
+        return Result.success(bookService.nextPage(currentPage));
+    }
 }
