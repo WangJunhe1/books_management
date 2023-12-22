@@ -57,6 +57,15 @@ const routes = new VueRouter({
                     }
                 },
                 {
+                    name: "bookComment",
+                    path: "/index/bookComment/",
+                    props:true,
+                    component: () => import("@/views/BookComment.vue"),
+                    meta: {
+                        title: "图书评论"
+                    }
+                },
+                {
                     name: "user",
                     path: "/User",
                     redirect: {name: "userInfo"},
