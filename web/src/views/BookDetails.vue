@@ -1,6 +1,9 @@
 <script>
 import '@/assets/font/iconfont.css'
+import '@/assets/css/csh.css'
+
 export default {
+  // 右下角小球
   data() {
     return {
       book: this.$store.state.Book.book,
@@ -50,25 +53,22 @@ export default {
   methods: {
     format(percentage) {
       return percentage;
-    },
-    borrowBook() {
-      this.$axios.post('', {
-        headers: {
-          'token': this.$store.state.User.token,
-        }
-      })
     }
   },
   mounted() {
     this.book = this.$route.params.book;
     localStorage.setItem('book', JSON.stringify(this.book));
     this.$store.dispatch('Book/setBookAction', this.book);
-  }
+  },
+  
 }
 </script>
 
 <template>
-  <div class="details">
+<div class="details">
+
+  
+
     <div class="container">
       <div class="book-info">
         <div class="reader-book-info">
@@ -83,7 +83,7 @@ export default {
                   <div class="book-info-author">{{book.bookAuthor}}</div>
                 </div>
                 <div class="book-info-right-header-wrapper">
-                  <button class="book-info-right-button" v-if="book !== null" @click="borrowBook()">借阅</button>
+                  <button class="book-info-right-button , km" v-if="book !== null">借阅</button>
                   <button class="book-info-right-button" v-else>已借阅</button>
                 </div>
               </div>
@@ -121,26 +121,30 @@ export default {
                 </div>
               </div>
             </div>
-            <div class="ratings-footer">
-              <router-link to="" class="book-footer-link">
-                <div class="book-footer-icon">
+
+            
+              <div class="ratings-footer">
+              <router-link to="" class="book-footer-link , km">
+                
+                  <div class="book-footer-icon">
                   <i class="iconfont icon-Outline_fuben11"></i>
                   推荐
-                </div>
+                </div>               
               </router-link>
-              <router-link to="" class="book-footer-link">
+              <router-link to="" class="book-footer-link , km">
                 <div class="book-footer-icon">
                   <i class="iconfont icon-Outline_fuben5"></i>
                   一般
                 </div>
               </router-link>
-              <router-link to="" class="book-footer-link">
+              <router-link to="" class="book-footer-link , km">
                 <div class="book-footer-icon">
                   <i class="iconfont icon-Outline_fuben24"></i>
                   不行
                 </div>
               </router-link>
             </div>
+          
           </div>
         </div>
       </div>
@@ -159,10 +163,11 @@ export default {
                   <img class="banner-title-user-img" :src="item.user.img" :alt="item.user.username">
                 </div>
                 <span class="banner-title-user-name">{{item.user.username}}</span>
-                <div class="banner-title-user-comment" v-if="item.commentType === 1">
+                  <div class="banner-title-user-comment" v-if="item.commentType === 1">
                   <i class="iconfont icon-Outline_fuben11"></i>
-                  <div class="iconfont-text">推荐</div>
+                    <div class="iconfont-text">推荐</div> 
                 </div>
+         
                 <div class="banner-title-user-comment" v-if="item.commentType === 2">
                   <i class="iconfont icon-Outline_fuben5"></i>
                   <div class="iconfont-text">一般</div>
@@ -180,14 +185,64 @@ export default {
         </div>
       </div>
     </div>
+     <!-- 右部导航 -->
+     <div class="youbu">
+            <div class="youbu2 r">
+
+                <div><a href=""><span></span>
+                        <h5>WeChat</h5></a>
+                </div>
+
+                <div><a href=""><span></span>
+                    <h5>QQ客服1</h5></a>
+                </div>
+                <div><a href=""><span></span>
+                    <h5>QQ客服2</h5></a>
+                </div>
+                <div><a href="" class="gb"><span></span>
+                    <h5>Tel</h5></a>
+                </div>
+            </div>
+        </div>
+        <!-- 二 -->
+        <div class="sxb">
+            <div class="sb">售前咨询</div>
+            <div class="xb">网站续费</div>
+        </div>
   </div>
 </template>
 
 <style>
+  @keyframes animate__pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+.km:hover {
+    animation-name: animate__pulse;
+    animation-duration: 0.8s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+/* .details {
+   添加背景图片 
+  background-image: url('../assets/css/');
+  设置背景大小和重复方式 
+  background-size: cover;
+  background-repeat: no-repeat;
+} */
+
 .details .container {
   width: 60%;
   margin: 0 auto;
-  background-color: pink;
+  background-color: rgb(224,221,216);
 }
 
 .details .container .book-info {
@@ -313,7 +368,7 @@ export default {
   font-size: 16px;
   line-height: 24px;
   font-weight: 500;
-  color: #eef0f4;
+  color:orangered;
 }
 
 .book-ratings .ratings-container {
@@ -341,7 +396,8 @@ export default {
   align-items: center;
   font-family: DIN-Medium,PingFang SC,-apple-system,SF UI Text,Lucida Grande,STheiti,Microsoft YaHei,sans-serif;
   font-size: 12px;
-  color: #8a8c90;
+  padding-top: 10px;
+  color: black;
   line-height: 16px;
 }
 
@@ -357,13 +413,14 @@ export default {
   align-items: center;
   font-size: 12px;
   font-family: PingFangSC-Medium,PingFang SC,-apple-system,SF UI Text,Lucida Grande,STheiti,Microsoft YaHei,sans-serif;
-  color: #8a8c90;
+  color:black;
+  font-weight: bold;
   line-height: 16px;
 }
 
 .book-sating-item-bar-bgc {
   flex: 1;
-  background-color: blue;
+  background-color: white;
   border-radius: 3px;
   margin-left: 8px;
   height: 5px;
@@ -371,7 +428,7 @@ export default {
 
 .book-sating-item-bar {
   height: 100%;
-  background-color: black;
+  background-color: gray;
   border-radius: 3px;
 }
 
@@ -424,7 +481,7 @@ export default {
   font-size: 16px;
   font-family: PingFang SC,-apple-system,SF UI Text,Lucida Grande,STheiti,Microsoft YaHei,sans-serif;
   font-weight: 500;
-  color: #eef0f4;
+  color: orangered;
 }
 
 .book-comments .comments-toReview-container .toReview-banner {
@@ -501,5 +558,9 @@ export default {
   height: auto;
   max-height: 125px;
 }
+
+
+
+
 
 </style>
