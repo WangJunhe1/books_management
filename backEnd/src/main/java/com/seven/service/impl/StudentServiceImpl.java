@@ -59,6 +59,7 @@ public class StudentServiceImpl implements StudentService {
         return CodeUtil.SUCCESS;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public Integer updateStudent(StudentUserDTO studentUserDTO) {
         Student student = new Student();
@@ -77,6 +78,7 @@ public class StudentServiceImpl implements StudentService {
         return CodeUtil.SUCCESS;
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void uploadImage(String studentNumber, String filePath) {
         LambdaQueryWrapper<Student> queryWrapper = new LambdaQueryWrapper<Student>()
