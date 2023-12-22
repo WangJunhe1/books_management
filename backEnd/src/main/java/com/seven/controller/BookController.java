@@ -44,7 +44,7 @@ public class BookController {
 
     @GetMapping("/nextPage/{currentPage}")
     public Result nextPage(@PathVariable Integer currentPage){
-        log.info("page:{}",currentPage);
+        log.info("page:{}",currentPage); 
         return Result.success(bookService.nextPage(currentPage));
     }
 }
