@@ -52,15 +52,21 @@ export default {
       return percentage;
     },
     borrowBook() {
-      this.$axios.post('', {
-        headers: {
-          'token': this.$store.state.User.token,
-        }
+      this.$axios.post(`http://localhost:5000/borrow/${this.book.bookId}`,
+     null,
+    {
+              headers: {
+                'token': this.$store.state.User.token,
+              }
+          }
+      ).then(res => {
+        t
       })
     }
   },
   mounted() {
     this.book = this.$route.params.book;
+    console.log(this.book)
     localStorage.setItem('book', JSON.stringify(this.book));
     this.$store.dispatch('Book/setBookAction', this.book);
   }
