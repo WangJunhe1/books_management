@@ -6,6 +6,7 @@ export default {
   // 右下角小球
   data() {
     return {
+      isSuccessBorrow: 0,
       book: this.$store.state.Book.book,
       bookDetail: {
         bookName: '《JavaScript权威指南》',
@@ -53,6 +54,17 @@ export default {
   methods: {
     format(percentage) {
       return percentage;
+    },
+    borrowBook() {
+      this.$axios.post(`http://localhost:5000/borrow/${this.book.bookId}`,
+          null,
+          {
+            headers: {
+              'token': this.$store.state.User.token,
+            }
+          }).then (res => {
+            this.isSuccessBorrow = res.data.code;
+      })
     }
   },
   mounted() {
@@ -65,10 +77,7 @@ export default {
 </script>
 
 <template>
-<div class="details">
-
-  
-
+<div class="details" style="margin-top: 200px">
     <div class="container">
       <div class="book-info">
         <div class="reader-book-info">
@@ -83,7 +92,7 @@ export default {
                   <div class="book-info-author">{{book.bookAuthor}}</div>
                 </div>
                 <div class="book-info-right-header-wrapper">
-                  <button class="book-info-right-button , km" v-if="book !== null">借阅</button>
+                  <button class="book-info-right-button , km" v-if="this.isSuccessBorrow == 0" @click="borrowBook()">借阅</button>
                   <button class="book-info-right-button" v-else>已借阅</button>
                 </div>
               </div>
@@ -427,7 +436,7 @@ export default {
 
 .book-sating-item-bar {
   height: 100%;
-  background-color: gray;
+  background-color: rgb(128, 128, 128);
   border-radius: 3px;
 }
 

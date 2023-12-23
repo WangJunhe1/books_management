@@ -54,6 +54,17 @@ export default {
     load() {
       this.count += 2
     }
+  },
+  mounted() {
+    this.$axios.get('http://localhost:5000/borrow/myBorrow',
+        {
+          headers: {
+            'token': this.$store.state.User.token
+          }
+        }
+    ).then(res => {
+      this.tableData = res.data.data
+    })
   }
 }
 </script>
