@@ -4,6 +4,7 @@ import com.seven.domain.dto.BorrowDTO;
 import com.seven.domain.entity.Book;
 import com.seven.domain.entity.Borrow;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.seven.domain.vo.MyBorrowVO;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ import java.util.List;
 public interface BorrowService extends IService<Borrow> {
     void borrowBook(BorrowDTO borrowDTO);
 
-    List<Book> getMyBorrow(String studentNumber);
+    List<MyBorrowVO> getMyBorrow(String studentNumber);
 
     void returnBorrow(BorrowDTO borrowDTO);
 }

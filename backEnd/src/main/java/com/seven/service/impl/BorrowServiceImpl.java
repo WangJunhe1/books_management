@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.seven.domain.dto.BorrowDTO;
 import com.seven.domain.entity.Book;
 import com.seven.domain.entity.Borrow;
+import com.seven.domain.vo.MyBorrowVO;
 import com.seven.mapper.BookMapper;
 import com.seven.mapper.BorrowMapper;
 import com.seven.service.BorrowService;
@@ -58,9 +59,9 @@ public class BorrowServiceImpl extends ServiceImpl<BorrowMapper, Borrow> impleme
     }
 
     @Override
-    public List<Book> getMyBorrow(String studentNumber) {
+    public List<MyBorrowVO> getMyBorrow(String studentNumber) {
 
-        List<Book> bookList = borrowMapper.selectMyBorrow(studentNumber);
+        List<MyBorrowVO> bookList = borrowMapper.selectMyBorrow(studentNumber);
 
         return bookList;
     }

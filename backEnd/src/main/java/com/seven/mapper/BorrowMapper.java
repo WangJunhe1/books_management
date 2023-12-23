@@ -3,6 +3,7 @@ package com.seven.mapper;
 import com.seven.domain.entity.Book;
 import com.seven.domain.entity.Borrow;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.seven.domain.vo.MyBorrowVO;
 
 import java.util.List;
 
@@ -15,5 +16,5 @@ import java.util.List;
  * @since 2023-12-22
  */
 public interface BorrowMapper extends BaseMapper<Borrow> {
-    List<Book> selectMyBorrow(String studentNumber);
+    List<MyBorrowVO> selectMyBorrow(String studentNumber);
 }
