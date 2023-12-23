@@ -14,17 +14,12 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentMapper commentMapper;
     @Override
-    public void getCommentByUserId(int UserId) {
+    public List<Comment> getCommentByUserId(int UserId) {
         LambdaQueryWrapper<Comment> lqw = new LambdaQueryWrapper<Comment>();
         lqw.eq(Comment::getUserId, UserId);
-        Comment s = commentMapper.selectOne(lqw);
-        System.out.println(s);
-    }
 
-    @Override
-    public void getCommentByUserId2(int UserId) {
-        List<Comment> customers = commentMapper.getCommentByUserId2(UserId);
+        List<Comment> s = commentMapper.selectList(lqw);
 
-        System.out.println(customers);
+        return s;
     }
 }

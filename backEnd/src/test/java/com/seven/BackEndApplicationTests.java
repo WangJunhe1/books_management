@@ -22,9 +22,4 @@ class BackEndApplicationTests {
         c.getCommentByUserId(1);
     }
 
-    @Test
-    public void test3 () {
-        System.out.println(c);
-        c.getCommentByUserId2(1);
-    }
 }

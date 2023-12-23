@@ -1,7 +1,9 @@
 package com.seven.service;
 
-public interface CommentService {
-    void getCommentByUserId(int UserId);
+import com.seven.domain.entity.Comment;
 
-    void getCommentByUserId2(int UserId);
+import java.util.List;
+
+public interface CommentService {
+    List<Comment> getCommentByUserId(int UserId);
 }
