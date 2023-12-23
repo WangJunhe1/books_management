@@ -1,13 +1,8 @@
 <script>
 export default {
-  methods: {
-    handleClick(row) {
-      console.log(row);
-    }
-  },
-
   data() {
     return {
+      count: 0,
       tableData: [
         {
           borrowDate: '2016-05-02',
@@ -51,6 +46,14 @@ export default {
         },
       ]
     }
+  },
+  methods: {
+    handleClick(row) {
+      console.log(row);
+    },
+    load() {
+      this.count += 2
+    }
   }
 }
 </script>
@@ -58,8 +61,9 @@ export default {
 <template>
   <el-table
       :data="tableData"
+      height="500"
       border
-      style="width: 100%">
+      style="width: 100%;">
     <el-table-column
         fixed
         prop="borrowDate"

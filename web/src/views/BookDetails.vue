@@ -124,20 +124,19 @@ export default {
 
             
               <div class="ratings-footer">
-              <router-link to="" class="book-footer-link , km">
-                
+              <router-link to="/index/bookComment" class="book-footer-link , km">
                   <div class="book-footer-icon">
                   <i class="iconfont icon-Outline_fuben11"></i>
                   推荐
                 </div>               
               </router-link>
-              <router-link to="" class="book-footer-link , km">
+              <router-link to="/index/bookComment" class="book-footer-link , km">
                 <div class="book-footer-icon">
                   <i class="iconfont icon-Outline_fuben5"></i>
                   一般
                 </div>
               </router-link>
-              <router-link to="" class="book-footer-link , km">
+              <router-link to="/index/bookComment" class="book-footer-link , km">
                 <div class="book-footer-icon">
                   <i class="iconfont icon-Outline_fuben24"></i>
                   不行

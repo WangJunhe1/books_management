@@ -1,0 +1,162 @@
+/* 右部导航 */
+
+.youbu {
+    z-index: 1;
+    display: inline-block;
+    width: 130px;
+    height: 220px;
+    position: fixed;
+    top: 270px;
+    right: 1%;
+    overflow: hidden;
+}
+
+.youbu2 {
+    display: inline-block;
+    width: 54px;
+    height: 220px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: space-around;
+}
+
+.youbu .youbu2 div:nth-child(1) {
+    background-color: #FECE62;
+    width: 130px;
+    height: 54px;
+    line-height: 10px;
+    position: absolute;
+    left: 0;
+    transition: 0.2s linear;
+    margin-left: 76px;
+    color: #fff;
+    opacity: 0.8;
+}
+
+.youbu .youbu2 div a {
+    display: inline-block;
+    color: #fff;
+    width: 100%;
+    height: 100%;
+}
+
+.youbu .youbu2 div h5 {
+    font-weight: 400;
+    float: left;
+}
+
+.youbu .youbu2 div span {
+    float: left;
+    margin-top: 15px;
+    width: 30px;
+    height: 20px;
+    background-color: #fff;
+    margin-left: 12px;
+    margin-right: 12px;
+    background: url(../img/yb1.png) no-repeat;
+    background-position: 50% 50%;
+}
+.youbu .youbu2 div:nth-child(1):hover {
+    left: -76px;
+    opacity: 1;
+}
+
+.youbu .youbu2 div {
+    background-color: #FECE62;
+    width: 130px;
+    height: 54px;
+    line-height: 10px;
+    position: absolute;
+    transition: 0.2s linear;
+    margin-left: 76px;
+    color: #fff;
+    opacity: 0.8;
+}
+
+.youbu .youbu2 div:nth-child(2) {
+    top: 55px;
+    left: 0px;
+}
+
+.youbu .youbu2 div:nth-child(2) span,
+.youbu .youbu2 div:nth-child(3) span {
+    background: url(../img/yb2.png) no-repeat;
+    background-position: 50% 50%;
+}
+
+.youbu .youbu2 div:nth-child(2):hover {
+    left: -76px;
+    opacity: 1;
+}
+
+.youbu .youbu2 div:nth-child(3) {
+    top: 110px;
+    left: 0px;
+}
+
+.youbu .youbu2 div:nth-child(3):hover {
+    left: -76px;
+    opacity: 1;
+}
+
+.youbu .youbu2 div:nth-child(4) {
+    top: 165px;
+    left: 0px;
+}
+
+.youbu .youbu2 div:nth-child(4) span {
+    background: url(../img/yb3.png) no-repeat;
+    background-position: 50% 50%;
+}
+
+.youbu .youbu2 div:nth-child(4):hover .gb {
+    padding-left: 20px;
+    box-sizing: border-box;
+}
+
+.youbu .youbu2 div:nth-child(4) a {
+    transition: 0.2s linear;
+}
+
+.youbu .youbu2 div:nth-child(4):hover {
+    left: -76px;
+    opacity: 1;
+}
+
+
+/* 二 */
+
+.sxb {
+    right: 0px;
+    top: 70.5%;
+    position: fixed;
+    z-index: 1;
+}
+
+.sb,
+.xb {
+    width: 98px;
+    height: 31px;
+    background-color: #26B1E7;
+    border-radius: 31px;
+    border: #fff 1px solid;
+    color: #fff;
+    text-align: center;
+    line-height: 31px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.xb {
+    margin-top: 10px;
+}
+
+.xb:hover,
+.sb:hover {
+    color: #26B1E7;
+    background-color: #fff;
+    border: #26B1E7 1px solid;
+}
+
+
