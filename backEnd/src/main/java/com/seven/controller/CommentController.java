@@ -38,6 +38,7 @@ public class CommentController {
      * @param
      * @return
      */
+//   1. 通过user_id查找评论
     @GetMapping("/getComment")
     public Result getCommentByUserId(ServletRequest request){
 
