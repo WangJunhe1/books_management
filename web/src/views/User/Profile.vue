@@ -4,13 +4,13 @@
       return {
         fileImg: null,
         student: {
-          studentName: "seven",
-          studentNumber: "seven",
-          studentSex: "男",
-          description: "在慢慢学习中",
-          birthday: "2004-04-14",
-          region: "河南省/郑州市/金水区",
-          portrait: "https://avatars0.githubusercontent.com/u/22588905?s=460&v=4",
+          studentName: "",
+          studentNumber: "",
+          studentSex: "",
+          description: "",
+          birthday: "",
+          region: "",
+          portrait: "",
         },
         isChange: false,
         options: [
@@ -377,18 +377,22 @@
       changeIsTrue() {
         this.isChange = true;
         this.student.region = this.student.region.split("/");
-        console.log(this.student.region)
+        console.log(this.student.region);
       },
       changeIsFalse() {
         this.isChange = false;
+        console.log(this.student.region);
         this.student.region = this.student.region.join("/");
+        this.student.birthday = this.student.birthday.toLocaleDateString();
+        console.log(this.student.birthday)
       },
       saveStudent() {
+        console.log(this.student.region)
         this.student.region = this.student.region.join("/");
         this.student.birthday = this.student.birthday.toLocaleDateString();
         this.$axios.post('http://localhost:5000/image/upload',
             {
-              'studentNumber': this.student.studentNumber,
+              "studentNumber": this.student.studentNumber,
               "file": this.fileImg
             },
             {
@@ -400,6 +404,23 @@
         this.$axios.put('http://localhost:5000/student/update',
                     this.student,
         )
+        //  数据回显
+        this.$axios.get('http://localhost:5000/student/getStudent', {
+          headers: {
+            'token': this.$store.state.User.token,
+          }
+        }).then(res => {
+          this.student = res.data.data;
+
+          console.log(this.student.birthday)
+          this.student.birthday = this.student.birthday[0] + "-" + this.student.birthday[1] + "-" + this.student.birthday[2];
+          console.log(this.student.birthday)
+          console.log(this.student.portrait)
+        })
+        setTimeout(() => {
+          this.fileImg = null;
+          this.isChange = false;
+        }, 2000)
       },
       changeDisplayBlock() {
         let icon = document.querySelector('.iconfont');
@@ -431,13 +452,6 @@
         }
       },
     },
-    watch: {
-      'student.birthday': {
-        handler(oldVal, newVal) {
-          this.student.birthday = this.student.birthday.toLocaleDateString();
-        }
-      }
-    },
     mounted() {
       console.log(this.$store.state.User.token);
       this.$axios.get('http://localhost:5000/student/getStudent', {
@@ -446,6 +460,9 @@
         }
       }).then(res => {
         this.student = res.data.data;
+        console.log(this.student.birthday)
+        this.student.birthday = this.student.birthday[0] + "-" + this.student.birthday[1] + "-" + this.student.birthday[2];
+        console.log(this.student.birthday)
       })
     }
   }
@@ -458,7 +475,7 @@
         <el-button type="primary" size="small" @click="changeIsTrue()">修改</el-button>
       </template>
       <el-descriptions-item label="头像">
-        <el-avatar :src="student.portrait" size="large" style="width: 100px; height: 100px;"></el-avatar>
+        <img class="studentImg" :src="student.portrait" :alt="student.studentName" style="width: 100px; height: 100px; border-radius: 50%"></img>
       </el-descriptions-item> <br/>
       <el-descriptions-item label="用户昵称">{{student.studentName}}</el-descriptions-item>
       <el-descriptions-item label="用户ID">{{student.studentNumber}}</el-descriptions-item>
@@ -469,7 +486,7 @@
     </el-descriptions>
 
     <el-form ref="form" :model="student" label-width="80px" v-else>
-      <el-form-item label="头像"> <!-- 没有解决 -->
+      <el-form-item label="头像">
         <input type="file" class="fileInput" accept="image/*" @change="fileInputChange"/>
         <div class="fileBox">
           <img class="fileImg" :src="student.portrait" alt="头像图标">
