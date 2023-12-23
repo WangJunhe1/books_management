@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 @RequestMapping("/borrow")
-@CrossOrigin
 public class BorrowController {
     @Autowired
     private JwtProperties jwtProperties;
