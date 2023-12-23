@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.seven.mapper.BorrowMapper">
-
+    <select id="selectMyBorrow" resultType="com.seven.domain.entity.Book">
+        select * from book
+        where book_id in (
+            select book_id from borrow
+            <where>
+                borrow_student_number = #{studentNumber}
+                           and borrow_status = 1
+            </where>
+        )
+    </select>
 </mapper>
