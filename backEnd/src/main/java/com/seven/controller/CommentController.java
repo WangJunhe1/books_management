@@ -3,16 +3,11 @@ package com.seven.controller;
 
 import com.seven.constant.JwtClaimsConstant;
 import com.seven.domain.dto.BookIdCommentDTO;
-import com.seven.domain.dto.BorrowDTO;
-import com.seven.domain.entity.Comment;
-import com.seven.domain.entity.Student;
 import com.seven.domain.pojo.Result;
 import com.seven.domain.vo.MyCommentVO;
 import com.seven.domain.vo.SelectCommentVO;
 import com.seven.properties.JwtProperties;
-import com.seven.service.BorrowService;
 import com.seven.service.CommentService;
-import com.seven.service.StudentService;
 import com.seven.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.ServletRequest;
@@ -33,11 +28,9 @@ public class CommentController {
     private JwtProperties jwtProperties;
     @Autowired
     private CommentService commentService;
-    @Autowired
-    private StudentService studentService;
 
     /**
-     * 通过user_id查找评论
+     * 评论功能
      * @param
      * @return
      */
@@ -57,7 +50,7 @@ public class CommentController {
     }
 
     /**
-     * 通过图书id查找评论
+     * 通过图书id获取页面信息
      * @param bookId
      * @return
      */
@@ -69,6 +62,12 @@ public class CommentController {
         return Result.success(selectCommentVOList);
     }
 
+    /**
+     * 发布评论
+     * @param bookIdCommentDTO
+     * @param request
+     * @return
+     */
     @PostMapping("/postComment")
     public Result postComment(@RequestBody BookIdCommentDTO bookIdCommentDTO, ServletRequest request) {
 

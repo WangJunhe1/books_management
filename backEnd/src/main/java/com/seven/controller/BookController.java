@@ -1,7 +1,9 @@
 package com.seven.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.seven.domain.dto.SearchDTO;
+import com.seven.domain.entity.Book;
 import com.seven.domain.pojo.PageBean;
 import com.seven.domain.pojo.Result;
 import com.seven.service.BookService;
@@ -63,5 +65,23 @@ public class BookController {
     public Result nextPage(@PathVariable Integer currentPage){
         log.info("page:{}",currentPage); 
         return Result.success(bookService.nextPage(currentPage));
+    }
+
+    /**
+     * 获取图书信息
+     * @param bookId
+     * @return
+     */
+    @GetMapping("/getBook/{bookId}")
+    public Result getBookTypeList(@PathVariable Integer bookId){
+
+        log.info("bookId:{}",bookId);
+
+        if(bookId == null){
+            return Result.error("bookId不能为空");
+        }
+
+        Book book = bookService.getOne(new QueryWrapper<Book>().eq("book_id", bookId));
+        return Result.success(book);
     }
 }
