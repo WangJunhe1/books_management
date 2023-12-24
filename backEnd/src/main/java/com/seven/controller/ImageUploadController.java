@@ -43,6 +43,12 @@ public class ImageUploadController {
         }
     }
 
+    /**
+     * 上传图片
+     * @param studentNumber
+     * @param file
+     * @return
+     */
     @PostMapping("/upload")
     public Result uploadImage(@RequestBody @RequestParam(required = true) String studentNumber,
                               @RequestParam(value = "file",required = true) MultipartFile file) {

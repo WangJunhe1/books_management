@@ -5,6 +5,7 @@ import com.seven.constant.JwtClaimsConstant;
 import com.seven.domain.dto.BookIdCommentDTO;
 import com.seven.domain.entity.Comment;
 import com.seven.domain.pojo.Result;
+import com.seven.domain.vo.MyCommentVO;
 import com.seven.domain.vo.SelectCommentVO;
 import com.seven.properties.JwtProperties;
 import com.seven.service.CommentService;
@@ -34,7 +35,6 @@ public class CommentController {
      * @param
      * @return
      */
-//   1. 通过user_id查找评论
     @GetMapping("/getComment")
     public Result getCommentByUserId(ServletRequest request){
 
@@ -45,11 +45,16 @@ public class CommentController {
 
         Integer userId = (Integer) claims.get(JwtClaimsConstant.USER_ID);
 
-        List<Comment> commentList = commentService.getCommentByUserId(userId);
+        List<MyCommentVO> commentList = commentService.getCommentByUserId(userId);
 
         return Result.success(commentList);
     }
 
+    /**
+     * 通过图书id获取页面信息
+     * @param bookId
+     * @return
+     */
     @GetMapping("/{bookId}")
     public Result getInfoByBookId(@PathVariable Integer bookId) {
 
@@ -58,6 +63,12 @@ public class CommentController {
         return Result.success(selectCommentVOList);
     }
 
+    /**
+     * 发布评论
+     * @param bookIdCommentDTO
+     * @param request
+     * @return
+     */
     @PostMapping("/postComment")
     public Result postComment(@RequestBody BookIdCommentDTO bookIdCommentDTO, ServletRequest request) {
 

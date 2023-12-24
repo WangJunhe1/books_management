@@ -25,9 +25,14 @@ import org.springframework.web.bind.annotation.*;
 public class BookController {
     @Autowired
     BookService bookService ;
-//    @RequestParam(defaultValue = "1") 可设置默认值
-//    @PathVariable Integer typeId
-//    @PathVariable Integer currentPage
+
+    /**
+     * 分页查询书籍
+     * @param page
+     * @param size
+     * @param searchDTO
+     * @return
+     */
     @GetMapping("/searchPage")
     public Result searchPage(@RequestParam(defaultValue = "1") Integer page,
                              @RequestParam(defaultValue = "10") Integer size,
@@ -38,12 +43,22 @@ public class BookController {
         return Result.success(pageBean);
     }
 
+    /**
+     * 通过类型获取所有该类型书籍
+     * @param typeId
+     * @return
+     */
     @GetMapping("/{typeId}")
     public Result selectByTypeId(@PathVariable Integer typeId){
         log.info("typeId:{}",typeId);
         return Result.success(bookService.selectByTypeId(typeId));
     }
 
+    /**
+     * 获取下一页
+     * @param currentPage
+     * @return
+     */
     @GetMapping("/nextPage/{currentPage}")
     public Result nextPage(@PathVariable Integer currentPage){
         log.info("page:{}",currentPage); 
