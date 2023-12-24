@@ -67,6 +67,11 @@ public class BookController {
         return Result.success(bookService.nextPage(currentPage));
     }
 
+    /**
+     * 获取图书信息
+     * @param bookId
+     * @return
+     */
     @GetMapping("/getBook/{bookId}")
     public Result getBookTypeList(@PathVariable Integer bookId){
 
