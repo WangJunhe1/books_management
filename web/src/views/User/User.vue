@@ -44,7 +44,7 @@ export default {
               <i class="el-icon-reading"></i>
               <span slot="title">我的借阅</span>
             </el-menu-item>
-            <el-menu-item index="/user/evaluation">
+            <el-menu-item index="/user/comment">
               <i class="el-icon-chat-dot-round"></i>
               <span slot="title">我的评论</span>
             </el-menu-item>

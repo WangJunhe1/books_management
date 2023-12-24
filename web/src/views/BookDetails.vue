@@ -547,7 +547,7 @@ export default {
   font-weight: 500;
 }
 
-.toReview-banner-item .toReview-banner-item-content {
+.toReview-banner-item .toReview-banner-item-comment {
   position: relative;
   line-height: 25px;
   overflow: hidden;

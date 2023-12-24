@@ -58,7 +58,7 @@ export default {
                 </a>
               </li>
               <li class="main-ul-li" v-if="isLogin">
-                <a href="/user/evaluation" class="menu-link">
+                <a href="/user/comment" class="menu-link">
                   <i class="el-icon-chat-dot-round"></i>我的评论
                 </a>
               </li>

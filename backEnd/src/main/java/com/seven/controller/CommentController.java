@@ -36,11 +36,10 @@ public class CommentController {
     private StudentService studentService;
 
     /**
-     * 评论功能
+     * 通过user_id查找评论
      * @param
      * @return
      */
-//   1. 通过user_id查找评论
     @GetMapping("/getComment")
     public Result getCommentByUserId(ServletRequest request){
 
@@ -56,6 +55,11 @@ public class CommentController {
         return Result.success(commentList);
     }
 
+    /**
+     * 通过图书id查找评论
+     * @param bookId
+     * @return
+     */
     @GetMapping("/{bookId}")
     public Result getInfoByBookId(@PathVariable Integer bookId) {
 

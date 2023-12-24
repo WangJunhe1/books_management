@@ -67,19 +67,19 @@ const routes = new VueRouter({
                 },
                 {
                     name: "user",
-                    path: "/User",
+                    path: "/user",
                     redirect: {name: "userInfo"},
                     component: () => import("@/views/User/User.vue"),
                     children: [
                         {
                             name: "userInfo",
-                            path: "/User/userInfo",
+                            path: "/user/userInfo",
                             redirect: {name: "profile"},
                             component: () => import("@/views/User/UserInfo.vue"),
                             children: [
                                 {
                                     name: "account",
-                                    path: "/User/userInfo/account",
+                                    path: "/user/userInfo/account",
                                     component: () => import("@/views/User/Account.vue"),
                                     meta: {
                                         title: "账户信息"
@@ -87,7 +87,7 @@ const routes = new VueRouter({
                                 },
                                 {
                                     name: "profile",
-                                    path: "/User/userInfo/profile",
+                                    path: "/user/userInfo/profile",
                                     component: () => import("@/views/User/Profile.vue"),
                                     meta: {
                                         title: "个人信息"
@@ -95,7 +95,7 @@ const routes = new VueRouter({
                                 },
                                 {
                                     name: "collection",
-                                    path: "/User/userInfo/collection",
+                                    path: "/user/userInfo/collection",
                                     component: () => import("@/views/User/Collection.vue"),
                                     meta: {
                                         title: "我的收藏"
@@ -103,7 +103,7 @@ const routes = new VueRouter({
                                 },
                                 {
                                     name: "history",
-                                    path: "/User/userInfo/history",
+                                    path: "/user/userInfo/history",
                                     component: () => import("@/views/User/History.vue"),
                                     meta: {
                                         title: "借阅历史"
@@ -113,16 +113,16 @@ const routes = new VueRouter({
                         },
                         {
                             name: "userBorrow",
-                            path: "/User/borrow",
+                            path: "/user/borrow",
                             component: () => import("@/views/User/UserBorrow.vue"),
                             meta: {
                                 title: "我的借阅"
                             }
                         },
                         {
-                            name: "userEvaluation",
-                            path: "/User/evaluation",
-                            component: () => import("@/views/User/UserEvaluation.vue"),
+                            name: "userComment",
+                            path: "/user/comment",
+                            component: () => import("@/views/User/UserComment.vue"),
                             meta: {
                                 title: "我的评论"
                             }
