@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.seven.mapper.CommentMapper">
+    <resultMap type="SelectCommentVO" id="booksComment" autoMapping="true">
+        <!-- 只展示了部分标签内容，一对多关联映射 -->
+        <collection property="book" ofType="book" autoMapping="true">
+            <id property="bookId" column="bid"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="selectCommentsWithUserInfo" parameterType="int" resultMap="booksComment">
+        SELECT u.username, c.comment_content, c.comment_status, s.portrait,b.book_id bid,b.*
+        FROM comment c
+                 JOIN user u ON c.user_id = u.user_id
+                 JOIN student s ON u.student_id = s.student_id
+                 JOIN book b ON c.book_id = b.book_id
+        WHERE c.book_id = #{bookId}
+
+    </select>
 </mapper>

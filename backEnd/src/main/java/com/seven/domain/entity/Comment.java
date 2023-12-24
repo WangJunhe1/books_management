@@ -21,12 +21,12 @@ public class Comment {
 
     private String commentContent;
 
-    private String userId;
+    private Integer userId;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime commentTime;
 
-    private String bookId;
+    private Integer bookId;
 
-    private String commentStatus;
+    private Integer commentStatus;
 }

@@ -17,9 +17,23 @@ class BackEndApplicationTests {
     @Autowired
     private CommentService c;
 
+
     @Test
     public void test2 () {
         c.getCommentByUserId(1);
     }
 
+    @Test
+    public void test3 () {
+        c.selectInfoByBookId(111);
+    }
+    @Test
+    public void test4 () {
+        c.selectInfoByBookId(111);
+    }
+
+    @Test
+    public void test5 () {
+
+    }
 }
