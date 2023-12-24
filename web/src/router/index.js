@@ -32,14 +32,6 @@ const routes = new VueRouter({
                     }
                 },
                 {
-                    name: "bookQuery",
-                    path: "/index/bookQuery",
-                    component: () => import("@/views/BookQuery.vue"),
-                    meta: {
-                        title: "图书查询"
-                    }
-                },
-                {
                     name: "bookBorrow",
                     path: "/index/bookBorrow/:bookTypeID",
                     component: () => import("@/views/BookBorrow.vue"),

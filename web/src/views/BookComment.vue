@@ -3,10 +3,59 @@ import '@/assets/font/iconfont.css'
 export default {
   data() {
     return {
-      book: {
-        bookName: "test"
+      commentState: this.$store.state.Book.commentState,
+      commentContent: '',
+      book: this.$store.state.Book.book || {
+        bookName: "test",
       },
     }
+  },
+  methods: {
+    changeCommentState(index) {
+      let bookFooterLink = document.querySelectorAll('.book-footer-link');
+      for (let i = 0; i < bookFooterLink.length; i++) {
+        if (index !== i) {
+          bookFooterLink[i].style.backgroundColor = 'yellow';
+        } else {
+          bookFooterLink[i].style.backgroundColor = '#0099ff';
+          this.commentState = index;
+          localStorage.setItem('commentState', index);
+          this.$store.dispatch('Book/setCommentStateAction', index);
+        }
+      }
+    },
+    submitComment() {
+      this.$axios.post('http://localhost:5000/comment/postComment', {
+        bookId: this.book.bookId,
+        commentContent: this.commentContent,
+        commentStatus: this.commentState,
+      }, {
+        headers: {
+          'token': this.$store.state.User.token,
+        }
+      }).then((res) => {
+        if (res.data.code === 0) {
+          this.$message({
+            message: '评论失败',
+            type: 'success'
+          })
+        }
+        if (res.data.code === 1) {
+          this.$message({
+            message: '评论成功，即将返回到图书详情页面',
+            type: 'success'
+          })
+          this.$router.push(`/index/bookDetails/${this.book.bookId}`)
+        }
+      })
+    }
+  },
+  mounted() {
+    let bookFooterLink = document.querySelectorAll('.book-footer-link');
+    this.commentState = localStorage.getItem('commentState');
+    this.book = JSON.parse(localStorage.getItem('book'));
+    console.log(this.commentState);
+    bookFooterLink[this.commentState].style.backgroundColor = '#0099ff';
   }
 }
 </script>
@@ -20,19 +69,19 @@ export default {
             点评"{{book.bookName}}"
           </div>
           <div class="comment-score">
-            <div class="book-footer-link">
+            <div class="book-footer-link" @click="changeCommentState(0)">
               <div class="book-footer-icon">
                 <i class="iconfont icon-Outline_fuben11"></i>
                 推荐
               </div>
             </div>
-            <div class="book-footer-link">
+            <div class="book-footer-link" @click="changeCommentState(1)">
               <div class="book-footer-icon">
                 <i class="iconfont icon-Outline_fuben5"></i>
                 一般
               </div>
             </div>
-            <div class="book-footer-link">
+            <div class="book-footer-link" @click="changeCommentState(2)">
               <div class="book-footer-icon">
                 <i class="iconfont icon-Outline_fuben24"></i>
                 不行
@@ -42,10 +91,10 @@ export default {
         </div>
       </div>
       <div class="comment-banner">
-        <textarea class="comment-value"></textarea>
+        <textarea class="comment-value" v-model="commentContent"></textarea>
       </div>
       <div class="comment-footer">
-        <el-button type="primary" class="comment-submit">发 表</el-button>
+        <el-button type="primary" class="comment-submit" @click="submitComment()">发 表</el-button>
       </div>
     </div>
   </div>

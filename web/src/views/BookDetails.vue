@@ -6,9 +6,15 @@ export default {
   // 右下角小球
   data() {
     return {
+      loading: false,
       isSuccessBorrow: 0,
       bookID: null,
-      book: this.$store.state.Book.book,
+      book: this.$store.state.Book.book || {
+        bookId: null,
+        bookName: null,
+        bookAuthor: null,
+        bookDetails: null,
+      },
       bookDetails: [],
       rating: [
         {
@@ -45,23 +51,30 @@ export default {
     ratingStatistics() {
       let a = 0, b = 0, c = 0;
       for (const detail in this.bookDetails) {
-        if (detail.commentStatus === 0) {
+        console.log(1)
+        if (detail.commentStatus == 0) {
           a++;
         }
-        if (detail.commentStatus === 1) {
+        if (detail.commentStatus == 1) {
           b++;
         }
-        if (detail.commentStatus === 2) {
+        if (detail.commentStatus == 2) {
           c++;
         }
       }
-      this.rating[0].value = a / this.bookDetails.length;
-      this.rating[1].value = b / this.bookDetails.length;
-      this.rating[2].value = c / this.bookDetails.length;
-      this.ratingScore = (a * 2 + b) / a * this.bookDetails.length;
+      this.rating[0].value = 1.0 * a / this.bookDetails.length;
+      this.rating[1].value = 1.0 * b / this.bookDetails.length;
+      this.rating[2].value = 1.0 * c / this.bookDetails.length;
+      this.ratingScore = 1.0 * (a * 2 + b) / a * this.bookDetails.length || 0;
+    },
+    bookComment(index) {
+      localStorage.setItem('commentState', index);
+      this.$store.dispatch('setCommentState', index)
+      this.$router.push('/index/bookComment');
     }
   },
   mounted() {
+    this.loading = true;
     this.bookID = this.$route.path.split('/').pop();
     console.log(this.bookID);
     this.$axios.get(`http://localhost:5000/book/getBook/${this.bookID}`).then(res => {
@@ -70,6 +83,7 @@ export default {
       this.$axios.get(`http://localhost:5000/comment/${this.bookID}`).then(res => {
         this.bookDetails = res.data.data;
         this.ratingStatistics();
+        this.loading = false;
       })
     })
   },
@@ -79,7 +93,7 @@ export default {
 
 <template>
 <div class="details" style="margin-top: 200px">
-    <div class="container">
+    <div class="container" v-loading="loading">
       <div class="book-info">
         <div class="reader-book-info">
           <div class="reader-book-info-header">
@@ -113,7 +127,7 @@ export default {
             <div class="ratings-container">
               <div class="rating-container-detail">
                 <div class="rating-container-detail-number">
-                  {{}}
+                  {{this.ratingScore}}
                   <span style="font-size: 20px">%</span>
                 </div>
                 <div class="rating-container-detail-count">
@@ -132,24 +146,24 @@ export default {
               </div>
             </div>
             <div class="ratings-footer">
-              <router-link to="/index/bookComment" class="book-footer-link , km">
+              <span @click="bookComment(0)" class="book-footer-link , km">
                 <div class="book-footer-icon">
                   <i class="iconfont icon-Outline_fuben11"></i>
                   推荐
                 </div>
-              </router-link>
-              <router-link to="/index/bookComment" class="book-footer-link , km">
+              </span>
+              <span @click="bookComment(1)" class="book-footer-link , km">
                 <div class="book-footer-icon">
                   <i class="iconfont icon-Outline_fuben5"></i>
                   一般
                 </div>
-              </router-link>
-              <router-link to="/index/bookComment" class="book-footer-link , km">
+              </span>
+              <span @click="bookComment(2)" class="book-footer-link , km">
                 <div class="book-footer-icon">
                   <i class="iconfont icon-Outline_fuben24"></i>
                   不行
                 </div>
-              </router-link>
+              </span>
             </div>
           </div>
         </div>
@@ -160,7 +174,8 @@ export default {
           <div class="toReview-header">
             <p class="toReview-header-title">精彩点评</p>
           </div>
-          <div class="toReview-banner">
+          <div class="nothing-comment" v-if="this.bookDetails.length === 0">没有评论</div>
+          <div class="toReview-banner" v-else>
             <div class="toReview-banner-item"
                  v-for="(item, index) in bookDetails"
                  :key="index">
@@ -565,8 +580,11 @@ export default {
   max-height: 125px;
 }
 
-
-
-
+.nothing-comment {
+  height: 125px;
+  line-height: 125px;
+  color: #999;
+  text-align: center;
+}
 
 </style>
