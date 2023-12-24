@@ -26,9 +26,9 @@ public class CommentServiceImpl implements CommentService {
         LambdaQueryWrapper<Comment> lqw = new LambdaQueryWrapper<Comment>();
         lqw.eq(Comment::getUserId, userId);
 
-        List<Comment> s = commentMapper.selectList(lqw);
+        List<Comment> list = commentMapper.selectList(lqw);
 
-        return s;
+        return list;
     }
 
     @Override

@@ -12,7 +12,7 @@ export default {
 </script>
 
 <template>
-  <div class="bookComment">
+  <div class="bookComment" style="margin-top: 220px">
     <div class="container" style="background-color:whitesmoke;">
       <div class="comment-header">
         <div class="book-info">
