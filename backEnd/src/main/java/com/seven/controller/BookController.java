@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.*;
 public class BookController {
     @Autowired
     BookService bookService ;
-
+//    @RequestParam(defaultValue = "1") 可设置默认值
+//    @PathVariable Integer typeId
+//    @PathVariable Integer currentPage
     @GetMapping("/searchPage")
     public Result searchPage(@RequestParam(defaultValue = "1") Integer page,
                              @RequestParam(defaultValue = "10") Integer size,

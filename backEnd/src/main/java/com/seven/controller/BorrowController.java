@@ -40,7 +40,6 @@ public class BorrowController {
 
     /**
      * 借书
-     *
      * @param bookId
      * @return
      */
@@ -178,5 +177,37 @@ public class BorrowController {
             return Result.error("获取借书信息失败：" + e.getMessage());
         }
         return Result.success(status);
+    }
+
+    @PutMapping("/{bookId}")
+    public Result renewalBorrow(@PathVariable Integer bookId, ServletRequest request) {
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+
+        try {
+            String token = httpRequest.getHeader("token");
+            Claims claims = JwtUtil.parseJWT(jwtProperties.getAdminSecretKey(), token);
+
+            Integer userId = (Integer) claims.get(JwtClaimsConstant.USER_ID);
+
+            Student student = studentService.getStudent(userId);
+
+            if (student == null) {
+                return Result.error("获取借书信息失败");
+            }
+            if (bookId == null) {
+                return Result.error("参数错误");
+            }
+
+            BorrowDTO borrowDTO = new BorrowDTO().builder()
+                    .bookId(bookId)
+                    .borrowStudentNumber(student.getStudentNumber())
+                    .build();
+
+            log.info("借书dto:{}", borrowDTO);
+            borrowService.renewalBorrow(borrowDTO);
+        } catch (Exception e) {
+            return Result.error("续借失败：" + e.getMessage());
+        }
+        return Result.success("续借成功");
     }
 }
