@@ -88,7 +88,7 @@ export default {
 </script>
 
 <template>
-  <div id="bookQuery">
+  <div id="bookQuery" style="margin-top: 220px">
     <div class="bookQuery">
 
     <div class="container">

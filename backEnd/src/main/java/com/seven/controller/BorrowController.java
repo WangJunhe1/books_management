@@ -73,6 +73,12 @@ public class BorrowController {
         return Result.success("借书成功");
     }
 
+    /**
+     * 获取我的借阅
+     * @param request
+     * @return
+     */
+
     @GetMapping("/myBorrow")
     public Result myBorrow(ServletRequest request) {
 
@@ -92,6 +98,13 @@ public class BorrowController {
         return Result.success(borrowService.getMyBorrow(student.getStudentNumber()));
     }
 
+
+    /**
+     * 图书归还
+     * @param bookId
+     * @param request
+     * @return
+     */
     @PutMapping("/return")
     public Result returnBorrow(@RequestParam Integer bookId, ServletRequest request) {
 
@@ -126,6 +139,13 @@ public class BorrowController {
         return Result.success("归还成功");
     }
 
+
+    /**
+     * 获取借阅状态
+     * @param bookId
+     * @param request
+     * @return
+     */
     @GetMapping("/{bookId}")
     public Result getBorrow(@PathVariable Integer bookId, ServletRequest request) {
         HttpServletRequest httpRequest = (HttpServletRequest) request;

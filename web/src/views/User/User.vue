@@ -17,7 +17,7 @@ export default {
 </script>
 
 <template>
-  <div id="userInfo">
+  <div id="userInfo" style="margin-top: 200px">
     <div class="container">
       <el-container>
         <el-aside width="200px">
