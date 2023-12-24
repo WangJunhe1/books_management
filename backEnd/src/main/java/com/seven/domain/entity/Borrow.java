@@ -30,10 +30,10 @@ public class Borrow {
 
     private String borrowStudentNumber;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime borrowStartTime;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime borrowEndTime;
 
     //1为借阅中，2为已归还

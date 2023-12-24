@@ -22,4 +22,6 @@ public interface BorrowService extends IService<Borrow> {
     List<MyBorrowVO> getMyBorrow(String studentNumber);
 
     void returnBorrow(BorrowDTO borrowDTO);
+
+    void renewalBorrow(BorrowDTO borrowDTO);
 }

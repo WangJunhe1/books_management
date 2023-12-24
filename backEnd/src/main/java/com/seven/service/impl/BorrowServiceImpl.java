@@ -90,4 +90,28 @@ public class BorrowServiceImpl extends ServiceImpl<BorrowMapper, Borrow> impleme
 
         borrowMapper.update(borrow, queryWrapper);
     }
+
+    @Override
+    public void renewalBorrow(BorrowDTO borrowDTO) {
+        LambdaQueryWrapper<Borrow> queryWrapper = new LambdaQueryWrapper<Borrow>()
+                .eq(Borrow::getBookId, borrowDTO.getBookId())
+                .eq(Borrow::getBorrowStudentNumber, borrowDTO.getBorrowStudentNumber());
+
+        Borrow borrowtemp = borrowMapper.selectOne(queryWrapper);
+        if (bookMapper.selectById(borrowDTO.getBookId()) == null) {
+            throw new RuntimeException("图书不存在");
+        }
+        if(borrowtemp != null && borrowtemp.getBorrowStatus() == 2){
+            throw new RuntimeException("图书已归还");
+        }
+        else if(borrowtemp == null){
+            throw new RuntimeException("图书未借阅");
+        }
+
+        Borrow borrow = new Borrow().builder()
+                .borrowEndTime(borrowtemp.getBorrowEndTime().plusMonths(1))
+                .build();
+
+        borrowMapper.update(borrow, queryWrapper);
+    }
 }
