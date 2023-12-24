@@ -59,6 +59,11 @@ public class StudentController {
         return Result.success();
     }
 
+    /**
+     * 获取学生信息
+     * @param request
+     * @return
+     */
     @GetMapping("/getStudent")
     public Result getStudent(ServletRequest request) {
         HttpServletRequest httpRequest = (HttpServletRequest) request;

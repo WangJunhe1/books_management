@@ -179,6 +179,12 @@ public class BorrowController {
         return Result.success(status);
     }
 
+    /**
+     * 续订功能
+     * @param bookId
+     * @param request
+     * @return
+     */
     @PutMapping("/{bookId}")
     public Result renewalBorrow(@PathVariable Integer bookId, ServletRequest request) {
         HttpServletRequest httpRequest = (HttpServletRequest) request;

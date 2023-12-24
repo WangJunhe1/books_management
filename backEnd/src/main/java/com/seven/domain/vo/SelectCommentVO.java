@@ -11,8 +11,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SelectCommentVO {
     private String commentContent;
+
     private String userName;
+
     private String portrait;
+
     private int commentStatus;
+
     private Book book;
 }

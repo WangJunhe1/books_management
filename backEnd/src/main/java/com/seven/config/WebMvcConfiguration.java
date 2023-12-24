@@ -60,7 +60,8 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
                 .excludePathPatterns("/student/register")
                 .excludePathPatterns("/bookType/getBookType")
                 .excludePathPatterns("/image/**")
-                .excludePathPatterns("/book/{*}");
+                .excludePathPatterns("/book/{*}")
+                .excludePathPatterns("/comment/{*}");
     }
 
     /**
