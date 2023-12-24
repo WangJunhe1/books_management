@@ -91,6 +91,7 @@ public class BorrowServiceImpl extends ServiceImpl<BorrowMapper, Borrow> impleme
         borrowMapper.update(borrow, queryWrapper);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void renewalBorrow(BorrowDTO borrowDTO) {
         LambdaQueryWrapper<Borrow> queryWrapper = new LambdaQueryWrapper<Borrow>()

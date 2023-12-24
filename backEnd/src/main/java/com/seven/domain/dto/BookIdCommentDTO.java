@@ -11,8 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BookIdCommentDTO {
     private Integer bookId;
+
     private String commentContent;
+
     private Integer commentStatus;
+
     @Builder.Default
     private Integer userId = null;
 }

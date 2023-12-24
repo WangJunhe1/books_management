@@ -3,15 +3,11 @@ package com.seven.controller;
 
 import com.seven.constant.JwtClaimsConstant;
 import com.seven.domain.dto.BookIdCommentDTO;
-import com.seven.domain.dto.BorrowDTO;
 import com.seven.domain.entity.Comment;
-import com.seven.domain.entity.Student;
 import com.seven.domain.pojo.Result;
 import com.seven.domain.vo.SelectCommentVO;
 import com.seven.properties.JwtProperties;
-import com.seven.service.BorrowService;
 import com.seven.service.CommentService;
-import com.seven.service.StudentService;
 import com.seven.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.ServletRequest;
@@ -32,8 +28,6 @@ public class CommentController {
     private JwtProperties jwtProperties;
     @Autowired
     private CommentService commentService;
-    @Autowired
-    private StudentService studentService;
 
     /**
      * 评论功能
