@@ -3,7 +3,6 @@ package com.seven.controller;
 
 import com.seven.constant.JwtClaimsConstant;
 import com.seven.domain.dto.BookIdCommentDTO;
-import com.seven.domain.entity.Comment;
 import com.seven.domain.pojo.Result;
 import com.seven.domain.vo.MyCommentVO;
 import com.seven.domain.vo.SelectCommentVO;
