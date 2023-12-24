@@ -31,15 +31,20 @@ public class CommentServiceImpl implements CommentService {
 
         List<Comment> list = commentMapper.selectList(lqw);
 
-
         List<MyCommentVO> myCommentlist = new ArrayList<>();
 
         for (Comment comment : list) {
+
+            if(comment.getBookId() == null)
+                continue;
 
             LambdaQueryWrapper<Book> queryWrapper = new LambdaQueryWrapper<Book>()
                     .eq(Book::getBookId, comment.getBookId());
 
             Book book = bookMapper.selectOne(queryWrapper);
+
+            if(book == null)
+                continue;
 
             MyCommentVO myCommentVO = new MyCommentVO();
             myCommentVO.setCommentContent(comment.getCommentContent());
