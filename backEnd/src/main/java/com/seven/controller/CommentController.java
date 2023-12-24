@@ -7,6 +7,7 @@ import com.seven.domain.dto.BorrowDTO;
 import com.seven.domain.entity.Comment;
 import com.seven.domain.entity.Student;
 import com.seven.domain.pojo.Result;
+import com.seven.domain.vo.MyCommentVO;
 import com.seven.domain.vo.SelectCommentVO;
 import com.seven.properties.JwtProperties;
 import com.seven.service.BorrowService;
@@ -50,7 +51,7 @@ public class CommentController {
 
         Integer userId = (Integer) claims.get(JwtClaimsConstant.USER_ID);
 
-        List<Comment> commentList = commentService.getCommentByUserId(userId);
+        List<MyCommentVO> commentList = commentService.getCommentByUserId(userId);
 
         return Result.success(commentList);
     }
