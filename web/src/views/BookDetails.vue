@@ -68,9 +68,7 @@ export default {
     }
   },
   mounted() {
-    this.book = this.$route.params.book;
-    localStorage.setItem('book', JSON.stringify(this.book));
-    this.$store.dispatch('Book/setBookAction', this.book);
+    this.book = this.$store.state.Book.book;
   },
   
 }
@@ -133,25 +131,25 @@ export default {
 
             
               <div class="ratings-footer">
-              <router-link to="/index/bookComment" class="book-footer-link , km">
+                <router-link to="/index/bookComment" class="book-footer-link , km">
                   <div class="book-footer-icon">
-                  <i class="iconfont icon-Outline_fuben11"></i>
-                  推荐
-                </div>               
-              </router-link>
-              <router-link to="/index/bookComment" class="book-footer-link , km">
-                <div class="book-footer-icon">
-                  <i class="iconfont icon-Outline_fuben5"></i>
-                  一般
-                </div>
-              </router-link>
-              <router-link to="/index/bookComment" class="book-footer-link , km">
-                <div class="book-footer-icon">
-                  <i class="iconfont icon-Outline_fuben24"></i>
-                  不行
-                </div>
-              </router-link>
-            </div>
+                    <i class="iconfont icon-Outline_fuben11"></i>
+                    推荐
+                  </div>
+                </router-link>
+                <router-link to="/index/bookComment" class="book-footer-link , km">
+                  <div class="book-footer-icon">
+                    <i class="iconfont icon-Outline_fuben5"></i>
+                    一般
+                  </div>
+                </router-link>
+                <router-link to="/index/bookComment" class="book-footer-link , km">
+                  <div class="book-footer-icon">
+                    <i class="iconfont icon-Outline_fuben24"></i>
+                    不行
+                  </div>
+                </router-link>
+              </div>
           
           </div>
         </div>

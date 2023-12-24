@@ -1,5 +1,6 @@
 <script>
 import "@/assets/css/BookBorrow.css";
+import bookDetails from "@/views/BookDetails.vue";
 export default {
   data() {
     return {
@@ -10,6 +11,11 @@ export default {
     }
   },
   methods: {
+    bookDetails(item) {
+      localStorage.setItem('book',JSON.stringify(item));
+      this.$store.dispatch('Book/setBookAction', this.book);
+      this.$router.push('/index/bookDetails/'+item.bookId);
+    },
     changeBorrowPage(item,index) {
       this.type = item.bookType;
 
@@ -72,7 +78,7 @@ export default {
           <el-main style="padding: 0">
             <div class="ranking-content-list">
               <div class="ranking-content-list-item" v-for="(item, index) in books" :key="item.id">
-                <router-link :to="{name: 'bookDetails', params: {book: item}}" ></router-link>
+                <span class="font-book" @click="bookDetails(item)" ></span>
                 <div class="content-list-item-info">
                   <p class="content-list-item-info-index">{{index + 1}}</p>
                   <div class="content-list-item-info-cover">
@@ -179,7 +185,7 @@ export default {
   background-color: #4a7ab0;
 }
 
-.ranking-content-list-item a {
+.ranking-content-list-item .font-book {
   position: absolute;
   width: 100%;
   height: 100%;

@@ -66,7 +66,7 @@ export default {
 .comment-header .comment-score {
   margin: 10px auto;
   display: flex;
-  width: 300px;
+  width: 800px;
   justify-content: space-between;
 }
 

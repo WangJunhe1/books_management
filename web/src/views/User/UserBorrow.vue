@@ -50,7 +50,40 @@ export default {
   },
   methods: {
     renewBook(row) {
+      this.loading = true;
       console.log(row);
+
+      this.$axios.put(`http://localhost:5000/borrow/${row.bookId}`,
+          null,
+          {
+            headers: {
+              'token': this.$store.state.User.token,
+            }
+          }
+      ).then((res) => {
+        if (res.data.code === 0) {
+          this.$message({
+            message: res.data.message,
+            type: 'error'
+          });
+        }
+        if (res.data.code === 1) {
+          this.$message({
+            message: '恭喜你，续借成功',
+            type: 'success'
+          });
+          this.$axios.get('http://localhost:5000/borrow/myBorrow',
+              {
+                headers: {
+                  'token': this.$store.state.User.token
+                }
+              }
+          ).then(res => {
+            this.tableData = res.data.data;
+            this.loading = false;
+          })
+        }
+      })
     },
     returnBook(row) {
       this.loading = true;
@@ -62,7 +95,13 @@ export default {
               'token': this.$store.state.User.token,
             }
           }
-      ).then(() => {
+      ).then((res) => {
+        if (res.data.code === 0) {
+          this.$message({
+            message: res.data.message,
+            type: 'error'
+          });
+        }
         this.$axios.get('http://localhost:5000/borrow/myBorrow',
             {
               headers: {
@@ -70,13 +109,13 @@ export default {
               }
             }
         ).then(res => {
-          this.tableData = res.data.data
+          this.tableData = res.data.data;
           this.$message({
             message: '恭喜你，归还成功',
             type: 'success'
           });
           this.loading = false;
-        })
+        });
       })
     },
     load() {
@@ -84,6 +123,7 @@ export default {
     }
   },
   mounted() {
+    this.loading = true;
     this.$axios.get('http://localhost:5000/borrow/myBorrow',
         {
           headers: {
@@ -91,7 +131,8 @@ export default {
           }
         }
     ).then(res => {
-      this.tableData = res.data.data
+      this.tableData = res.data.data;
+      this.loading = false;
     })
   }
 }
