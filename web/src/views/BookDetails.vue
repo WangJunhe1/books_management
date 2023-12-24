@@ -7,48 +7,24 @@ export default {
   data() {
     return {
       isSuccessBorrow: 0,
+      bookID: null,
       book: this.$store.state.Book.book,
-      bookDetail: {
-        bookName: '《JavaScript权威指南》',
-        count: 92,
-        number: 73.2,
-        ratings: [
-          {
-            user: {
-              ...this.$store.state.User.user,
-              img: 'https://avatars.githubusercontent.com/u/122709756?v=4'
-            },
-            score: 4.5,
-            time: '2019-08-08 12:12',
-            commentType: 1,
-            text: "评价内容",
-          },
-          {
-            user: {
-              ...this.$store.state.User.user,
-              img: 'https://avatars.githubusercontent.com/u/122709756?v=4'
-            },
-            score: 4.5,
-            time: '2019-08-08 12:12',
-            commentType: 1,
-            text: "评价内容",
-          },
-        ],
-        ratingsSum: [
-          {
-            name: "推荐",
-            number: 72,
-          },
-          {
-            name: "一般",
-            number: 22,
-          },
-          {
-            name: "不行",
-            number: 5,
-          },
-        ]
-      }
+      bookDetails: [],
+      rating: [
+        {
+          name: '推荐',
+          value: null
+        },
+        {
+          name: '一般',
+          value: null
+        },
+        {
+          name: '不行',
+          value: null
+        },
+      ],
+      ratingScore: null,
     }
   },
   methods: {
@@ -65,10 +41,37 @@ export default {
           }).then (res => {
             this.isSuccessBorrow = res.data.code;
       })
+    },
+    ratingStatistics() {
+      let a = 0, b = 0, c = 0;
+      for (const detail in this.bookDetails) {
+        if (detail.commentStatus === 0) {
+          a++;
+        }
+        if (detail.commentStatus === 1) {
+          b++;
+        }
+        if (detail.commentStatus === 2) {
+          c++;
+        }
+      }
+      this.rating[0].value = a / this.bookDetails.length;
+      this.rating[1].value = b / this.bookDetails.length;
+      this.rating[2].value = c / this.bookDetails.length;
+      this.ratingScore = (a * 2 + b) / a * this.bookDetails.length;
     }
   },
   mounted() {
-    this.book = this.$store.state.Book.book;
+    this.bookID = this.$route.path.split('/').pop();
+    console.log(this.bookID);
+    this.$axios.get(`http://localhost:5000/book/getBook/${this.bookID}`).then(res => {
+      this.book = res.data.data;
+      console.log(this.book);
+      this.$axios.get(`http://localhost:5000/comment/${this.bookID}`).then(res => {
+        this.bookDetails = res.data.data;
+        this.ratingStatistics();
+      })
+    })
   },
   
 }
@@ -110,47 +113,44 @@ export default {
             <div class="ratings-container">
               <div class="rating-container-detail">
                 <div class="rating-container-detail-number">
-                  {{bookDetail.number}}
+                  {{}}
                   <span style="font-size: 20px">%</span>
                 </div>
                 <div class="rating-container-detail-count">
-                  {{bookDetail.count}}人点评
+                  {{this.bookDetails.length}}人点评
                 </div>
               </div>
               <div class="book-rating-bar-container">
                 <div class="book-rating-bar"
-                     v-for="(item, index) in bookDetail.ratingsSum"
+                     v-for="(item, index) in this.rating"
                      :key="index">
                   <span>{{item.name}}</span>
                   <div class="book-sating-item-bar-bgc">
-                    <div class="book-sating-item-bar" :style="{width: item.number+'%'}"></div>
+                    <div class="book-sating-item-bar" :style="{width: item.value+'%'}"></div>
                   </div>
                 </div>
               </div>
             </div>
-
-            
-              <div class="ratings-footer">
-                <router-link to="/index/bookComment" class="book-footer-link , km">
-                  <div class="book-footer-icon">
-                    <i class="iconfont icon-Outline_fuben11"></i>
-                    推荐
-                  </div>
-                </router-link>
-                <router-link to="/index/bookComment" class="book-footer-link , km">
-                  <div class="book-footer-icon">
-                    <i class="iconfont icon-Outline_fuben5"></i>
-                    一般
-                  </div>
-                </router-link>
-                <router-link to="/index/bookComment" class="book-footer-link , km">
-                  <div class="book-footer-icon">
-                    <i class="iconfont icon-Outline_fuben24"></i>
-                    不行
-                  </div>
-                </router-link>
-              </div>
-          
+            <div class="ratings-footer">
+              <router-link to="/index/bookComment" class="book-footer-link , km">
+                <div class="book-footer-icon">
+                  <i class="iconfont icon-Outline_fuben11"></i>
+                  推荐
+                </div>
+              </router-link>
+              <router-link to="/index/bookComment" class="book-footer-link , km">
+                <div class="book-footer-icon">
+                  <i class="iconfont icon-Outline_fuben5"></i>
+                  一般
+                </div>
+              </router-link>
+              <router-link to="/index/bookComment" class="book-footer-link , km">
+                <div class="book-footer-icon">
+                  <i class="iconfont icon-Outline_fuben24"></i>
+                  不行
+                </div>
+              </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -162,29 +162,29 @@ export default {
           </div>
           <div class="toReview-banner">
             <div class="toReview-banner-item"
-                 v-for="(item, index) in bookDetail.ratings"
+                 v-for="(item, index) in bookDetails"
                  :key="index">
               <div class="toReview-banner-item-title">
                 <div class="banner-title-user-info">
-                  <img class="banner-title-user-img" :src="item.user.img" :alt="item.user.username">
+                  <img class="banner-title-user-img" :src="item.portrait" :alt="item.userName">
                 </div>
-                <span class="banner-title-user-name">{{item.user.username}}</span>
-                  <div class="banner-title-user-comment" v-if="item.commentType === 1">
+                <span class="banner-title-user-name">{{item.userName}}</span>
+                  <div class="banner-title-user-comment" v-if="item.commentStatus === 0">
                   <i class="iconfont icon-Outline_fuben11"></i>
                     <div class="iconfont-text">推荐</div> 
                 </div>
          
-                <div class="banner-title-user-comment" v-if="item.commentType === 2">
+                <div class="banner-title-user-comment" v-if="item.commentStatus === 1">
                   <i class="iconfont icon-Outline_fuben5"></i>
                   <div class="iconfont-text">一般</div>
                 </div>
-                <div class="banner-title-user-comment" v-if="item.commentType === 3">
+                <div class="banner-title-user-comment" v-if="item.commentStatus === 2">
                   <i class="iconfont icon-Outline_fuben24"></i>
                   <div class="iconfont-text">不行</div>
                 </div>
               </div>
               <p class="toReview-banner-item-comment">
-                {{item.text}}
+                {{item.commentContent}}
               </p>
             </div>
           </div>
