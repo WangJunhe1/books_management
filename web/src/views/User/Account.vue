@@ -3,11 +3,7 @@ export default {
   name: 'Account',
   data() {
     return {
-      user: {
-        password: '',
-        phone: '',
-        email: ''
-      }
+      student: {},
     }
   },
   methods: {
@@ -18,11 +14,12 @@ export default {
         inputPattern: /\S/,
         inputErrorMessage: '密码不能为空'
       }).then(({ value }) => {
-        this.user.password = value;
-        this.$message({
-          type: 'success',
-          message: '你的密码是: ' + value
-        });
+        this.$axios.put(`http://localhost:5000/user/updatePassword?studentNumber=${this.student.studentNumber}&password=${value}`).then(() => {
+          this.$message({
+            type: 'success',
+            message: '你的密码是: ' + value
+          });
+        })
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -94,6 +91,15 @@ export default {
       },
       deep: true
     }
+  },
+  mounted() {
+    this.$axios.get('http://localhost:5000/studnet/getStudnet', {
+      headers: {
+        'token': this.$store.state.USer.token
+      }
+    }).then(res => {
+      this.student = res.data.data;
+    })
   }
 }
 </script>

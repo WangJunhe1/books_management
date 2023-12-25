@@ -37,8 +37,6 @@ export default {
               </template>
               <el-menu-item index="/user/userInfo/profile">个人资料</el-menu-item>
               <el-menu-item index="/user/userInfo/account">账号设置</el-menu-item>
-              <el-menu-item index="/user/userInfo/collection">我的收藏</el-menu-item>
-              <el-menu-item index="/user/userInfo/history">浏览历史</el-menu-item>
             </el-submenu>
             <el-menu-item index="/user/borrow">
               <i class="el-icon-reading"></i>
