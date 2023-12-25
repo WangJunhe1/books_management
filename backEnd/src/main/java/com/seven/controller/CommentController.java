@@ -79,6 +79,7 @@ public class CommentController {
         Integer userId = (Integer) claims.get(JwtClaimsConstant.USER_ID);
 
         bookIdCommentDTO.setUserId(userId);
+        System.out.println(bookIdCommentDTO);
         commentService.postComment(bookIdCommentDTO);
 
         return Result.success();
