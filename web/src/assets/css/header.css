@@ -17,7 +17,7 @@
 }
 
 .main ul li:hover {
-    font-size: 30px; /* 鼠标悬停时字体变大 */
+    font-size: 25px; /* 鼠标悬停时字体变大 */
 }
 
 .main a:hover {

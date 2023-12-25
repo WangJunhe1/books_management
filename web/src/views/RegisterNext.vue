@@ -7,7 +7,7 @@ export default {
         studentName: '',
         studentSex: '',
         studentEmail: '',
-        birthDate: '',
+        birthday: '',
         region: '',
         description: '',
       },
@@ -398,35 +398,28 @@ export default {
       if (this.student.region !== null) {
         this.student.region = this.student.region.join("/");
       }
+      if (this.student.birthday !== null) {
+        this.student.birthday = this.student.birthday.toLocaleDateString();
+      }
       this.$axios.post('http://localhost:5000/student/register', {
-        studentNumber: this.student.studentNumber,
         studentName: this.student.studentName,
+        studentNumber: this.student.studentNumber,
         studentSex: this.student.studentSex,
         studentEmail: this.student.studentEmail,
-        birthDate: this.student.birthDate,
+        birthday: this.student.birthday,
         region: this.student.region,
         description: this.student.description,
       }).then(() => {
-        this.$router.push('/login');
+        this.$message({
+          message: '学生信息注册成功，请重新注册账号',
+          type: 'success'
+        })
+        this.$router.push('/register');
       })
     },
     resetForm() {
       this.$router.go(-1);
     },
-    remoteMethod(query) {
-      if (query !== '') {
-        this.loading = true;
-        setTimeout(() => {
-          this.loading = false;
-          this.options = this.list.filter(item => {
-            return item.label.toLowerCase()
-                .indexOf(query.toLowerCase()) > -1;
-          });
-        }, 200);
-      } else {
-        this.options = [];
-      }
-    }
   }
 }
 </script>
@@ -449,7 +442,7 @@ export default {
           <el-input v-model="student.studentEmail" placeholder="请输入学生邮箱"></el-input>
         </el-form-item>
         <el-form-item label="学生出生日期" prop="birthDate">
-          <el-date-picker type="date" v-model="student.birthDate" placeholder="请输入个人日期" style="width: 100%;"></el-date-picker>
+          <el-date-picker type="date" v-model="student.birthday" placeholder="请输入个人日期" style="width: 100%;"></el-date-picker>
         </el-form-item>
         <el-form-item label="学生所在地区" prop="address">
           <el-cascader :options="options" clearable style="width: 100%;" v-model="student.region"></el-cascader>
