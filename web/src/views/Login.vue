@@ -75,7 +75,7 @@ export default {
             <i class="iconfont icon-github"></i>
             <i class="iconfont icon-bilibili-line"></i>
           </div>
-          <span class="form_span">选择登录方式或电子邮箱注册</span>
+          <span class="form_span">登录</span>
           <input type="text" class="form_input" placeholder="Username" v-model="user.username"/>
           <input type="password" class="form_input" placeholder="Password" v-model="user.password" @keyup.enter="formCheck"/>
           <router-link to="/register" class="form_link">忘记密码?</router-link>

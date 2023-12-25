@@ -18,7 +18,7 @@ export default {
 </script>
 
 <template>
-  <div id="bookDistribution" style="margin-top: 220px">
+  <div id="bookDistribution">
     <div class="container">
       <el-table
           v-loading="loading"

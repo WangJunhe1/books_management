@@ -29,6 +29,20 @@ export default {
         })
         return false;
       }
+      if(this.user.studentId.trim() === '') {
+        this.$message({
+          message: '学号不能为空',
+          type: 'error'
+        })
+        return false;
+      }
+      if(this.user.studentId.length !== 12) {
+        this.$message({
+          message: '学号长度为12位',
+          type: 'error'
+        })
+        return false;
+      }
       if(this.user.phone.trim() === '') {
         this.$message({
           message: '手机号不能为空',
@@ -57,23 +71,16 @@ export default {
         })
         return false;
       }
-      this.$router.push('/registerNext');
-      /*  分页设置数据
-      this.$axios.post('http://localhost:5000/user/register', this.user).then(res => {
-        if (res.data.code === 200) {
-          this.$message({
-            message: '注册成功',
-            type: 'success'
-          })
-          this.$router.push('/registerNext');
-        } else {
-          this.$message({
-            message: res.data.message,
-            type: 'error'
-          })
-          return false;
-        }
-      })*/
+       // 分页设置数据
+      this.$axios.post('http://localhost:5000/user/register', {
+        username: this.user.username,
+        phone: this.user.phone,
+        studentId: this.user.studentId,
+        password: this.user.password
+      }).then(() => {
+        this.$router.push('/registerNext');
+      });
+
     }
   }
 }
@@ -92,8 +99,9 @@ export default {
             <i class="iconfont icon-github"></i>
             <i class="iconfont icon-bilibili-line"></i>
           </div>
-          <span class="form_span">选择注册方式或电子邮箱注册</span>
+          <span class="form_span">注册</span>
           <input type="text" class="form_input" placeholder="Name" v-model="user.username" />
+          <input type="text" class="form_input" placeholder="StudentId" v-model="user.studentId" />
           <input type="text" class="form_input" placeholder="Phone" v-model="user.phone" />
           <input type="password" class="form_input" placeholder="Password" v-model="user.password" />
           <el-button  :plain="true" class="form_button button submit"  @click="register()">SIGN UP</el-button>

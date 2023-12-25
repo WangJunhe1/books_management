@@ -35,7 +35,7 @@ export default {
 }
 </script>
 <template>
-    <div >
+    <div class="head">
       <div class="black">
           <a href="/index" title="首页" class="img">
             <img id="myImage" src="@/assets/css/logo.png" style="width: 500px;" alt="Example Image">

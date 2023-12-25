@@ -27,7 +27,7 @@ export default {
            :key="index">
         <div class="toReview-banner-item-title">
           <div class="banner-title-user-info">
-            <img class="banner-title-user-img" :src="item.portrait" :alt="item.userName">
+            <span>{{item.bookName}}</span>
           </div>
           <span class="banner-title-user-name">{{item.userName}}</span>
           <div class="banner-title-user-comment" v-if="item.commentStatus === 0">

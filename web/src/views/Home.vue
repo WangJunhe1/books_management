@@ -3,6 +3,7 @@
 export default {
   data() {
     return {
+      isSelected: false,
       page: 1,
       input: "",
       myBorrowBooks: [
@@ -65,7 +66,8 @@ export default {
           img: "https://img3.doubanio.com/lpic/s1167614.jpg",
         }
       ],
-      classifyList: []
+      classifyList: [],
+      searchBooks: []
     }
   },
   methods: {
@@ -73,10 +75,26 @@ export default {
       this.page++;
       this.$axios.get(`http://localhost:5000/book/nextPage/${this.page}`).then(res => {
         this.recommendBooks = res.data.data;
+        console.log(this.recommendBooks);
       })
     },
     bookDetails(id) {
       this.$router.push(`/index/bookDetails/${id}`);
+    },
+    getSearchBooks() {
+      this.isSelected = true;
+      // TODO:查询
+      this.$axios.post('http://localhost:5000/book/searchPage', {
+          bookName: this.input
+      }).then(res => {
+        this.searchBooks = res.data.data.rows;
+      })
+    },
+    changeIsSelectedTure() {
+      this.isSelected = true;
+    },
+    changeIsSelectedFalse() {
+      this.isSelected = false;
     }
   },
   mounted() {
@@ -103,7 +121,7 @@ export default {
 </script>
 
 <template>
-  <div id="bookQuery" style="margin-top: 220px">
+  <div id="bookQuery">
     <div class="bookQuery">
       <div class="container">
         <div class="header">
@@ -113,8 +131,27 @@ export default {
                 placeholder="请输入内容"
                 prefix-icon="el-icon-search"
                 v-model="input"
+                @blur="changeIsSelectedFalse()"
+                @focus="changeIsSelectedTure()"
                 clearable>
             </el-input>
+            <el-button type="primary" @click="getSearchBooks()" icon="el-icon-arrow-right" class="search-input-button"></el-button>
+            <div class="search_result_global_list" v-if="this.isSelected === true">
+              <div class="search_result_global_item" v-for="item in searchBooks" :key="item.bookId">
+                <span class="search_result_global_bookLink" @click="bookDetails(item.bookId)">
+                  <div class="search_result_global_bookBlock">
+                    <div class="search_result_global_bookCover">
+                      <img :src="item.bookImg" :alt="item.bookName" class="wr_bookCover_img" >
+                    </div>
+                    <div class="search_result_global_bookInfo">
+                      <p class="search_result_global_bookTitle">{{item.bookName}}</p>
+                      <p class="search_result_global_bookAuthor">{{item.bookAuthor}}</p>
+                      <p class="search_result_global_bookContent">{{item.bookDesc}}</p>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
         <div class="banner">
@@ -169,8 +206,6 @@ export default {
         </div>
       </div>
 
-
-
       <div class="footer">
         <div class="book-classify">
           <h2 class="book-classify-title bookshelf-title">
@@ -203,6 +238,14 @@ export default {
 #bookQuery .header .input {
   margin: 30px auto;
   width: 60%;
+  position: relative;
+}
+
+.input .search-input-button {
+  position: absolute;
+  height: 50px;
+  right: 0;
+  border-radius: 25px;
 }
 
 #bookQuery .header .el-input__inner {
@@ -218,7 +261,7 @@ export default {
 .header-borrow {
   position: relative;
   font-size: 25px;
-  color: white;
+  color: brown;
 }
 
 .header-borrow .right-link {
@@ -246,7 +289,7 @@ export default {
   position: absolute;
   right: 0;
   font-size: 20px;
-  color: white;
+  color: brown;
 }
 
 .right-link:hover {
@@ -260,10 +303,6 @@ export default {
   flex-wrap: wrap;
   justify-content: space-between;
 }
-
-
-
-
 
 .myBorrow .borrow-bookshelf:hover {
   transform: scale(1.1);
@@ -298,19 +337,19 @@ export default {
 
 .myBorrow .borrow-bookshelf .book-info .book-name {
   font-size: 16px;
-  color: #ffffff;
+  color: brown;
   font-weight: 500;
 }
 
 .myBorrow .borrow-bookshelf .book-info .book-author {
   margin-top: 10px;
   font-size: 14px;
-  color: white;
+  color: brown;
 }
 
 .recommend {
   width: 100%;
-  color: white;
+  color: brown;
 }
 
 .recommend .recommend-list {
@@ -367,7 +406,7 @@ export default {
   text-overflow: ellipsis;
   word-break: break-all;
   word-wrap: normal;
-  color: #eef0f4;
+  color: brown;
 }
 
 .item-allInfo .book-info .book-author {
@@ -378,7 +417,7 @@ export default {
   text-overflow: ellipsis;
   word-break: break-all;
   word-wrap: normal;
-  color: #8a8c90;
+  color: saddlebrown;
 }
 
 .item-allInfo .book-info .book-desc {
@@ -386,13 +425,13 @@ export default {
   margin-top: 10px;
   font-size: 13px;
   font-family: DIN-Regular,PingFang SC,-apple-system,SF UI Text,Lucida Grande,STheiti,Microsoft YaHei,sans-serif;
-  color: #8a8c90;
+  color: brown;
   line-height: 21px;
   overflow: hidden;
   max-height: 42px;
 }
 .bookQuery{
-  background-color: black;
+  background-color: whitesmoke;
 }
 .myBorrow .borrow-bookshelf {
   position: relative;
@@ -401,11 +440,12 @@ export default {
   border-radius: 12px;
   width: 23.5%;
   transition: all .2s ease-in-out;
-  background-color: black;
+  background-color: whitesmoke;
+  color: brown;
 }
 /*书鼠标悬浮变色*/
 .myBorrow .borrow-bookshelf:hover {
-  background-color: rgb(38, 38, 40);
+  background-color: white;
 }
 
 .recommend .recommend-list .recommend-item {
@@ -414,11 +454,11 @@ export default {
   border-radius: 12px;
   width: 23.5%;
   transition: all .2s ease-in-out;
-  background-color: black;
+  background-color: whitesmoke;
 }
 /*书鼠标悬浮变色*/
 .recommend .recommend-list .recommend-item:hover{
-  background-color: rgb(38, 38, 40);
+  background-color: white;
 }
 
 .book-classify{
@@ -426,7 +466,7 @@ export default {
   width: 79%;
 }
 .book-classify h2{
-  color: white;
+  color: brown;
 }
 .book-classify ul{
   width: 100%;
@@ -449,14 +489,134 @@ export default {
 
 .book-classify a {
   text-decoration: none;
-  color: white;
+  color: brown;
   height: 100%; /* 让a标签高度100%填充li元素 */
   display: flex; /* 使用flex布局 */
   align-items: center; /* 实现垂直居中 */
 }
 
 .book-classify ul li:hover{
-  background-color:rgb(38, 38, 40);
+  background-color: white;
 }
 
+.search_result_global_list {
+  position: absolute;
+  float: right;
+  z-index: 100;
+  display: block;
+  border-radius: 12px;
+  background-color: white;
+  margin-top: 10px;
+  height: 500px;
+  overflow-y: scroll;
+  width: 680px;
+  margin-bottom: 20px;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.search_result_global_item:first-child {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.search_result_global_item:last-child {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+.search_result_global_item {
+  padding: 24px;
+  cursor: pointer;
+  border-radius: 0;
+  border: solid hsla(0,0%,100%,.05);
+  border-width: 0 0 1px;
+}
+
+.search_result_global_bookLink {
+  display: block;
+  user-select: none;
+}
+
+.search_result_global_item {
+  padding: 24px;
+  cursor: pointer;
+  border-radius: 0;
+  border: solid hsla(0,0%,100%,.05);
+  border-width: 0 0 1px;
+}
+
+.search_result_global_item:hover {
+  background-color: wheat;
+}
+
+.search_result_global_bookCover {
+  width: 72px!important;
+  height: 103px!important;
+  float: left;
+  display: block;
+  width: 120px;
+  height: 174px;
+  box-shadow: 0 2px 16px rgba(0,0,0,.08);
+  background: #d8d8d8;
+  position: relative;
+}
+
+.wr_bookCover_img {
+  vertical-align: top;
+  width: 100%;
+  height: 100%;
+  background-color: #d8d8d8;
+  -o-object-fit: cover;
+  object-fit: cover;
+}
+
+.search_result_global_bookInfo {
+  padding: 0 0 0 94px;
+}
+
+.search_result_global_bookTitle {
+  padding-top: 3px;
+  font-size: 16px;
+  font-family: "SourceHanSerifCN-Bold",PingFang SC,-apple-system,SF UI Text,Lucida Grande,STheiti,Microsoft YaHei,sans-serif;
+  color: brown;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  word-wrap: normal;
+}
+
+.search_result_global_bookAuthor {
+  font-size: 13px;
+  margin-top: 6px;
+  color: saddlebrown;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  word-wrap: normal;
+}
+
+.search_result_global_bookContent {
+  margin-top: 6px;
+  font-size: 14px;
+  color: brown;
+  line-height: 22px;
+  overflow: hidden;
+  height: 44px;
+  display: -webkit-box;
+  display: -moz-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -moz-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  -webkit-text-size-adjust: none;
+  box-orient: vertical;
+  height: auto;
+  max-height: 44px;
+}
 </style>
