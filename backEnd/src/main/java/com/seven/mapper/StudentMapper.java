@@ -11,10 +11,10 @@ public interface StudentMapper extends BaseMapper<Student> {
 
     /**
      * 通过学生姓名查找学生id
-     * @param studentName
+     * @param studentNumber
      * @return
      */
-    @Select("select student_id from student where student_name = #{studentName}")
-    Integer selectIdByName(@Param("studentName") String studentName);
+    @Select("select student_id from student where student_number = #{studentNumber}")
+    Integer selectIdByNumber(@Param("studentNumber") String studentNumber);
 
 }

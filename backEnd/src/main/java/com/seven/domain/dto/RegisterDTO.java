@@ -16,8 +16,11 @@ import lombok.NoArgsConstructor;
 @Builder
 public class RegisterDTO {
     private String username;
+
     private String password;
+
     private String phone;
+
     @Builder.Default
-    private String studentName = null;
+    private String studentNumber = null;
 }

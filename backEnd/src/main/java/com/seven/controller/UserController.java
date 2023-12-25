@@ -91,7 +91,7 @@ public class UserController {
         StudentUserDTO studentUserDTO = new StudentUserDTO()
                 .builder()
                 .userId(code)
-                .studentName(registerDTO.getStudentName())
+                .studentNumber(registerDTO.getStudentNumber())
                 .build();
 
         code = studentService.updateStudent(studentUserDTO);
@@ -112,6 +112,7 @@ public class UserController {
     @PutMapping("/updatePassword")
     public Result updatePassword(@RequestParam(required = true) String studentNumber,
                                  @RequestParam(required = true) String password){
+        System.out.println("password:"+password);
         userService.updatePassword(studentNumber, password);
         return Result.success();
     }

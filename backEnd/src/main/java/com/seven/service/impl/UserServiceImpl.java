@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
         //设置密码并进行md5加密
         user.setPassword(DigestUtils.md5DigestAsHex(user.getPassword().getBytes()));
 
-        Integer studentId = studentMapper.selectIdByName(registerDTO.getStudentName());
+        Integer studentId = studentMapper.selectIdByNumber(registerDTO.getStudentNumber());
 
         //学生查不到
         if (studentId == null) {

@@ -19,7 +19,7 @@ public class SearchDTO {
     private String bookName = null;
 
     @Builder.Default
-    private String bookAuthor = null;
+    private String bookAuthor =null ;
 
     @Builder.Default
     private String bookDesc = null;

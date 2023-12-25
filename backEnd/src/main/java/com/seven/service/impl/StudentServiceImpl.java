@@ -67,7 +67,7 @@ public class StudentServiceImpl implements StudentService {
         BeanUtils.copyProperties(studentUserDTO, student);
 
         UpdateWrapper<Student> updateWrapper = new UpdateWrapper<Student>()
-                .eq("student_name", student.getStudentName());
+                .eq("student_number", student.getStudentNumber());
 
         log.info("student: {}", student);
         Integer code = studentMapper.update(student, updateWrapper);

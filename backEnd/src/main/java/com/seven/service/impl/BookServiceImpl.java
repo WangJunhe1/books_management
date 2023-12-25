@@ -31,16 +31,13 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
     private BookMapper bookMapper;
 
     @Override
-    public PageBean searchPage(Integer page, Integer size, SearchDTO searchDTO) {
-        PageHelper.startPage(page, size);
+    public List<Book> searchPage(SearchDTO searchDTO) {
         Book book = new Book();
         BeanUtils.copyProperties(searchDTO,book);
 
         List<Book> bookList = bookMapper.searchList(book);
-        Page<Book> pages = (Page<Book>) bookList;
 
-        PageBean pageBean = new PageBean(pages.getTotal(),pages.getResult());
-        return pageBean;
+        return bookList;
     }
 
     @Override
