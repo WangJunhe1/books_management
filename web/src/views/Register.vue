@@ -75,9 +75,10 @@ export default {
       this.$axios.post('http://localhost:5000/user/register', {
         username: this.user.username,
         phone: this.user.phone,
-        studentId: this.user.studentId,
+        studentNumber: this.user.studentId,
         password: this.user.password
       }).then((res) => {
+        console.log(res.data)
         if (res.data.code === 0) {
           this.$message({
             message: '注册失败，没有查询到对应到学生ID，您需要先进行学生注册',

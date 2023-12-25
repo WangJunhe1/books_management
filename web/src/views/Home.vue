@@ -110,6 +110,7 @@ export default {
         }
     ).then(res => {
       this.myBorrowBooks = res.data.data;
+      console.log(this.myBorrowBooks )
       this.loading = false;
     })
     this.$axios.get('http://localhost:5000/bookType/getBookType').then(res => {
@@ -160,7 +161,7 @@ export default {
         </div>
         <div class="banner">
           <div class="myBorrow">
-            <h2 class="header-borrow bookshelf-title">
+            <h2 class="header-borrow bookshelf-title" v-if="this.myBorrowBooks.length !== 0">
               我的借阅
               <router-link class="right-link" to="/user/comment">
                 查看我的借阅&gt

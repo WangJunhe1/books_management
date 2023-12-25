@@ -390,6 +390,7 @@
         console.log(this.student.region)
         this.student.region = this.student.region.join("/");
         this.student.birthday = this.student.birthday.toLocaleDateString();
+        this.student.birthday = this.student.birthday.replaceAll("\/", "-");
         this.$axios.post('http://localhost:5000/image/upload',
             {
               "studentNumber": this.student.studentNumber,
@@ -397,12 +398,21 @@
             },
             {
               headers: {
+                'token': this.$store.state.User.token,
                 'Content-Type': 'multipart/form-data'
               }
             }
         )
         this.$axios.put('http://localhost:5000/student/update',
-                    this.student,
+            {
+              userId: this.student.userId,
+              studentNumber: this.student.studentNumber,
+              studentName: this.student.studentName,
+              studentSex: this.student.studentSex,
+              region: this.student.region,
+              description: this.student.description,
+              birthday: this.student.birthday,
+            }
         ).then(() => {
           //  数据回显
           this.$axios.get('http://localhost:5000/student/getStudent', {
