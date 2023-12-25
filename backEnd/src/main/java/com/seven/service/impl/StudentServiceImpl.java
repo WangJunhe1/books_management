@@ -9,11 +9,17 @@ import com.seven.domain.entity.Student;
 import com.seven.mapper.StudentMapper;
 import com.seven.service.StudentService;
 import com.seven.utils.CodeUtil;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 /**
  * @author :Wjh
@@ -36,6 +42,14 @@ public class StudentServiceImpl implements StudentService {
         Student student = new Student();
         log.info("studentRegisterDTO: {}", studentRegisterDTO);
         BeanUtils.copyProperties(studentRegisterDTO, student);
+
+        Date date = studentRegisterDTO.getBirthday();
+        Instant instant = date.toInstant();
+        ZoneId zoneId = ZoneId.systemDefault();
+        LocalDateTime localDateTime = instant.atZone(zoneId).toLocalDateTime();
+
+        student.setBirthday(localDateTime);
+
         log.info("student: {}", student);
         studentMapper.insert(student);
         return student;
