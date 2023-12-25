@@ -390,6 +390,7 @@
         console.log(this.student.region)
         this.student.region = this.student.region.join("/");
         this.student.birthday = this.student.birthday.toLocaleDateString();
+        this.student.birthday = this.student.birthday.replaceAll("\/", "-");
         this.$axios.post('http://localhost:5000/image/upload',
             {
               "studentNumber": this.student.studentNumber,
@@ -397,30 +398,41 @@
             },
             {
               headers: {
+                'token': this.$store.state.User.token,
                 'Content-Type': 'multipart/form-data'
               }
             }
         )
         this.$axios.put('http://localhost:5000/student/update',
-                    this.student,
-        )
-        //  数据回显
-        this.$axios.get('http://localhost:5000/student/getStudent', {
-          headers: {
-            'token': this.$store.state.User.token,
-          }
-        }).then(res => {
-          this.student = res.data.data;
+            {
+              userId: this.student.userId,
+              studentNumber: this.student.studentNumber,
+              studentName: this.student.studentName,
+              studentSex: this.student.studentSex,
+              region: this.student.region,
+              description: this.student.description,
+              birthday: this.student.birthday,
+            }
+        ).then(() => {
+          //  数据回显
+          this.$axios.get('http://localhost:5000/student/getStudent', {
+            headers: {
+              'token': this.$store.state.User.token,
+            }
+          }).then(res => {
+            this.student = res.data.data;
 
-          console.log(this.student.birthday)
-          this.student.birthday = this.student.birthday[0] + "-" + this.student.birthday[1] + "-" + this.student.birthday[2];
-          console.log(this.student.birthday)
-          console.log(this.student.portrait)
+            console.log(this.student.birthday)
+            this.student.birthday = this.student.birthday[0] + "-" + this.student.birthday[1] + "-" + this.student.birthday[2];
+            console.log(this.student.birthday)
+            console.log(this.student.portrait)
+
+            setTimeout(() => {
+              this.fileImg = null;
+              this.isChange = false;
+            }, 2000)
+          })
         })
-        setTimeout(() => {
-          this.fileImg = null;
-          this.isChange = false;
-        }, 2000)
       },
       changeDisplayBlock() {
         let icon = document.querySelector('.iconfont');

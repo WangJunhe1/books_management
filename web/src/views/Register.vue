@@ -71,16 +71,29 @@ export default {
         })
         return false;
       }
-       // 分页设置数据
+
       this.$axios.post('http://localhost:5000/user/register', {
         username: this.user.username,
         phone: this.user.phone,
-        studentId: this.user.studentId,
+        studentNumber: this.user.studentId,
         password: this.user.password
-      }).then(() => {
-        this.$router.push('/registerNext');
+      }).then((res) => {
+        console.log(res.data)
+        if (res.data.code === 0) {
+          this.$message({
+            message: '注册失败，没有查询到对应到学生ID，您需要先进行学生注册',
+            type: 'error'
+          })
+          this.$router.push('/registerNext');
+        }
+        if (res.data.code === 1) {
+          this.$message({
+            message: '注册成功',
+            type: 'success'
+          })
+          this.$router.push('/login');
+        }
       });
-
     }
   }
 }

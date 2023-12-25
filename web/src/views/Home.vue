@@ -1,5 +1,7 @@
 <script>
 
+import book from "@/store/Book";
+
 export default {
   data() {
     return {
@@ -78,8 +80,10 @@ export default {
         console.log(this.recommendBooks);
       })
     },
-    bookDetails(id) {
-      this.$router.push(`/index/bookDetails/${id}`);
+    bookDetails(item) {
+      localStorage.setItem('book',JSON.stringify(item));
+      this.$store.dispatch('Book/setBookAction', localStorage.setItem('book',JSON.stringify(item)));
+      this.$router.push(`/index/bookDetails/${item.bookId}`);
     },
     getSearchBooks() {
       this.isSelected = true;
@@ -87,7 +91,7 @@ export default {
       this.$axios.post('http://localhost:5000/book/searchPage', {
           bookName: this.input
       }).then(res => {
-        this.searchBooks = res.data.data.rows;
+        this.searchBooks = res.data.data;
       })
     },
     changeIsSelectedTure() {
@@ -106,6 +110,7 @@ export default {
         }
     ).then(res => {
       this.myBorrowBooks = res.data.data;
+      console.log(this.myBorrowBooks )
       this.loading = false;
     })
     this.$axios.get('http://localhost:5000/bookType/getBookType').then(res => {
@@ -138,7 +143,7 @@ export default {
             <el-button type="primary" @click="getSearchBooks()" icon="el-icon-arrow-right" class="search-input-button"></el-button>
             <div class="search_result_global_list" v-if="this.isSelected === true">
               <div class="search_result_global_item" v-for="item in searchBooks" :key="item.bookId">
-                <span class="search_result_global_bookLink" @click="bookDetails(item.bookId)">
+                <span class="search_result_global_bookLink" @click="bookDetails(item)">
                   <div class="search_result_global_bookBlock">
                     <div class="search_result_global_bookCover">
                       <img :src="item.bookImg" :alt="item.bookName" class="wr_bookCover_img" >
@@ -156,7 +161,7 @@ export default {
         </div>
         <div class="banner">
           <div class="myBorrow">
-            <h2 class="header-borrow bookshelf-title">
+            <h2 class="header-borrow bookshelf-title" v-if="this.myBorrowBooks.length !== 0">
               我的借阅
               <router-link class="right-link" to="/user/comment">
                 查看我的借阅&gt
@@ -164,7 +169,7 @@ export default {
             </h2>
             <div class="borrow-list">
               <div class="borrow-bookshelf" v-for="item in myBorrowBooks" :key="item.bookId" v-if="myBorrowBooks !== null">
-                <span class="borrow-bookshelf-turn" @click="bookDetails(item.bookId)"></span>
+                <span class="borrow-bookshelf-turn" @click="bookDetails(item)"></span>
                 <div class="book-allInfo">
                   <div class="book-img">
                     <img :src="item.bookImg" :alt="item.bookName" class="borrow-img">
@@ -189,7 +194,7 @@ export default {
             </h2>
             <div class="recommend-list">
               <div class="recommend-item" v-for="item in recommendBooks.rows" :key="item.bookId">
-                <span class="recommend-item-turn" @click="bookDetails(item.bookId)"></span>
+                <span class="recommend-item-turn" @click="bookDetails(item)"></span>
                 <div class="item-allInfo">
                   <div class="book-img">
                     <img :src="item.bookImg" :alt="item.bookName" class="borrow-img">

@@ -3,7 +3,6 @@ import '@/assets/font/iconfont.css'
 import '@/assets/css/csh.css'
 
 export default {
-  // 右下角小球
   data() {
     return {
       loading: false,
@@ -30,7 +29,7 @@ export default {
           value: null
         },
       ],
-      ratingScore: null,
+      ratingScore: 0,
     }
   },
   methods: {
@@ -48,25 +47,6 @@ export default {
             this.isSuccessBorrow = res.data.code;
       })
     },
-    ratingStatistics() {
-      let a = 0, b = 0, c = 0;
-      for (const detail in this.bookDetails) {
-        console.log(1)
-        if (detail.commentStatus == 0) {
-          a++;
-        }
-        if (detail.commentStatus == 1) {
-          b++;
-        }
-        if (detail.commentStatus == 2) {
-          c++;
-        }
-      }
-      this.rating[0].value = 1.0 * a / this.bookDetails.length;
-      this.rating[1].value = 1.0 * b / this.bookDetails.length;
-      this.rating[2].value = 1.0 * c / this.bookDetails.length;
-      this.ratingScore = 1.0 * (a * 2 + b) / a * this.bookDetails.length || 0;
-    },
     bookComment(index) {
       localStorage.setItem('commentState', index);
       this.$store.dispatch('setCommentState', index)
@@ -76,13 +56,26 @@ export default {
   mounted() {
     this.loading = true;
     this.bookID = this.$route.path.split('/').pop();
-    console.log(this.bookID);
     this.$axios.get(`http://localhost:5000/book/getBook/${this.bookID}`).then(res => {
       this.book = res.data.data;
-      console.log(this.book);
       this.$axios.get(`http://localhost:5000/comment/${this.bookID}`).then(res => {
         this.bookDetails = res.data.data;
-        this.ratingStatistics();
+        let a = 0, b = 0, c = 0;
+        for (let i =0; i < this.bookDetails.length; i++) {
+          if (this.bookDetails[i].commentStatus === 0) {
+            a++;
+          }
+          if (this.bookDetails[i].commentStatus === 1) {
+            b++;
+          }
+          if (this.bookDetails[i].commentStatus === 2) {
+            c++;
+          }
+        }
+        this.rating[0].value = a / this.bookDetails.length * 100;
+        this.rating[1].value = b / this.bookDetails.length * 100;
+        this.rating[2].value = c / this.bookDetails.length * 100;
+        this.ratingScore = ((a * 2 + b - c * 0.5) / (2 * this.bookDetails.length)) * 100 || 0;
         this.loading = false;
       })
     })
@@ -92,7 +85,7 @@ export default {
 </script>
 
 <template>
-<div class="details" style="margin-top: 200px">
+<div class="details">
     <div class="container" v-loading="loading">
       <div class="book-info">
         <div class="reader-book-info">
@@ -107,7 +100,7 @@ export default {
                   <div class="book-info-author">{{book.bookAuthor}}</div>
                 </div>
                 <div class="book-info-right-header-wrapper">
-                  <button class="book-info-right-button , km" v-if="this.isSuccessBorrow == 0" @click="borrowBook()">借阅</button>
+                  <button class="book-info-right-button , km" v-if="this.isSuccessBorrow === 0" @click="borrowBook()">借阅</button>
                   <button class="book-info-right-button" v-else>已借阅</button>
                 </div>
               </div>
@@ -127,7 +120,7 @@ export default {
             <div class="ratings-container">
               <div class="rating-container-detail">
                 <div class="rating-container-detail-number">
-                  {{this.ratingScore}}
+                  {{this.ratingScore.toFixed(1)}}
                   <span style="font-size: 20px">%</span>
                 </div>
                 <div class="rating-container-detail-count">
