@@ -1,6 +1,7 @@
 package com.seven.domain.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,12 +11,16 @@ import lombok.NoArgsConstructor;
  */
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class SearchDTO {
-    private String bookName;
+    @Builder.Default
+    private String bookName = null;
 
-    private String bookAuthor;
+    @Builder.Default
+    private String bookAuthor =null ;
 
-    private String bookDesc;
+    @Builder.Default
+    private String bookDesc = null;
 }

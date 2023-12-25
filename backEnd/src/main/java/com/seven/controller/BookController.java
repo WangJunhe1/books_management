@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.*;
  * <p>
  * 图书表 前端控制器
  * </p>
- *
- * @author wjh
- * @since 2023-12-04
  */
 
 @Slf4j
@@ -35,7 +32,7 @@ public class BookController {
      * @param searchDTO
      * @return
      */
-    @GetMapping("/searchPage")
+    @PostMapping("/searchPage")
     public Result searchPage(@RequestParam(defaultValue = "1") Integer page,
                              @RequestParam(defaultValue = "10") Integer size,
                              @RequestBody SearchDTO searchDTO){
