@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 图书表 前端控制器
@@ -27,19 +29,15 @@ public class BookController {
 
     /**
      * 分页查询书籍
-     * @param page
-     * @param size
      * @param searchDTO
      * @return
      */
     @PostMapping("/searchPage")
-    public Result searchPage(@RequestParam(defaultValue = "1") Integer page,
-                             @RequestParam(defaultValue = "10") Integer size,
-                             @RequestBody SearchDTO searchDTO){
-        log.info("page:{},size:{},searchDTO:{}",page,size,searchDTO);
+    public Result searchPage(@RequestBody SearchDTO searchDTO){
+        log.info("searchDTO:{}",searchDTO);
 
-        PageBean pageBean = bookService.searchPage(page,size,searchDTO);
-        return Result.success(pageBean);
+        List<Book> list = bookService.searchPage(searchDTO);
+        return Result.success(list);
     }
 
     /**
