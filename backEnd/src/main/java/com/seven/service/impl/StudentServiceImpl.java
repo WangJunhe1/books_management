@@ -61,6 +61,13 @@ public class StudentServiceImpl implements StudentService {
         Student student = new Student();
         BeanUtils.copyProperties(updateStudentDTO, student);
 
+        Date date = updateStudentDTO.getBirthday();
+        Instant instant = date.toInstant();
+        ZoneId zoneId = ZoneId.systemDefault();
+        LocalDateTime localDateTime = instant.atZone(zoneId).toLocalDateTime();
+
+        student.setBirthday(localDateTime);
+
         UpdateWrapper<Student> updateWrapper = new UpdateWrapper<Student>()
                 .eq("student_number", student.getStudentNumber());
 

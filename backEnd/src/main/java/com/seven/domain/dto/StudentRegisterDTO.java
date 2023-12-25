@@ -29,7 +29,6 @@ public class StudentRegisterDTO {
 
     @Builder.Default
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date birthday = null;
 
     private String studentEmail;

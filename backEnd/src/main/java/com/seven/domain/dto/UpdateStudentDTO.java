@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @author :Wjh
@@ -31,5 +32,5 @@ public class UpdateStudentDTO {
     private String description;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime birthday;
+    private Date birthday;
 }
