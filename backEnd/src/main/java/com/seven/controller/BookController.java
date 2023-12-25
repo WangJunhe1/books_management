@@ -35,7 +35,7 @@ public class BookController {
      * @param searchDTO
      * @return
      */
-    @GetMapping("/searchPage")
+    @PostMapping("/searchPage")
     public Result searchPage(@RequestParam(defaultValue = "1") Integer page,
                              @RequestParam(defaultValue = "10") Integer size,
                              @RequestBody SearchDTO searchDTO){

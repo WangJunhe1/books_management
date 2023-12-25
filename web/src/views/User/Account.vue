@@ -14,7 +14,12 @@ export default {
         inputPattern: /\S/,
         inputErrorMessage: '密码不能为空'
       }).then(({ value }) => {
-        this.$axios.put(`http://localhost:5000/user/updatePassword?studentNumber=${this.student.studentNumber}&password=${value}`).then(() => {
+        this.$axios.put(`http://localhost:5000/user/updatePassword?studentNumber=${this.student.studentNumber}&password=${value}`,null,
+        {
+          headers: {
+            'token': this.$store.state.User.token,
+          }
+        }).then(() => {
           this.$message({
             type: 'success',
             message: '你的密码是: ' + value
@@ -34,10 +39,16 @@ export default {
         inputPattern: /^1[3456789]\d{9}$/,
         inputErrorMessage: '手机号格式不正确'
       }).then(({ value }) => {
-        this.user.phone = value;
-        this.$message({
-          type: 'success',
-          message: '你的手机号是: ' + value
+        this.$axios.put(`http://localhost:5000/user/updatePassword?studentNumber=${this.student.studentNumber}&studentPhone=${value}`,null,
+        {
+          headers: {
+            'token': this.$store.state.User.token,
+          }
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '你的手机号是: ' + value
+          });
         });
       }).catch(() => {
         this.$message({
@@ -53,10 +64,16 @@ export default {
         inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
         inputErrorMessage: '邮箱格式不正确'
       }).then(({ value }) => {
-        this.user.email = value;
-        this.$message({
-          type: 'success',
-          message: '你的邮箱是: ' + value
+        this.$axios.put(`http://localhost:5000/user/updatePassword?studentNumber=${this.student.studentNumber}&password=${value}`,null,
+        {
+          headers: {
+            'token': this.$store.state.User.token,
+          }
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '你的邮箱是: ' + value
+          });
         });
       }).catch(() => {
         this.$message({
@@ -72,10 +89,18 @@ export default {
         inputPattern: "注销账号",
         type: 'warning'
       }).then(() => {
-        this.$message({
-          type: 'success',
-          message: '删除成功!'
-        });
+        this.$axios.delete(`http://localhost:5000/user/delete/${this.student.userId}`,{
+          headers: {
+            'token': this.$store.state.User.token,
+          }
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '删除成功!'
+          });
+          localStorage.clear();
+          this.$router.push('/index');
+        })
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -93,12 +118,13 @@ export default {
     }
   },
   mounted() {
-    this.$axios.get('http://localhost:5000/studnet/getStudnet', {
+    this.$axios.get('http://localhost:5000/student/getStudent',{
       headers: {
-        'token': this.$store.state.USer.token
+        'token': this.$store.state.User.token
       }
     }).then(res => {
       this.student = res.data.data;
+      console.log(this.student)
     })
   }
 }

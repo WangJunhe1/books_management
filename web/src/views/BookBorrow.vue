@@ -59,7 +59,7 @@ export default {
 </script>
 
 <template>
-  <div id="bookBorrow" style="margin-top: 220px">
+  <div id="bookBorrow">
     <div class="container" style="background-color:#fff;">
       <el-container v-loading="loading">
         <el-aside width="200px" class="el-aside" style="background-color:whitesmoke;">
