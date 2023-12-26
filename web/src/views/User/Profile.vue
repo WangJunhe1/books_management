@@ -383,14 +383,12 @@
         this.isChange = false;
         console.log(this.student.region);
         this.student.region = this.student.region.join("/");
-        this.student.birthday = this.student.birthday.toLocaleDateString();
         console.log(this.student.birthday)
       },
       saveStudent() {
         console.log(this.student.region)
         this.student.region = this.student.region.join("/");
-        this.student.birthday = this.student.birthday.toLocaleDateString();
-        this.student.birthday = this.student.birthday.replaceAll("\/", "-");
+        console.log(this.student.birthday)
         this.$axios.post('http://localhost:5000/image/upload',
             {
               "studentNumber": this.student.studentNumber,
@@ -412,6 +410,10 @@
               region: this.student.region,
               description: this.student.description,
               birthday: this.student.birthday,
+            }, {
+              headers: {
+                'token': this.$store.state.User.token,
+              }
             }
         ).then(() => {
           //  数据回显
@@ -531,7 +533,7 @@
       </el-form-item>
       <el-form-item label="出生日期">
         <el-col :span="11">
-          <el-date-picker type="date" placeholder="选择日期" v-model="student.birthday" style="width: 100%;"></el-date-picker>
+          <el-date-picker type="date" placeholder="选择日期" value-format="yyyy-MM-dd" v-model="student.birthday" style="width: 100%;"></el-date-picker>
         </el-col>
       </el-form-item>
       <el-form-item label="个人简介">

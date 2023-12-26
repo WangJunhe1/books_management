@@ -4,48 +4,7 @@ export default {
     return {
       loading: false,
       count: 0,
-      tableData: [
-        {
-          borrowDate: '2016-05-02',
-          bookImg: 'http://localhost:5000/image/user/test.png',
-          bookName: '王小虎',
-          bookType: '上海',
-          bookAuthor: '普陀区',
-          bookPublish: '人民出版社'
-        },
-        {
-          borrowDate: '2016-05-02',
-          bookImg: 'http://localhost:5000/image/user/test.png',
-          bookName: '王小虎',
-          bookType: '上海',
-          bookAuthor: '普陀区',
-          bookPublish: '人民出版社'
-        },
-        {
-          borrowDate: '2016-05-02',
-          bookImg: 'http://localhost:5000/image/user/test.png',
-          bookName: '王小虎',
-          bookType: '上海',
-          bookAuthor: '普陀区',
-          bookPublish: '人民出版社'
-        },
-        {
-          borrowDate: '2016-05-02',
-          bookImg: 'http://localhost:5000/image/user/test.png',
-          bookName: '王小虎',
-          bookType: '上海',
-          bookAuthor: '普陀区',
-          bookPublish: '人民出版社'
-        },
-        {
-          borrowDate: '2016-05-02',
-          bookImg: 'http://localhost:5000/image/user/test.png',
-          bookName: '王小虎',
-          bookType: '上海',
-          bookAuthor: '普陀区',
-          bookPublish: '人民出版社'
-        },
-      ]
+      tableData: []
     }
   },
   methods: {

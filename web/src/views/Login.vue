@@ -33,7 +33,7 @@ export default {
       this.$axios.post('http://localhost:5000/user/login', this.user).then(res => {
         console.log(res.data);
         this.data = res.data;
-        if( this.data.object === null ) {
+        if( this.data.data === null ) {
           this.$message({
             message: this.data.message,
             type: 'warning'

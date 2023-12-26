@@ -398,9 +398,6 @@ export default {
       if (this.student.region !== null) {
         this.student.region = this.student.region.join("/");
       }
-      if (this.student.birthday !== null) {
-        this.student.birthday = this.student.birthday.toLocaleDateString();
-      }
       this.$axios.post('http://localhost:5000/student/register', {
         studentName: this.student.studentName,
         studentNumber: this.student.studentNumber,
@@ -442,7 +439,7 @@ export default {
           <el-input v-model="student.studentEmail" placeholder="请输入学生邮箱"></el-input>
         </el-form-item>
         <el-form-item label="学生出生日期" prop="birthDate">
-          <el-date-picker type="date" v-model="student.birthday" placeholder="请输入个人日期" style="width: 100%;"></el-date-picker>
+          <el-date-picker type="date" v-model="student.birthday" value-format="yyyy-MM-dd" placeholder="请输入个人日期" style="width: 100%;"></el-date-picker>
         </el-form-item>
         <el-form-item label="学生所在地区" prop="address">
           <el-cascader :options="options" clearable style="width: 100%;" v-model="student.region"></el-cascader>

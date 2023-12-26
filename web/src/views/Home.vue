@@ -8,71 +8,14 @@ export default {
       isSelected: false,
       page: 1,
       input: "",
-      myBorrowBooks: [
-        {
-          id: 1,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 2,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 3,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 4,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        }
-      ],
-      recommendBooks: [
-        {
-          id: 1,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 2,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 3,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        },
-        {
-          id: 4,
-          name: "《JavaScript权威指南》",
-          author: "Nicholas C. Zakas",
-          desc: "JavaScript权威指南，适合初步学习js的小白和复习使用",
-          img: "https://img3.doubanio.com/lpic/s1167614.jpg",
-        }
-      ],
+      myBorrowBooks: [],
+      recommendBooks: [],
       classifyList: [],
       searchBooks: []
     }
   },
   methods: {
+    //  点击换一批
     nextPage() {
       this.page++;
       this.$axios.get(`http://localhost:5000/book/nextPage/${this.page}`).then(res => {
@@ -80,6 +23,7 @@ export default {
         console.log(this.recommendBooks);
       })
     },
+    // 跳转图书详情页面
     bookDetails(item) {
       localStorage.setItem('book',JSON.stringify(item));
       this.$store.dispatch('Book/setBookAction', localStorage.setItem('book',JSON.stringify(item)));
@@ -102,17 +46,20 @@ export default {
     }
   },
   mounted() {
-    this.$axios.get('http://localhost:5000/borrow/myBorrow',
-        {
-          headers: {
-            'token': this.$store.state.User.token
+    if (this.$store.state.User.token !== null) {
+      this.$axios.get('http://localhost:5000/borrow/myBorrow',
+          {
+            headers: {
+              'token': this.$store.state.User.token
+            }
           }
-        }
-    ).then(res => {
-      this.myBorrowBooks = res.data.data;
-      console.log(this.myBorrowBooks)
-      this.loading = false;
-    })
+      ).then(res => {
+        this.myBorrowBooks = res.data.data;
+        this.loading = false;
+      })
+    } else {
+
+    }
     this.$axios.get('http://localhost:5000/bookType/getBookType').then(res => {
       this.classifyList = res.data.data;
     });
@@ -161,7 +108,7 @@ export default {
         </div>
         <div class="banner">
           <div class="myBorrow">
-            <h2 class="header-borrow bookshelf-title" v-if="this.myBorrowBooks.length !== 0 || this.myBorrowBooks !== null">
+            <h2 class="header-borrow bookshelf-title" v-if="this.myBorrowBooks.length !== 0">
               我的借阅
               <router-link class="right-link" to="/user/comment">
                 查看我的借阅&gt

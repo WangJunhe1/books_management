@@ -39,7 +39,7 @@ export default {
         inputPattern: /^1[3456789]\d{9}$/,
         inputErrorMessage: '手机号格式不正确'
       }).then(({ value }) => {
-        this.$axios.put(`http://localhost:5000/user/updatePassword?studentNumber=${this.student.studentNumber}&studentPhone=${value}`,null,
+        this.$axios.put(`http://localhost:5000/user/updatePhone?studentNumber=${this.student.studentNumber}&studentPhone=${value}`,null,
         {
           headers: {
             'token': this.$store.state.User.token,
@@ -64,7 +64,7 @@ export default {
         inputPattern: /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
         inputErrorMessage: '邮箱格式不正确'
       }).then(({ value }) => {
-        this.$axios.put(`http://localhost:5000/user/updatePassword?studentNumber=${this.student.studentNumber}&password=${value}`,null,
+        this.$axios.put(`http://localhost:5000/user/updateEmail?studentNumber=${this.student.studentNumber}&studentEmail=${value}`,null,
         {
           headers: {
             'token': this.$store.state.User.token,
@@ -89,7 +89,7 @@ export default {
         inputPattern: "注销账号",
         type: 'warning'
       }).then(() => {
-        this.$axios.delete(`http://localhost:5000/user/delete/${this.student.userId}`,{
+        this.$axios.delete(`http://localhost:5000/user/delete/${this.student.studentNumber}`,{
           headers: {
             'token': this.$store.state.User.token,
           }
@@ -99,7 +99,7 @@ export default {
             message: '删除成功!'
           });
           localStorage.clear();
-          this.$router.push('/index');
+          this.$router.push('/login');
         })
       }).catch(() => {
         this.$message({
