@@ -4,7 +4,7 @@
 <mapper namespace="com.seven.mapper.CommentMapper">
     <resultMap type="com.seven.domain.vo.SelectCommentVO" id="booksComment" autoMapping="true">
         <!-- 只展示了部分标签内容，一对多关联映射 -->
-        <collection property="book" ofType="book" autoMapping="true">
+        <collection property="book" ofType="com.seven.domain.entity.Book" autoMapping="true">
             <id property="bookId" column="bid"/>
         </collection>
     </resultMap>

@@ -1,6 +1,7 @@
 package com.seven.interceptor;
 
 import com.seven.constant.JwtClaimsConstant;
+import com.seven.exception.TokenNotExitException;
 import com.seven.properties.JwtProperties;
 import com.seven.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
@@ -41,6 +42,10 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
         //1、从请求头中获取令牌
         String token = request.getHeader(jwtProperties.getAdminTokenName());
 
+        if(token == null){
+            throw new TokenNotExitException("未登录");
+        }
+
         //2、校验令牌
         try {
             log.info("jwt校验:{}", token);
@@ -52,7 +57,7 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
         } catch (Exception ex) {
             //4、不通过，响应401状态码
             response.setStatus(401);
-            return false;
+            throw new TokenNotExitException("登录已过期，请重新登录");
         }
     }
 }

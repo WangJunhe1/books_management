@@ -62,6 +62,7 @@ public class BorrowServiceImpl extends ServiceImpl<BorrowMapper, Borrow> impleme
     public List<MyBorrowVO> getMyBorrow(String studentNumber) {
 
         List<MyBorrowVO> bookList = borrowMapper.selectMyBorrow(studentNumber);
+        System.out.println(bookList);
 
         return bookList;
     }

@@ -108,5 +108,4 @@ public class MultipartFileDTO implements MultipartFile {
     public void transferTo(File dest) throws IOException, IllegalStateException {
         FileCopyUtils.copy(this.content, dest);
     }
-
 }
