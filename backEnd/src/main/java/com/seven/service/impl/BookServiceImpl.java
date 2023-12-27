@@ -1,6 +1,5 @@
 package com.seven.service.impl;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.Page;
@@ -15,6 +14,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,7 +36,6 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
         BeanUtils.copyProperties(searchDTO,book);
 
         List<Book> bookList = bookMapper.searchList(book);
-
         return bookList;
     }
 

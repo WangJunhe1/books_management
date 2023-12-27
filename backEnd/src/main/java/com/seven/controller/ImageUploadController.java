@@ -59,8 +59,8 @@ public class ImageUploadController {
             fileName = file.getOriginalFilename();
             // 获取文件名
             // 指定保存路径
-            filePath = uploadPath  + "\\" + fileName;
-            tempPath = targetPath  + "\\" + fileName;
+            filePath = "/Users/seven/Desktop/book_management/backEnd/src/main/resources/static/img/use/r" + fileName;
+            tempPath = "/Users/seven/Desktop/book_management/backEnd/target/classes/static/img/user/" + fileName;
 
             log.info("上传文件路径：" + filePath);
             log.info("上传文件路径：" + tempPath);
