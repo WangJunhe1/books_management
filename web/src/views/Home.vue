@@ -8,6 +8,7 @@ export default {
       isSelected: false,
       page: 1,
       input: "",
+      newInput: "",
       myBorrowBooks: [],
       recommendBooks: [],
       classifyList: [],
@@ -35,7 +36,21 @@ export default {
       this.$axios.post('http://localhost:5000/book/searchPage', {
           bookName: this.input
       }).then(res => {
+        for (let i = 0; i < res.data.data.length; i++) {
+          // 使用更安全的方法替换字符串
+          const safeReplace = (str, search, replace) => {
+            if (str) {
+              return str.replace(new RegExp(search, 'g'), replace);
+            }
+            return str;
+          };
+
+          res.data.data[i].bookName = safeReplace(res.data.data[i].bookName, this.input, `<span style="color: blue">${this.input}</span>`);
+          res.data.data[i].bookAuthor = safeReplace(res.data.data[i].bookAuthor, this.input, `<span style="color: blue">${this.input}</span>`);
+          res.data.data[i].bookDesc = safeReplace(res.data.data[i].bookDesc, this.input, `<span style="color: blue">${this.input}</span>`);
+        }
         this.searchBooks = res.data.data;
+        console.log(this.searchBooks)
       })
     },
     changeIsSelectedTure() {
@@ -66,6 +81,7 @@ export default {
 
     this.$axios.get(`http://localhost:5000/book/nextPage/${this.page}`).then(res => {
       this.recommendBooks = res.data.data;
+      this.searchBooks = this.recommendBooks.rows;
     })
 
   }
@@ -96,9 +112,9 @@ export default {
                       <img :src="item.bookImg" :alt="item.bookName" class="wr_bookCover_img" >
                     </div>
                     <div class="search_result_global_bookInfo">
-                      <p class="search_result_global_bookTitle">{{item.bookName}}</p>
-                      <p class="search_result_global_bookAuthor">{{item.bookAuthor}}</p>
-                      <p class="search_result_global_bookContent">{{item.bookDesc}}</p>
+                      <p class="search_result_global_bookTitle" v-html="item.bookName"></p>
+                      <p class="search_result_global_bookAuthor" v-html="item.bookAuthor"></p>
+                      <p class="search_result_global_bookContent" v-html="item.bookDesc"></p>
                     </div>
                   </div>
                 </span>
@@ -181,6 +197,9 @@ export default {
 </template>
 
 <style>
+em {
+  color: orange;
+}
 
 #bookQuery .header {
   padding: 10px;
@@ -571,4 +590,5 @@ export default {
   height: auto;
   max-height: 44px;
 }
+
 </style>
