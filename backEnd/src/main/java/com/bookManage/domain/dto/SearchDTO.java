@@ -11,11 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SearchDTO {
     @Builder.Default
-    private String bookName = null;
-
-    @Builder.Default
-    private String bookAuthor =null ;
-
-    @Builder.Default
-    private String bookDesc = null;
+    private String searchKey = null;
 }

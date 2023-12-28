@@ -11,5 +11,5 @@ import java.util.List;
  * </p>
  */
 public interface BookMapper extends BaseMapper<Book> {
-    List<Book> searchList(Book book);
+    List<Book> searchList(String key);
 }

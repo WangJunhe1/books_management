@@ -28,10 +28,9 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements Bo
 
     @Override
     public List<Book> searchPage(SearchDTO searchDTO) {
-        Book book = new Book();
-        BeanUtils.copyProperties(searchDTO,book);
+        String key = searchDTO.getSearchKey();
 
-        List<Book> bookList = bookMapper.searchList(book);
+        List<Book> bookList = bookMapper.searchList(key);
         return bookList;
     }
 

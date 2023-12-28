@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 通过账号名和密码查询用户
-     *
      * @param loginDTO
      * @return
      */

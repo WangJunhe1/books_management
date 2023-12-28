@@ -4,14 +4,10 @@
     <select id="searchList" resultType="com.bookManage.domain.entity.Book">
         select * from book
         <where>
-            <if test="bookName!= null and bookName!= ''">
-                book_name like concat('%',#{bookName},'%')
-            </if>
-            <if test="bookAuthor!= null and bookAuthor!= ''">
-                and book_author like concat('%',#{bookAuthor},'%')
-            </if>
-            <if test="bookDesc!= null and bookDesc!= ''">
-                and book_desc like concat('%',#{bookDesc},'%')
+            <if test="key != null and key != ''">
+                book_name like concat('%',#{key},'%')
+                or book_author like concat('%',#{key},'%')
+                or book_desc like concat('%',#{key},'%')
             </if>
         </where>
     </select>
