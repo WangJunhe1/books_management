@@ -16,4 +16,5 @@ public class BorrowConstant {
     public static final String BOOK_NOT_EXIST = "图书不存在";
     public static final String BOOK_IS_BORROWED = "图书已借阅";
     public static final String BOOK_IS_NOT_BORROWED = "图书未借阅";
+    public static final String BOOK_SEARCH_FAILED = "查询不到该书籍信息";
 }

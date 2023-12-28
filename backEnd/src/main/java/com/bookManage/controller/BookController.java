@@ -2,6 +2,7 @@ package com.bookManage.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.bookManage.constant.BorrowConstant;
 import com.bookManage.domain.dto.SearchDTO;
 import com.bookManage.domain.entity.Book;
 import com.bookManage.domain.pojo.Result;
@@ -36,6 +37,9 @@ public class BookController {
         log.info("searchDTO:{}",searchDTO);
 
         List<Book> list = bookService.searchPage(searchDTO);
+        if(list == null){
+            return Result.success(BorrowConstant.BOOK_SEARCH_FAILED);
+        }
         return Result.success(list);
     }
 
