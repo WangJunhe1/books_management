@@ -1,5 +1,4 @@
 <script>
-import '@/assets/font/iconfont.css'
 import '@/assets/css/login.css';
 export default {
   name: "Login",
@@ -32,17 +31,14 @@ export default {
       // debugger
       this.$axios.post('http://localhost:5000/user/login', this.user).then(res => {
         console.log(res.data);
-        this.data = res.data;
-        if( this.data.data === null ) {
+        if( res.data === null ) {
           this.$message({
-            message: this.data.message,
+            message: res.message,
             type: 'warning'
           });
           return false;
         }
-        localStorage.setItem('data', JSON.stringify(this.data));
-        this.$store.dispatch('User/setDataAction', this.data);
-        this.user = this.data.data;
+        this.user = res.data;
         localStorage.setItem('user', JSON.stringify(this.user));
         this.$store.dispatch('User/setUserAction', this.user);
         localStorage.setItem('isLogin', true);

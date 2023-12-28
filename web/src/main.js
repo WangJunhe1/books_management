@@ -5,14 +5,14 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import axios from 'axios'
 import store from "@/store";
+import service from "@/interceptor/request.js";
 
 // 动画 animate.css
-import animated from 'animate.css'
-Vue.use(animated)
+import 'animate.css';
 
 
 Vue.use(ElementUI);
-Vue.prototype.$axios = axios;
+Vue.prototype.$axios = service;
 Vue.config.productionTip = false
 
 new Vue({

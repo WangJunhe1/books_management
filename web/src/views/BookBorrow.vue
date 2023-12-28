@@ -7,7 +7,6 @@ export default {
       bookTypeList: [],
       books: [],
       type: "",
-      loading: true,
     }
   },
   methods: {
@@ -53,7 +52,6 @@ export default {
     this.$axios.get(`http://localhost:5000/book/${typeID}`).then(res => {
       this.books = res.data.data;
     })
-    this.loading = false;
   },
 }
 </script>
@@ -61,7 +59,7 @@ export default {
 <template>
   <div id="bookBorrow">
     <div class="container" style="background-color:#fff;">
-      <el-container v-loading="loading">
+      <el-container>
         <el-aside width="200px" class="el-aside" style="background-color:whitesmoke;">
           <div class="nav-slide">
             <ul class="ranking-list">

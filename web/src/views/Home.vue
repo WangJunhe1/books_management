@@ -69,19 +69,20 @@ export default {
             }
           }
       ).then(res => {
-        this.myBorrowBooks = res.data.data;
+        this.myBorrowBooks = res.data;
         this.loading = false;
       })
     } else {
 
     }
     this.$axios.get('http://localhost:5000/bookType/getBookType').then(res => {
-      this.classifyList = res.data.data;
+      this.classifyList = res.data;
     });
 
     this.$axios.get(`http://localhost:5000/book/nextPage/${this.page}`).then(res => {
-      this.recommendBooks = res.data.data;
-      this.searchBooks = this.recommendBooks.rows;
+      console.log(res)
+      this.recommendBooks = res.data.rows;
+      this.searchBooks = this.recommendBooks;
     })
 
   }
@@ -156,7 +157,7 @@ export default {
               </span>
             </h2>
             <div class="recommend-list">
-              <div class="recommend-item" v-for="item in recommendBooks.rows" :key="item.bookId">
+              <div class="recommend-item" v-for="item in recommendBooks" :key="item.bookId">
                 <span class="recommend-item-turn" @click="bookDetails(item)"></span>
                 <div class="item-allInfo">
                   <div class="book-img">

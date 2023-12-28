@@ -2,18 +2,14 @@
 export default {
   data() {
     return {
-      loading: true,
       tableData: []
     }
   },
   mounted() {
     this.$axios.get("http://localhost:5000/bookType/getBookType").then(res => {
-      this.tableData = res.data.data;
+      this.tableData = res.data;
     })
   },
-  updated() {
-    this.loading = false;
-  }
 }
 </script>
 
@@ -21,9 +17,6 @@ export default {
   <div id="bookDistribution">
     <div class="container">
       <el-table
-          v-loading="loading"
-          element-loading-text="拼命加载中"
-          element-loading-spinner="el-icon-loading"
           :data="tableData"
           stripe
           style="width: 100%">

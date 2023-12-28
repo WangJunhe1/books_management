@@ -5,7 +5,6 @@ import '@/assets/css/csh.css'
 export default {
   data() {
     return {
-      loading: false,
       isSuccessBorrow: 0,
       bookID: null,
       book: this.$store.state.Book.book || {
@@ -44,7 +43,7 @@ export default {
               'token': this.$store.state.User.token,
             }
           }).then (res => {
-            this.isSuccessBorrow = res.data.code;
+            this.isSuccessBorrow = res.code;
       })
     },
     bookComment(index) {
@@ -54,12 +53,11 @@ export default {
     }
   },
   mounted() {
-    this.loading = true;
     this.bookID = this.$route.path.split('/').pop();
     this.$axios.get(`http://localhost:5000/book/getBook/${this.bookID}`).then(res => {
-      this.book = res.data.data;
+      this.book = res.data;
       this.$axios.get(`http://localhost:5000/comment/${this.bookID}`).then(res => {
-        this.bookDetails = res.data.data;
+        this.bookDetails = res.data;
         let a = 0, b = 0, c = 0;
         for (let i =0; i < this.bookDetails.length; i++) {
           if (this.bookDetails[i].commentStatus === 0) {
@@ -76,7 +74,6 @@ export default {
         this.rating[1].value = b / this.bookDetails.length * 100;
         this.rating[2].value = c / this.bookDetails.length * 100;
         this.ratingScore = ((a * 2 + b - c * 0.5) / (2 * this.bookDetails.length)) * 100 || 0;
-        this.loading = false;
       })
     })
   },
@@ -86,7 +83,7 @@ export default {
 
 <template>
 <div class="details">
-    <div class="container" v-loading="loading">
+    <div class="container">
       <div class="book-info">
         <div class="reader-book-info">
           <div class="reader-book-info-header">

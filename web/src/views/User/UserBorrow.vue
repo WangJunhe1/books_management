@@ -2,14 +2,12 @@
 export default {
   data() {
     return {
-      loading: false,
       count: 0,
       tableData: []
     }
   },
   methods: {
     renewBook(row) {
-      this.loading = true;
       console.log(row);
 
       this.$axios.put(`http://localhost:5000/borrow/${row.bookId}`,
@@ -39,13 +37,11 @@ export default {
               }
           ).then(res => {
             this.tableData = res.data.data;
-            this.loading = false;
           })
         }
       })
     },
     returnBook(row) {
-      this.loading = true;
       console.log(row);
       this.$axios.put(`http://localhost:5000/borrow/return?bookId=${row.bookId}`,
           null,
@@ -73,7 +69,6 @@ export default {
             message: '恭喜你，归还成功',
             type: 'success'
           });
-          this.loading = false;
         });
       })
     },
@@ -82,7 +77,6 @@ export default {
     }
   },
   mounted() {
-    this.loading = true;
     this.$axios.get('http://localhost:5000/borrow/myBorrow',
         {
           headers: {
@@ -91,7 +85,6 @@ export default {
         }
     ).then(res => {
       this.tableData = res.data.data;
-      this.loading = false;
     })
   }
 }
@@ -100,7 +93,6 @@ export default {
 <template>
   <div class="bookComment">
     <el-table
-        v-loading="loading"
         :data="tableData"
         height="500"
         border

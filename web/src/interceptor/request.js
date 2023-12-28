@@ -1,10 +1,26 @@
 import axios from 'axios'
+import { Message, Loading } from 'element-ui';
+import router from '../router/index'
+import store from '../store/index'
+
+let loading        //定义loading变量
+
+function startLoading() {    //使用Element loading-start 方法
+    loading = Loading.service({
+        lock: true,
+        text: '页面正在加载中...',
+        background: 'rgba(0, 0, 0, 0.7)'
+    })
+}
+function endLoading() {    //使用Element loading-close 方法
+    loading.close()
+}
 
 //初始化axios
 const service = axios.create({
     baseURL: 'http://localhost:5000',
     headers: {
-        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        'Content-Type': 'application/json;charset=UTF-8'
     },
     // timeout: 10000 // 请求超时
 })
@@ -12,9 +28,10 @@ const service = axios.create({
 //请求拦截器
 service.interceptors.request.use(
     config => {
+        startLoading();
         // 判断是否存在token,把token添加点请求头中，每次请求携带token传给后端
-        if (this.$store.state.User.token) {
-            config.headers['token'] = this.$store.state.User.token
+        if (store.state.User.token) {
+            config.headers['token'] = store.state.User.token
         }
         return config
     },
@@ -26,15 +43,20 @@ service.interceptors.request.use(
 //响应拦截器
 service.interceptors.response.use(
     response=> {
-        const res = response.data
-        if (res.code !== 200) {
-            //请求失败（包括token失效，302，404...根据和后端约定好的状态码做出不同的处理）
-            return res
-        }else{
-            //请求成功
-            return res
-        }
+        endLoading()
+        return response.data
     },error => {
+        endLoading()
+
+        const { status } = error.response
+        if (status === 401) {
+            Message.error(error.response.data.msg)
+            // 清除token
+            localStorage.clear()
+
+            // 页面跳转
+            router.push('/login')
+        }
         //处理错误响应
         return Promise.reject(error)
     }

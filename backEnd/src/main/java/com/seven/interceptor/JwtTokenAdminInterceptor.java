@@ -43,6 +43,7 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
         String token = request.getHeader(jwtProperties.getAdminTokenName());
 
         if(token == null){
+            response.setStatus (401);
             throw new TokenNotExitException("未登录");
         }
 
@@ -55,7 +56,7 @@ public class JwtTokenAdminInterceptor implements HandlerInterceptor {
             //3、通过，放行
             return true;
         } catch (Exception ex) {
-            //4、不通过，响应401状态码
+            //4、不通过，响应401
             response.setStatus(401);
             throw new TokenNotExitException("登录已过期，请重新登录");
         }
