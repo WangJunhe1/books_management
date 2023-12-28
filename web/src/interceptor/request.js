@@ -9,7 +9,7 @@ function startLoading() {    //使用Element loading-start 方法
     loading = Loading.service({
         lock: true,
         text: '页面正在加载中...',
-        background: 'rgba(0, 0, 0, 0.7)'
+        background: 'linear-gradient(to bottom , rgb(83,138,194), rgb(177,195,215))'
     })
 }
 function endLoading() {    //使用Element loading-close 方法

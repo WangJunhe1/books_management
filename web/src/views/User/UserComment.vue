@@ -44,6 +44,7 @@ export default {
             <div class="iconfont-text">不行</div>
           </div>
         </div>
+        <hr>
         <p class="toReview-banner-item-comment">
           {{item.commentContent}}
         </p>

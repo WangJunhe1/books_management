@@ -84,6 +84,10 @@ export default {
           }
         }
     ).then(res => {
+      for (let i = 0; i < res.data.length; i++) {
+        res.data[i].borrowStartTime = res.data[i].borrowStartTime.replace('T', ' ');
+        res.data[i].borrowEndTime = res.data[i].borrowEndTime.replace('T', ' ');
+      }
       this.tableData = res.data;
     })
   }
@@ -101,13 +105,13 @@ export default {
           fixed
           prop="borrowStartTime"
           label="借阅日期"
-          width="150">
+          width="180">
       </el-table-column>
       <el-table-column
           fixed
           prop="borrowEndTime"
           label="归还日期"
-          width="150"
+          width="180"
           color="red">
       </el-table-column>
       <el-table-column

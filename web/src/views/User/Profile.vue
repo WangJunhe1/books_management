@@ -389,18 +389,20 @@
         console.log(this.student.region)
         this.student.region = this.student.region.join("/");
         console.log(this.student.birthday)
-        this.$axios.post('http://localhost:5000/image/upload',
-            {
-              "studentNumber": this.student.studentNumber,
-              "file": this.fileImg
-            },
-            {
-              headers: {
-                'token': this.$store.state.User.token,
-                'Content-Type': 'multipart/form-data'
+        if (this.fileImg !== null) {
+          this.$axios.post('http://localhost:5000/image/upload',
+              {
+                "studentNumber": this.student.studentNumber,
+                "file": this.fileImg
+              },
+              {
+                headers: {
+                  'token': this.$store.state.User.token,
+                  'Content-Type': 'multipart/form-data'
+                }
               }
-            }
-        )
+          )
+        }
         this.$axios.put('http://localhost:5000/student/update',
             {
               userId: this.student.userId,
@@ -425,9 +427,8 @@
             this.student = res.data;
 
             console.log(this.student.birthday)
-            this.student.birthday = this.student.birthday[0] + "-" + this.student.birthday[1] + "-" + this.student.birthday[2];
+            this.student.birthday = this.student.birthday.substring(0, 10);
             console.log(this.student.birthday)
-            console.log(this.student.portrait)
 
             setTimeout(() => {
               this.fileImg = null;
@@ -467,7 +468,6 @@
       },
     },
     mounted() {
-      console.log(this.$store.state.User.token);
       this.$axios.get('http://localhost:5000/student/getStudent', {
         headers: {
           'token': this.$store.state.User.token,
@@ -475,7 +475,7 @@
       }).then(res => {
         this.student = res.data;
         console.log(this.student.birthday)
-        this.student.birthday = this.student.birthday[0] + "-" + this.student.birthday[1] + "-" + this.student.birthday[2];
+        this.student.birthday = this.student.birthday.substring(0, 10);
         console.log(this.student.birthday)
       })
     }

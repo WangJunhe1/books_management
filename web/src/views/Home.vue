@@ -1,7 +1,4 @@
 <script>
-
-import book from "@/store/Book";
-
 export default {
   data() {
     return {
@@ -31,27 +28,31 @@ export default {
       this.$router.push(`/index/bookDetails/${item.bookId}`);
     },
     getSearchBooks() {
-      this.isSelected = true;
-      // TODO:查询
-      this.$axios.post('http://localhost:5000/book/searchPage', {
+      if (this.input === ""){
+        this.$message({
+          message: "搜索内容不能为空",
+          type: "warning"
+        });
+      } else {
+        this.$axios.post('http://localhost:5000/book/searchPage', {
           bookName: this.input
-      }).then(res => {
-        for (let i = 0; i < res.data.data.length; i++) {
-          // 使用更安全的方法替换字符串
-          const safeReplace = (str, search, replace) => {
-            if (str) {
-              return str.replace(new RegExp(search, 'g'), replace);
-            }
-            return str;
-          };
+        }).then(res => {
+          for (let i = 0; i < res.data.length; i++) {
+            // 使用更安全的方法替换字符串
+            const safeReplace = (str, search, replace) => {
+              if (str) {
+                return str.replace(new RegExp(search, 'g'), replace);
+              }
+              return str;
+            };
 
-          res.data.data[i].bookName = safeReplace(res.data.data[i].bookName, this.input, `<span style="color: blue">${this.input}</span>`);
-          res.data.data[i].bookAuthor = safeReplace(res.data.data[i].bookAuthor, this.input, `<span style="color: blue">${this.input}</span>`);
-          res.data.data[i].bookDesc = safeReplace(res.data.data[i].bookDesc, this.input, `<span style="color: blue">${this.input}</span>`);
-        }
-        this.searchBooks = res.data.data;
-        console.log(this.searchBooks)
-      })
+            res.data[i].bookName = safeReplace(res.data[i].bookName, this.input, `<span style="color: lightblue">${this.input}</span>`);
+            res.data[i].bookAuthor = safeReplace(res.data[i].bookAuthor, this.input, `<span style="color: lightblue">${this.input}</span>`);
+            res.data[i].bookDesc = safeReplace(res.data[i].bookDesc, this.input, `<span style="color: lightblue">${this.input}</span>`);
+          }
+          this.searchBooks = res.data;
+        })
+      }
     },
     changeIsSelectedTure() {
       this.isSelected = true;
@@ -90,18 +91,18 @@ export default {
 </script>
 
 <template>
-  <div id="bookQuery">
-    <div class="bookQuery">
+  <div id="home">
+    <div class="home">
       <div class="container">
         <div class="header">
-          <div class="input">
+          <div class="input"
+               @mouseleave="changeIsSelectedFalse()"
+               @mouseenter="changeIsSelectedTure()">
             <el-input
                 class="search-input"
                 placeholder="请输入内容"
                 prefix-icon="el-icon-search"
                 v-model="input"
-                @blur="changeIsSelectedFalse()"
-                @focus="changeIsSelectedTure()"
                 clearable>
             </el-input>
             <el-button type="primary" @click="getSearchBooks()" icon="el-icon-arrow-right" class="search-input-button"></el-button>
@@ -198,16 +199,12 @@ export default {
 </template>
 
 <style>
-em {
-  color: orange;
-}
-
-#bookQuery .header {
+#home .header {
   padding: 10px;
   width: 100%;
 }
 
-#bookQuery .header .input {
+#home .header .input {
   margin: 30px auto;
   width: 60%;
   position: relative;
@@ -220,7 +217,7 @@ em {
   border-radius: 25px;
 }
 
-#bookQuery .header .el-input__inner {
+#home .header .el-input__inner {
   height: 50px;
   line-height: 50px;
   border-radius: 25px
@@ -242,12 +239,12 @@ em {
   right: 0;
 }
 
-#bookQuery .banner {
+#home .banner {
   width: 100%;
   height: 100%;
 }
 
-#bookQuery .myBorrow {
+#home .myBorrow {
   width: 100%;
 }
 
@@ -402,7 +399,7 @@ em {
   overflow: hidden;
   max-height: 42px;
 }
-.bookQuery{
+.home{
   background-color: whitesmoke;
 }
 .myBorrow .borrow-bookshelf {
@@ -478,7 +475,6 @@ em {
   display: block;
   border-radius: 12px;
   background-color: white;
-  margin-top: 10px;
   height: 500px;
   overflow-y: scroll;
   width: 680px;

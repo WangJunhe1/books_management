@@ -73,7 +73,7 @@ export default {
         this.rating[0].value = a / this.bookDetails.length * 100;
         this.rating[1].value = b / this.bookDetails.length * 100;
         this.rating[2].value = c / this.bookDetails.length * 100;
-        this.ratingScore = ((a * 2 + b - c * 0.5) / (2 * this.bookDetails.length)) * 100 || 0;
+        this.ratingScore = ((a * 2 + b) / (2 * this.bookDetails.length)) * 100 || 0;
       })
     })
   },
@@ -188,6 +188,7 @@ export default {
                   <div class="iconfont-text">不行</div>
                 </div>
               </div>
+              <hr>
               <p class="toReview-banner-item-comment">
                 {{item.commentContent}}
               </p>

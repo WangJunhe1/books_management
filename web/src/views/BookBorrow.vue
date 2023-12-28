@@ -1,12 +1,11 @@
 <script>
 import "@/assets/css/BookBorrow.css";
-import bookDetails from "@/views/BookDetails.vue";
 export default {
   data() {
     return {
       bookTypeList: [],
       books: [],
-      type: "",
+      type: "个人成长",
     }
   },
   methods: {
@@ -15,43 +14,31 @@ export default {
       this.$store.dispatch('Book/setBookAction', this.book);
       this.$router.push('/index/bookDetails/'+item.bookId);
     },
-    changeBorrowPage(item,index) {
+    changeBorrowPage(item, index) {
+      console.log(1)
       this.type = item.bookType;
-
-      this.$router.push('/index/bookBorrow/'+item.bookTypeId);
-
-      const path = this.$route.path;
-      let typeID = path.split('/').pop();
+      console.log(this.type);
       let rankingList = document.querySelectorAll('.ranking-list-item');
       for (let i = 0; i < rankingList.length; i++) {
         rankingList[i].classList.remove('ranking-list-item-active');
-        if (typeID == (i + 1)) {
+        if (index - 1 === i) {
           rankingList[i].classList.add('ranking-list-item-active');
         }
       }
-      window.location.reload();
+      this.$axios.get(`http://localhost:5000/book/${item.bookTypeId}`).then(res => {
+          this.books = res.data;
+      })
     }
   },
   mounted() {
     this.$axios.get('http://localhost:5000/bookType/getBookType').then(res => {
-      this.bookTypeList = res.data.data;
+      this.bookTypeList = res.data;
     });
-  },
-  updated() {
-    const path = this.$route.path;
-    let typeID = path.split('/').pop();
-    let rankingList = document.querySelectorAll('.ranking-list-item');
-    for (let i = 0; i < rankingList.length; i++) {
-      rankingList[i].classList.remove('ranking-list-item-active');
-      if (typeID == (i + 1)) {
-        this.type = this.bookTypeList[i].bookType;
-        rankingList[i].classList.add('ranking-list-item-active');
-      }
-    }
-
-    this.$axios.get(`http://localhost:5000/book/${typeID}`).then(res => {
-      this.books = res.data.data;
+    this.$axios.get(`http://localhost:5000/book/1`).then(res => {
+      this.books = res.data;
     })
+    let rankingList = document.querySelectorAll('.ranking-list-item');
+    rankingList[0].classList.add('ranking-list-item-active');
   },
 }
 </script>
@@ -63,15 +50,15 @@ export default {
         <el-aside width="200px" class="el-aside" style="background-color:whitesmoke;">
           <div class="nav-slide">
             <ul class="ranking-list">
-              <li class="ranking-list-item" v-for="item in bookTypeList" :key="item.bookTypeID">
-                <span class="ranking-list-item-link" @click="changeBorrowPage(item)">{{item.bookType}}</span>
+              <li class="ranking-list-item" v-for="item in bookTypeList" :key="item.bookTypeId">
+                <span class="ranking-list-item-link" @click="changeBorrowPage(item, item.bookTypeId)">{{item.bookType}}</span>
               </li>
             </ul>
           </div>
         </el-aside>
         <el-container class="main-container">
           <el-header class="main-header" style="background-color:whitesmoke;">
-            <span class="header-title">{{type}}</span>
+            <span class="header-title" v-html="type"></span>
           </el-header>
           <el-main style="padding: 0">
             <div class="ranking-content-list">
