@@ -422,7 +422,7 @@
               'token': this.$store.state.User.token,
             }
           }).then(res => {
-            this.student = res.data.data;
+            this.student = res.data;
 
             console.log(this.student.birthday)
             this.student.birthday = this.student.birthday[0] + "-" + this.student.birthday[1] + "-" + this.student.birthday[2];
@@ -473,7 +473,7 @@
           'token': this.$store.state.User.token,
         }
       }).then(res => {
-        this.student = res.data.data;
+        this.student = res.data;
         console.log(this.student.birthday)
         this.student.birthday = this.student.birthday[0] + "-" + this.student.birthday[1] + "-" + this.student.birthday[2];
         console.log(this.student.birthday)

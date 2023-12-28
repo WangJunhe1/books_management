@@ -123,7 +123,7 @@ export default {
         'token': this.$store.state.User.token
       }
     }).then(res => {
-      this.student = res.data.data;
+      this.student = res.data;
       console.log(this.student)
     })
   }

@@ -12,7 +12,7 @@ export default {
         'token': this.$store.state.User.token,
       }
     }).then(res => {
-      this.comments = res.data.data;
+      this.comments = res.data;
       console.log(this.comments)
     })
   }
@@ -110,7 +110,7 @@ export default {
   font-weight: 500;
 }
 
-.toReview-banner-item-content {
+.toReview-banner-item-comment {
   position: relative;
   line-height: 25px;
   overflow: hidden;

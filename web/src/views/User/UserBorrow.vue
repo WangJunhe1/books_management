@@ -36,7 +36,7 @@ export default {
                 }
               }
           ).then(res => {
-            this.tableData = res.data.data;
+            this.tableData = res.data;
           })
         }
       })
@@ -64,7 +64,7 @@ export default {
               }
             }
         ).then(res => {
-          this.tableData = res.data.data;
+          this.tableData = res.data;
           this.$message({
             message: '恭喜你，归还成功',
             type: 'success'
@@ -84,7 +84,7 @@ export default {
           }
         }
     ).then(res => {
-      this.tableData = res.data.data;
+      this.tableData = res.data;
     })
   }
 }
@@ -154,5 +154,7 @@ export default {
 </template>
 
 <style>
-
+::-webkit-scrollbar {
+  display: none;
+}
 </style>
