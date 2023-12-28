@@ -41,21 +41,28 @@ public class AutoFillAspect {
     public void autoFillBefore(JoinPoint jp){
         log.info("自动填充前置通知");
 
+        //获取方法的签名
         MethodSignature signature = (MethodSignature) jp.getSignature();
+        //获取方法的注解
         AutoFill autoFill = signature.getMethod().getAnnotation(AutoFill.class);
+        //获取注解里面的属性值
         OperationType operationType = autoFill.value();
 
+        //获取方法参数（User),可能有多个
         Object[] args = jp.getArgs();
 
+        //方法没有参数
         if(args == null || args.length == 0){
             return ;
         }
 
+        //获取第一个参数
         Object object = args[0];
         LocalDateTime now = LocalDateTime.now();
 
         if(operationType == OperationType.INSERT){
             try {
+                //通过反射获取两个方法
                 Method setCreateTime = object.getClass().getMethod(AutoFillConstant.SET_CREATE_TIME, LocalDateTime.class);
                 Method setUpdateTime = object.getClass().getMethod(AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);
                 //为对象属性赋值
