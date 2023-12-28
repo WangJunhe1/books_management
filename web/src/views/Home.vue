@@ -35,8 +35,16 @@ export default {
         });
       } else {
         this.$axios.post('http://localhost:5000/book/searchPage', {
-          bookName: this.input
+          searchKey: this.input
         }).then(res => {
+          console.log(res.data)
+          if (res.data.length === 0) {
+            console.log(1)
+            this.$message({
+              message: "没有找到相关书籍内容",
+              type: "warning"
+            })
+          }
           for (let i = 0; i < res.data.length; i++) {
             // 使用更安全的方法替换字符串
             const safeReplace = (str, search, replace) => {
@@ -46,9 +54,9 @@ export default {
               return str;
             };
 
-            res.data[i].bookName = safeReplace(res.data[i].bookName, this.input, `<span style="color: lightblue">${this.input}</span>`);
-            res.data[i].bookAuthor = safeReplace(res.data[i].bookAuthor, this.input, `<span style="color: lightblue">${this.input}</span>`);
-            res.data[i].bookDesc = safeReplace(res.data[i].bookDesc, this.input, `<span style="color: lightblue">${this.input}</span>`);
+            res.data[i].bookName = safeReplace(res.data[i].bookName, this.input, `<span style="color: deepskyblue">${this.input}</span>`);
+            res.data[i].bookAuthor = safeReplace(res.data[i].bookAuthor, this.input, `<span style="color: deepskyblue">${this.input}</span>`);
+            res.data[i].bookDesc = safeReplace(res.data[i].bookDesc, this.input, `<span style="color: deepskyblue">${this.input}</span>`);
           }
           this.searchBooks = res.data;
         })
@@ -106,7 +114,7 @@ export default {
                 clearable>
             </el-input>
             <el-button type="primary" @click="getSearchBooks()" icon="el-icon-arrow-right" class="search-input-button"></el-button>
-            <div class="search_result_global_list" v-if="this.isSelected === true">
+            <div class="search_result_global_list" v-if="isSelected === true">
               <div class="search_result_global_item" v-for="item in searchBooks" :key="item.bookId">
                 <span class="search_result_global_bookLink" @click="bookDetails(item)">
                   <div class="search_result_global_bookBlock">
@@ -126,14 +134,14 @@ export default {
         </div>
         <div class="banner">
           <div class="myBorrow">
-            <h2 class="header-borrow bookshelf-title" v-if="this.myBorrowBooks.length !== 0">
+            <h2 class="header-borrow bookshelf-title" v-if="myBorrowBooks.length !== 0">
               我的借阅
               <router-link class="right-link" to="/user/comment">
                 查看我的借阅&gt
               </router-link>
             </h2>
             <div class="borrow-list">
-              <div class="borrow-bookshelf" v-for="item in myBorrowBooks" :key="item.bookId" v-if="myBorrowBooks !== null">
+              <div class="borrow-bookshelf" v-for="item in myBorrowBooks" :key="item.bookId">
                 <span class="borrow-bookshelf-turn" @click="bookDetails(item)"></span>
                 <div class="book-allInfo">
                   <div class="book-img">
@@ -144,9 +152,6 @@ export default {
                     <div class="book-author">{{item.bookAuthor}}</div>
                   </div>
                 </div>
-              </div>
-              <div class="borrow-nothing" v-else>
-
               </div>
             </div>
           </div>
@@ -477,7 +482,7 @@ export default {
   background-color: white;
   height: 500px;
   overflow-y: scroll;
-  width: 680px;
+  width: 100%;
   margin-bottom: 20px;
 }
 
@@ -501,6 +506,15 @@ export default {
   border-radius: 0;
   border: solid hsla(0,0%,100%,.05);
   border-width: 0 0 1px;
+}
+
+.search-none {
+  width: 100%;
+  height: 100%;
+  color: #4a7ab0;
+  text-align: center;
+  align-items: center;
+  z-index: 10000;
 }
 
 .search_result_global_bookLink {
